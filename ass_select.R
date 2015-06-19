@@ -1,0 +1,17 @@
+tagList(
+  column(3, 
+         br(),
+         p("Basic underlying assumptions used in the projection of future indicators. Available at the country level only. 
+           Full information on the scenarios can be found on the About page."),
+         br(),
+         uiOutput("ass_sn0"),
+         checkboxInput('ass_prevsn', 'Use scenarios in Selection tab', TRUE), 
+         br(),
+         uiOutput("ass_nat0"),
+         checkboxInput('ass_prevnat', 'Use countries in Selection tab', TRUE), 
+         br()
+  ),
+  column(9, br(), dataTableOutput("data_ass"))
+)
+  
+  

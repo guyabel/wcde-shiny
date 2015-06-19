@@ -1,0 +1,12 @@
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+}
+
+#share-buttons img {
+  float:right; 
+  width: 35px;
+  padding: 5px;
+  border: 0;
+  box-shadow: 0;
+  display: inline;
+}

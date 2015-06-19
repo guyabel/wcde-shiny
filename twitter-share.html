@@ -1,0 +1,12 @@
+var header = $('.navbar > .container');
+header.append('<div style=\"float:right; margin-top:-40px\"><a href=\"https://twitter.com/share\" class=\"twitter-share-button\" align=\"middle\" data-url=\"www.wittgensteincentre.org/dataexplorer\" data-text=\"Explore global demographic projections by age, sex and education from @WiCVienna wittgensteincentre.org/dataexplorer" data-size=\"large\">Tweet</a></div>');
+console.log(header)
+!function(d,s,id){
+var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+if(!d.getElementById(id)){
+js=d.createElement(s);
+js.id=id;
+js.src=p+'://platform.twitter.com/widgets.js';
+fjs.parentNode.insertBefore(js,fjs);
+}
+}(document, 'script', 'twitter-wjs');    
