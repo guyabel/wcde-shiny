@@ -22,11 +22,11 @@ Folder server contains all the R code that is dependent (reactive) on the user i
 
 do_label.R produces the set of objects in label.RData. It contains
  * lists of indicator names, country names, age groups, etc., etc., used in the drop down fields
- * ind data.frame which has details on which indicators are available by which dimension. 
- * geog data.frame which has details on which country, areas and region names and codes. 
- * dimen data.frame which has details on scenario, age, sex and education dimensions.
- * faq data.frame which is displayed in the FAQ tab.
- * assump data.frame which has details on projection assumptions used in each scenario-country combination
+ * ind data.frame: details on which indicators are available by which dimension. 
+ * geog data.frame: details on country, areas and region names and codes. 
+ * dimen data.frame: details on scenario, age, sex and education dimensions.
+ * faq data.frame: displayed in the FAQ tab.
+ * assump data.frame: details on projection assumptions used in each scenario-country combination
 The objects in label.RData are loaded at the top of the ui.R script. 
 
 The ui.R script refers to a number of files in order to control the layout including:
