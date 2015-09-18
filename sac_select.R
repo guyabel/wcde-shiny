@@ -28,7 +28,7 @@ tagList(
         column(6, 
           h4("Graphic Options:"),
           fluidRow(
-            column(6, selectizeInput("sac_edu", "Educational Categories", width="100%",  choices = list("Standard"=4,"Detailed"=6))),
+            column(6, selectizeInput("sac_edu", "Educational Categories", width="100%",  list("Four Categories"=4,"Six Categories"=6))),
             column(6, selectizeInput("sac_y", "Vertical Axis", width="100%",
                                      choices = list("Plot Specific"="data","Both Plots"="allarea")))
           )

@@ -97,15 +97,15 @@ output$sac_leg<- renderGvis({
   #want to only react to tick box
   df1 <- df0 %>% filter(year==2010, sexno==0, ageno==0, eduno!=0, isono==4) %>% select(edu,age,sexno) %>% 
     dcast(age~edu, value.var="sexno")
-  w<-800
+  w<-900
   if(input$sac_edu==4){
     df1 <- df0 %>% filter(year==2010, sexno==0, ageno==0, eduno %in% c(1,2,4,6,7), isono==4) %>% select(edu,age,sexno) 
     levels(df1$edu)<-names(edu2)
     df1 <- df1 %>% dcast(age~edu, value.var="sexno")
-    w<-500
+    w<-600
   }
   gvisBarChart(df1, xvar="age", yvar=names(df1)[-1], 
-               options=list(colors=get(paste0("iiasa",input$pyr_edu)), height=30, width=w, legend="{position:'top', textStyle: {fontSize: 12}}",
+               options=list(colors=get(paste0("iiasa",input$sac_edu)), height=30, width=w, legend="{position:'top', textStyle: {fontSize: 12}}",
                             chartArea="{right:'0%',left:'0%',width:'100%',top:'100%',height:'0%'}"))
 })
 
