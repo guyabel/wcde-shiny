@@ -202,6 +202,7 @@ output$pyr2_dl <- downloadHandler(
     }
     if(input$pyr_dl=="png"){
       system("wkhtmltoimage --enable-javascript --javascript-delay 2000 gg.html gg.png")
+      system("optipng gg.png")
       file.copy("./gg.png", file)
       file.remove("gg.png")
     }
