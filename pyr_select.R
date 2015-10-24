@@ -28,7 +28,7 @@ tagList(
         column(6, 
           h4("Graphic Options:"),
           fluidRow(
-            column(6, selectizeInput("pyr_edu", "Educational Breakdown", width="100%",  choices = list("Four Categories"=4,"Six Categories"=6))),
+            column(6, selectizeInput("pyr_edu", "Educational Breakdown", width="100%",  choices = list("Six Categories"=6,"Four Categories"=4))),
             column(6, selectizeInput("pyr_x", "Horizontal Axis", width="100%",
                                      choices = list("Data Specific"="data","Entire Time Horizon"="allyear","Both Plots"="allarea")))
           )
@@ -36,7 +36,7 @@ tagList(
         column(6,
           h4("Download Options:"),
           fluidRow(
-            column(4, selectizeInput("pyr_dl", "File Type", width="100%",  choices = list("PDF"="pdf","PNG"="png"))),
+            column(4, selectizeInput("pyr_dl", "File Type", width="100%",  choices = list("PNG"="png","PDF"="pdf"))),
             column(4, downloadButton('pyr1_dl', 'Left Pyramid')),
             column(4, downloadButton('pyr2_dl', 'Right Pyramid'))
           )
