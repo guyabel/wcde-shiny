@@ -91,6 +91,7 @@ output$map1_dl <- downloadHandler(
     }
     if(input$sac_dl=="png"){
       system("wkhtmltoimage --enable-javascript --javascript-delay 4000 gg.html gg.png"); #file.show("gg.png")
+      system("optipng gg.png")
       file.copy("./gg.png", file)
       file.remove("gg.png")
     }
