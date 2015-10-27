@@ -5,7 +5,7 @@
 #setwd("C:/Users/gabel/Documents/shiny/wic2")
 #df0<-loads(file="df1", variables=c("area", "isono", "year","period", "ageno","sexno","eduno","age","bage","sage","sex","edu"), ultra.fast = TRUE, to.data.frame=TRUE)
 #source("./server/sac_fn.R")
-#input<-NULL; input$sac_sn1=2; input$sac_geo1="France"; input$sac_edu=6
+#input<-NULL; input$sac_sn1=2; input$sac_geo1="France"; input$sac_edu=6; input$sac_year1=c(1970,2100)
 
 
 output$sac_warn1 <- renderUI({
@@ -52,8 +52,11 @@ output$sac1<- renderGvis({
   withProgress(message = 'Loading Left Plot', value = 0, {
     df1<-loads(file=paste0("df",input$sac_sn1), variables="epop", ultra.fast = TRUE, to.data.frame=TRUE)
     incProgress(1/4)
-    df_sac1 <- cbind(df0,df1) %>% filter(ageno==0, sexno==0, area==input$sac_geo1, year %in% seq(input$sac_year1[1],input$sac_year1[2],5)) %>% 
-      mutate(scenario=input$sac_sn1) %>% rename(pop=epop)
+    df_sac1 <- df0 %>% 
+      bind_cols(df1) %>% 
+      filter(ageno==0, sexno==0, area==input$sac_geo1, year %in% seq(input$sac_year1[1],input$sac_year1[2],5)) %>% 
+      mutate(scenario=input$sac_sn1) %>% 
+      rename(pop=epop)
     incProgress(2/4)
     if(input$sac_edu==4){
       levels(df_sac1$edu)<-names(edu2)
@@ -62,7 +65,7 @@ output$sac1<- renderGvis({
       incProgress(3/4)
     }
     df_sac1 <<- df_sac1
-    gg<-gsac(df_sac1, pcol=get(paste0("iiasa",input$sac_edu)), w=300, legend="none", pmax=sac_max()$max1)
+    gg<-gsac(df_sac1, pcol=get(paste0("iiasa",input$sac_edu)), w=300, legend="none", pmax=sac_max()$max1, prop = input$sac_prop)
     incProgress(4/4)
   })
   return(gg)
@@ -87,7 +90,7 @@ output$sac2<- renderGvis({
       incProgress(3/4)
     }
     df_sac2 <<- df_sac2
-    gg<-gsac(df_sac2, pcol=get(paste0("iiasa",input$sac_edu)), w=300, legend="none", pmax=sac_max()$max1)
+    gg<-gsac(df_sac2, pcol=get(paste0("iiasa",input$sac_edu)), w=300, legend="none", pmax=sac_max()$max1, prop = input$sac_prop)
     incProgress(4/4)
   })
   return(gg)
@@ -123,7 +126,7 @@ output$sac1_dl <- downloadHandler(
     cat(ifelse(geog %>% filter(name %in% input$sac_geo1) %>% .[["is171"]] %in% 0, paste0(tt,"<br>\n<br>\n"), ""), file = fh)
     close(fh)
     
-    gg<-gsac(df_sac1, pcol=get(paste0("iiasa",input$sac_edu)), w=500, h=700, legend="top", pmax=sac_max()$max1)
+    gg<-gsac(df_sac1, pcol=get(paste0("iiasa",input$sac_edu)), w=500, h=700, legend="top", pmax=sac_max()$max1, prop = input$sac_prop)
     gg$html$caption<-readLines("head.html")
     print(gg, file="gg.html")
     
@@ -156,7 +159,7 @@ output$sac2_dl <- downloadHandler(
     cat(ifelse(geog %>% filter(name %in% input$sac_geo2) %>% .[["is171"]] %in% 0, paste0(tt,"<br>\n<br>\n"), ""), file = fh)
     close(fh)
     
-    gg<-gsac(df_sac2, pcol=get(paste0("iiasa",input$sac_edu)), w=500, h=700, legend="top", pmax=sac_max()$max2)
+    gg<-gsac(df_sac2, pcol=get(paste0("iiasa",input$sac_edu)), w=500, h=700, legend="top", pmax=sac_max()$max2, prop = input$sac_prop)
     gg$html$caption<-readLines("head.html")
     print(gg, file="gg.html")
     

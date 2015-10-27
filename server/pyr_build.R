@@ -78,9 +78,9 @@ output$pyr1<- renderGvis({
       noedu_pyr1 <<- TRUE
     
     if(noedu_pyr1==FALSE)
-      gg<-gpyr(df_pyr1, pyear=input$pyr_year1, pcol=get(paste0("iiasa",input$pyr_edu)), w=295, legend="none", pmax=pyr_max()$max1)
+      gg<-gpyr(df_pyr1, pyear=input$pyr_year1, pcol=get(paste0("iiasa",input$pyr_edu)), w=295, legend="none", pmax=pyr_max()$max1, prop = input$pyr_prop)
     if(noedu_pyr1==TRUE)
-      gg<-gpyr(df_pyr1, pyear=input$pyr_year1, pcol="['darkgrey']", w=295, legend="none", pmax=pyr_max()$max1, no.edu = TRUE)
+      gg<-gpyr(df_pyr1, pyear=input$pyr_year1, pcol="['darkgrey']", w=295, legend="none", pmax=pyr_max()$max1, no.edu = TRUE, prop = input$pyr_prop)
     incProgress(4/4)
   })
   return(gg)
@@ -110,14 +110,15 @@ output$pyr2<- renderGvis({
       noedu_pyr2 <<- TRUE
     
     if(noedu_pyr2==FALSE)
-      gg<-gpyr(df_pyr2, pyear=input$pyr_year2, pcol=get(paste0("iiasa",input$pyr_edu)), w=295, legend="none", pmax=pyr_max()$max2)
+      gg<-gpyr(df_pyr2, pyear=input$pyr_year2, pcol=get(paste0("iiasa",input$pyr_edu)), w=295, legend="none", pmax=pyr_max()$max2, prop = input$pyr_prop)
     if(noedu_pyr2==TRUE)
-      gg<-gpyr(df_pyr2, pyear=input$pyr_year2, pcol="['darkgrey']", w=295, legend="none", pmax=pyr_max()$max2, no.edu = TRUE)
+      gg<-gpyr(df_pyr2, pyear=input$pyr_year2, pcol="['darkgrey']", w=295, legend="none", pmax=pyr_max()$max2, no.edu = TRUE, prop = input$pyr_prop)
     #gg<-gpyr(df_pyr2, pyear=input$pyr_year2, pcol=get(paste0("iiasa",input$pyr_edu)), w=295, legend="none", pmax=pyr_max()$max2)
     incProgress(4/4)
   })
   return(gg)
 })
+
 
 output$pyr_leg<- renderGvis({
   #want to only react to tick box
@@ -151,9 +152,9 @@ output$pyr1_dl <- downloadHandler(
     close(fh)
     
     if(noedu_pyr1==FALSE)
-      gg<-gpyr(df_pyr1, pyear=input$pyr_year1, pcol=get(paste0("iiasa",input$pyr_edu)), w=500, h=700, legend="top", pmax=pyr_max()$max1)
+      gg<-gpyr(df_pyr1, pyear=input$pyr_year1, pcol=get(paste0("iiasa",input$pyr_edu)), w=500, h=700, legend="top", pmax=pyr_max()$max1, prop = input$pyr_prop)
     if(noedu_pyr1==TRUE)
-      gg<-gpyr(df_pyr1, pyear=input$pyr_year1, pcol="['darkgrey']", w=500, h=700, legend="top", legend="none", pmax=pyr_max()$max1, no.edu = TRUE)
+      gg<-gpyr(df_pyr1, pyear=input$pyr_year1, pcol="['darkgrey']", w=500, h=700, legend="top", legend="none", pmax=pyr_max()$max1, no.edu = TRUE, prop = input$pyr_prop)
     gg$html$caption<-readLines("head.html")
     print(gg, file="gg.html")
     
@@ -188,9 +189,9 @@ output$pyr2_dl <- downloadHandler(
     close(fh)
     
     if(noedu_pyr2==FALSE)
-      gg<-gpyr(df_pyr2, pyear=input$pyr_year2, pcol=get(paste0("iiasa",input$pyr_edu)), w=500, h=700, legend="top", pmax=pyr_max()$max2)
+      gg<-gpyr(df_pyr2, pyear=input$pyr_year2, pcol=get(paste0("iiasa",input$pyr_edu)), w=500, h=700, legend="top", pmax=pyr_max()$max2, prop = input$pyr_prop)
     if(noedu_pyr2==TRUE)
-      gg<-gpyr(df_pyr2, pyear=input$pyr_year2, pcol="['darkgrey']",  w=500, h=700, legend="top", pmax=pyr_max()$max2, no.edu = TRUE)
+      gg<-gpyr(df_pyr2, pyear=input$pyr_year2, pcol="['darkgrey']",  w=500, h=700, legend="top", pmax=pyr_max()$max2, no.edu = TRUE, prop = input$pyr_prop)
     
     gg$html$caption<-readLines("head.html")
     print(gg, file="gg.html")

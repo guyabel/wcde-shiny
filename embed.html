@@ -19,7 +19,16 @@
     </head>
 
     <body>
-        <iframe id="iframe1" src="http://witt.null2.net/shiny/wicsecret/" frameborder="0"></iframe>
+        <iframe id="iframe1" src="http://witt.null2.net/shiny/wic/<?php echo !empty($_GET['nav']) ? '?nav=' . $_GET['nav'] : '' ?>" frameborder="0"></iframe>
+		<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-47048000-1', 'auto');
+  ga('send', 'pageview');
+		</script>
     </body>
 </html>
 
