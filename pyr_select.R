@@ -32,13 +32,13 @@ tagList(
             column(4, selectizeInput("pyr_x", "Horizontal Axis", width="100%",
                                      choices = list("Data Specific"="data","Entire Time Horizon"="allyear","Both Plots"="allarea"))),
             column(4, selectizeInput("pyr_prop", "Data", width="100%",
-                                     choices = list("Population"="FALSE","Proportion"="TRUE")))
+                                     choices = list("Population"="FALSE","Percentage"="TRUE")))
           )
         ),
         column(6,
           h4("Download Options:"),
           fluidRow(
-            column(4, selectizeInput("pyr_dl", "File Type", width="100%",  choices = list("PDF"="pdf","PNG"="png"))),
+            column(4, selectizeInput("pyr_dl", "File Type", width="100%",  choices = list("PNG"="png","PDF"="pdf"))),
             column(4, downloadButton('pyr1_dl', 'Left Pyramid')),
             column(4, downloadButton('pyr2_dl', 'Right Pyramid'))
           )

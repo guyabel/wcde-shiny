@@ -31,7 +31,7 @@ gpyr<-function(df_pyr, pyear, pcol=iiasa6, w=400, h=500, legend="top", pmax=NULL
     pmax <- 1
   bar1 <- gvisBarChart(data = dfm, xvar="age", yvar=names(dfm)[-1],
             options = list(bar = "{groupWidth:'90%'}", 
-                           isStacked = if(prop == TRUE) 'relative' else TRUE, 
+                           isStacked = if(prop == TRUE) 'percent' else TRUE, 
                            title = paste0("Total Population: ",round(dft$pop/1000,2)," m"), 
                            titleTextStyle = "{fontName:'Arial',fontSize:16}",
                            hAxis=paste0("{direction:-1, maxValue:",pmax,", title: 'Male'}"),
@@ -42,7 +42,7 @@ gpyr<-function(df_pyr, pyear, pcol=iiasa6, w=400, h=500, legend="top", pmax=NULL
 
   bar2 <- gvisBarChart(data = dff, xvar="age", yvar=names(dfm)[-1],
             options = list(bar = "{groupWidth:'90%'}", 
-                           isStacked = if(prop == TRUE) 'relative' else TRUE, 
+                           isStacked = if(prop == TRUE) 'percent' else TRUE, 
                            hAxis=paste0("{maxValue:",pmax,", title: 'Female'}"),
                            legend="{position:'none'}",
                            colors = pcol, height = h, width = w, 

@@ -11,7 +11,7 @@ gsac<-function(df_sac, pcol=iiasa6, w=400, h=500, legend="top", pmax=NULL, prop=
     pmax <- 1
   
   p1 <- gvisAreaChart(data = df1, xvar="year", yvar=names(df1[,-1]),
-          options = list(isStacked = if(prop == TRUE) 'relative' else TRUE, 
+          options = list(isStacked = if(prop == TRUE) 'percent' else TRUE, 
                          colors=pcol, 
                          chartArea="{left:'12.5%',top:'5%',height:'90%',width:'80%'}",
                          height=h, width=w*2, areaOpacity=0.8,

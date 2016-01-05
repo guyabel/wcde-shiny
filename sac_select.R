@@ -32,13 +32,13 @@ tagList(
             column(4, selectizeInput("sac_y", "Vertical Axis", width="100%",
                                      choices = list("Plot Specific"="data","Both Plots"="allarea"))),
             column(4, selectizeInput("sac_prop", "Data", width="100%",
-                                     choices = list("Population"="FALSE","Proportion"="TRUE")))
+                                     choices = list("Population"="FALSE","Percentage"="TRUE")))
           )
         ),
         column(6,
           h4("Download Options:"),
           fluidRow(
-            column(4, selectizeInput("sac_dl", "File Type", width="100%",  choices = list("PDF"="pdf","PNG"="png"))),
+            column(4, selectizeInput("sac_dl", "File Type", width="100%",  choices = list("PNG"="png","PDF"="pdf"))),
             column(4, downloadButton('sac1_dl', 'Left Plot')),
             column(4, downloadButton('sac2_dl', 'Right Plot'))
           )
