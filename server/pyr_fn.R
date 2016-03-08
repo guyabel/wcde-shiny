@@ -7,7 +7,7 @@ gpyr<-function(df_pyr, pyear, pcol=iiasa6, w=400, h=500, legend="top", pmax=NULL
     arrange(desc(ageno)) %>% 
     select(-ageno)
   dff <- df_pyr %>% 
-    filter(year==pyear, sexno==1, ageno!=0) %>% 
+    filter(year==pyear, sexno==2, ageno!=0) %>% 
     select(ageno, age ,edu,pop) %>% 
     dcast(age+ageno~edu, value.var="pop") %>%  
     arrange(desc(ageno)) %>% 
