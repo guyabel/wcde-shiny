@@ -1,10 +1,10 @@
-setwd("C:/Users/gabel/Documents")
+setwd("E:/VID/project/wcde/")
 rm(list=ls())
 
 ##
 ##copy about
 ##
-file.copy(from = "C:/Users/gabel/Dropbox/wicdata/about_details.md", to = "C:/Users/gabel/Documents/shiny/wcde/about_details.md", overwrite = TRUE)
+# file.copy(from = "C:/Users/gabel/Dropbox/wicdata/about_details.md", to = "C:/Users/gabel/Documents/shiny/wcde/about_details.md", overwrite = TRUE)
 
 ##
 ##Indicators
@@ -12,7 +12,8 @@ file.copy(from = "C:/Users/gabel/Dropbox/wicdata/about_details.md", to = "C:/Use
 
 library("xlsx")
 #ind<-read.csv("C:/Users/gabel/Dropbox/wicdata/indicator.csv", stringsAsFactors=FALSE , sep="|")
-ind<-read.xlsx("C:/Users/gabel/Dropbox/wicdata/indicator.xlsx", stringsAsFactors=FALSE , sheetIndex=1)
+# ind<-read.xlsx("C:/Users/gabel/Dropbox/wicdata/indicator.xlsx", stringsAsFactors=FALSE , sheetIndex=1)
+ind <- read.xlsx("./meta/indicator.xlsx", stringsAsFactors=FALSE , sheetIndex=1)
 
 ind0<-as.list(unique(ind$type))
 names(ind0)<-unique(ind$type1)
@@ -39,7 +40,8 @@ ind4<-c(ind1,ind2,ind3)
 ##
 ##geography
 ##
-geog<-read.xlsx("C:/Users/gabel/Dropbox/wicdata/geography.xlsx", stringsAsFactors=FALSE , sheetIndex=1)
+geog <- read.xlsx("./meta/geography.xlsx", stringsAsFactors=FALSE , sheetIndex=1)
+
 ggnum<-geog$ggarea[grep("[0-9]",geog$ggarea)]
 ggnum<-format(as.numeric(ggnum),width = 3, format = "d", flag = "0") 
 geog$ggarea[grep("[0-9]",geog$ggarea)]<-gsub(" ", "0",ggnum)
@@ -79,13 +81,10 @@ geo3[[2]]<-an1[-1]
 
 
 
-
-
-
 ##
 ##dimensions
 ##
-dimen<-read.xlsx("C:/Users/gabel/Dropbox/wicdata/dimension.xlsx", stringsAsFactors=FALSE , sheetIndex=1)
+dimen <- read.xlsx("./meta/dimension.xlsx", stringsAsFactors=FALSE , sheetIndex=1)
 
 sn1<-as.list(subset(dimen, dim=="scenario")$code)
 names(sn1)<-subset(dimen, dim=="scenario")$name
@@ -130,7 +129,7 @@ names(bage1) <- subset(dimen, dim=="bage")$name
 ##
 ##assumptions
 ##
-assump<-read.xlsx("C:/Users/gabel/Dropbox/wicdata/assumption.xlsx", stringsAsFactors=FALSE , sheetIndex=1)
+assump <- read.xlsx("./meta/assumption.xlsx", stringsAsFactors=FALSE , sheetIndex=1)
 #assump$country<-NULL
 # assump<-assump %>% left_join(geog %>% select(name,isono))
 # assump<-assump %>% rename(country=name)
@@ -168,13 +167,13 @@ iiasa6<-paste0("['lightgrey','",
 ##
 ##faq
 ##
-faq<-read.xlsx("C:/Users/gabel/Dropbox/wicdata/faq.xlsx", stringsAsFactors=FALSE , sheetIndex=1)
+faq <- read.xlsx("./meta/faq.xlsx", stringsAsFactors=FALSE , sheetIndex=1)
 
 ##
 ##saving
 ##
 rm(i)
 
-save.image(file="C:/Users/gabel/Documents/shiny/wcde/label.RData")
+save.image(file="./label.RData")
 
 
