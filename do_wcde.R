@@ -1,6 +1,7 @@
 #install.packages('shiny')
 
 #setwd("C:/Users/gabel/Documents/")
+#setwd("C:/Users/Guy/Documents/Github")
 setwd("E:/VID/project/")
 library(shiny)
 runApp("./wcde", launch.browser = TRUE)
