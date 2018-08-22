@@ -1,4 +1,4 @@
-setwd("E:/VID/project/wcde/")
+# setwd("E:/VID/project/wcde/")
 rm(list=ls())
 
 ##
@@ -89,13 +89,13 @@ dimen <- read.xlsx("./meta/dimension.xlsx", stringsAsFactors=FALSE , sheetIndex=
 sn1<-as.list(subset(dimen, dim=="scenario")$code)
 names(sn1)<-subset(dimen, dim=="scenario")$name
 
-yn1<-seq(2010, 2100,5)
-yn2<-as.list(yn1)[-19]
-names(yn2)<-paste0(yn1[-19],"-",substr(yn1[-19]+5,3,4))
+yn1<-seq(2015, 2100,5)
+yn2<-as.list(yn1)[-length(yn1)]
+names(yn2)<-paste0(yn1[-length(yn1)],"-",substr(yn1[-length(yn1)]+5,3,4))
 
-yn3<-seq(1970, 2100,5)
-yn4<-as.list(yn3)[-27]
-names(yn4)<-paste0(yn3[-27],"-",substr(yn3[-27]+5,3,4))
+yn3<-seq(1950, 2100,5)
+yn4<-as.list(yn3)[-length(yn1)]
+names(yn4)<-paste0(yn3[-length(yn1)],"-",substr(yn3[-length(yn1)]+5,3,4))
 
 
 age1<-as.list(subset(dimen, dim=="age")$code)

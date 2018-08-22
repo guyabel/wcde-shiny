@@ -51,7 +51,7 @@ df_build <- reactive({
       edu0 <- 0 
       if(df1$edu==1)
         edu0<-unlist(edu1)
-      if(df1$edu2==1)
+      if(fn %in% c("ggapedu15", "ggapedu25", "etfr"))
         edu0<-unlist(edu1)[-(1:2)]
       if(fn=="etfr")
         edu0<-unlist(edu1)[-2]

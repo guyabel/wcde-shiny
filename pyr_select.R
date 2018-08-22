@@ -6,8 +6,8 @@ tagList(
     column(width = 3, selectizeInput("pyr_sn2", "Scenario", choices = sn1, selected=sn1[1], width="100%"))
   ),
   fluidRow(
-    column(width = 6, sliderInput("pyr_year1", "Year", min = 1970, max = 2100, value = 2010, step= 5, ticks= FALSE, sep="", width="100%")),
-    column(width = 6, sliderInput("pyr_year2", "Year", min = 1970, max = 2100, value = 2050, step= 5, ticks= FALSE, sep="", width="100%"))
+    column(width = 6, sliderInput("pyr_year1", "Year", min = 1950, max = 2100, value = 2015, step= 5, ticks= FALSE, sep="", width="100%")),
+    column(width = 6, sliderInput("pyr_year2", "Year", min = 1950, max = 2100, value = 2050, step= 5, ticks= FALSE, sep="", width="100%"))
   ),
   fluidRow(
     column(width = 6, htmlOutput("pyr_warn1")),

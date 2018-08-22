@@ -72,8 +72,8 @@ output$pyr1<- renderGvis({
     }
     
     df_pyr1 <<- df_pyr1
-    noedu_pyr1 <<- geog %>% filter(name==input$pyr_geo1) %>% .[["is171"]] %in% 0 & input$pyr_year1<2010
-    if(input$pyr_geo1=="Israel" & input$pyr_year1<2010)
+    noedu_pyr1 <<- geog %>% filter(name==input$pyr_geo1) %>% .[["is171"]] %in% 0 & input$pyr_year1<2015
+    if(input$pyr_geo1=="Israel" & input$pyr_year1<2015)
       noedu_pyr1 <<- TRUE
     
     if(noedu_pyr1==FALSE)
@@ -104,8 +104,8 @@ output$pyr2<- renderGvis({
     }
     
     df_pyr2 <<- df_pyr2
-    noedu_pyr2 <<- geog %>% filter(name==input$pyr_geo2) %>% .[["is171"]] %in% 0 & input$pyr_year2<2010
-    if(input$pyr_geo2=="Israel" & input$pyr_year2<2010)
+    noedu_pyr2 <<- geog %>% filter(name==input$pyr_geo2) %>% .[["is171"]] %in% 0 & input$pyr_year2<2015
+    if(input$pyr_geo2=="Israel" & input$pyr_year2<2015)
       noedu_pyr2 <<- TRUE
     
     if(noedu_pyr2==FALSE)
@@ -121,11 +121,11 @@ output$pyr2<- renderGvis({
 
 output$pyr_leg<- renderGvis({
   #want to only react to tick box
-  df1 <- df0 %>% filter(year==2010, sexno==0, ageno==0, eduno!=0, isono==4) %>% select(edu,age,sexno) %>% 
+  df1 <- df0 %>% filter(year==2015, sexno==0, ageno==0, eduno!=0, isono==4) %>% select(edu,age,sexno) %>% 
     dcast(age~edu, value.var="sexno")
   w<-900
   if(input$pyr_edu==4){
-    df1 <- df0 %>% filter(year==2010, sexno==0, ageno==0, eduno %in% c(1,2,4,6,7), isono==4) %>% select(edu,age,sexno) 
+    df1 <- df0 %>% filter(year==2015, sexno==0, ageno==0, eduno %in% c(1,2,4,6,7), isono==4) %>% select(edu,age,sexno) 
     levels(df1$edu)<-names(edu2)
     df1 <- df1 %>% dcast(age~edu, value.var="sexno")
     w<-600

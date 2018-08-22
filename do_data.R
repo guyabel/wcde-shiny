@@ -18,7 +18,7 @@ library("saves")
 iso24 <- geog %>% filter(is171==0) %>% .[["isono"]]
 
 for(sn in 1:7){
-  df0<-expand.grid(year=seq(1970,2100,5), isono=geog$isono, ageno=0:21, sexno=0:2, eduno=0:7)
+  df0<-expand.grid(year=seq(1950,2100,5), isono=geog$isono, ageno=0:21, sexno=0:2, eduno=0:7)
   setwd(paste0(wd,"/df0"))
   for(i in 1:length(ind$name)){
     fn<-paste0("df",sn,ind$name[i],".csv")
@@ -26,9 +26,9 @@ for(sn in 1:7){
       df1 <- read.csv(fn, stringsAsFactors=FALSE) %>% distinct() 
       #set past data unreliable to NA (iso24 and isreal)
       if(ind$is195[i]==0 & ind$edu[i]==0)
-        df1[df1$year<2010 & df1$isono %in% c(iso24,376), ncol(df1)]<-NA
+        df1[df1$year<2015 & df1$isono %in% c(iso24,376), ncol(df1)]<-NA
       if(ind$is195[i]==0 & ind$edu[i]==1)
-        df1[df1$year<2010 & df1$isono %in% c(iso24,376) & df1$eduno!=0, ncol(df1)]<-NA
+        df1[df1$year<2015 & df1$isono %in% c(iso24,376) & df1$eduno!=0, ncol(df1)]<-NA
       df0 <- df0 %>% left_join(df1)
       #print(nrow(df0))
       #print(head(subset(df0, isono==4 & ageno<2 & year==1975)))
