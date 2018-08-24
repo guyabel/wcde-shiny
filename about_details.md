@@ -1,16 +1,16 @@
 ### Overview
 
-The new set of projections by levels of educational attainment was produced by a large team of researchers at the <a href="http://www.wittgensteincentre.org" target="_blank_">Wittgenstein Centre</a> for Demography and Global Human Capital and at other institutions. It also includes population projections developed for the 5th assessment report of the Intergovernmental Panel on Climate Change <a href="http://www.ipcc.ch/" target="_blank">(IPCC)</a>  according to a set of Shared Socioeconomic Pathways (SSP) scenarios. There are two main areas where the new projections advance the state of the art beyond other existing global population projections (those that cover most world countries):
+The new set of projections by levels of educational attainment was produced by a large team of researchers at the <a href="http://www.wittgensteincentre.org" target="_blank_">Wittgenstein Centre</a> for Demography and Global Human Capital and at other institutions. It is also part of an ongoing international effort to develop a new generation of global change scenarios related to the Intergovernmental Panel on Climate Change <a href="http://www.ipcc.ch/" target="_blank">(IPCC)</a> according to a set of Shared Socioeconomic Pathways (SSP) scenarios. There are two main areas where the new projections advance the state of the art beyond other existing global population projections (those that cover most world countries):
 
 * They explicitly and systematically incorporate population heterogeneity by level of education, thereby illustrating how educational attainment can and should be routinely added to age and sex as a third demographic dimension.
-* The assumptions about future trends in fertility, mortality, and migration include the scientific input of more than 500 population experts around the world who responded to an online questionnaire and assessed the validity of alternative arguments as well as the conclusions of intensive discussions at five meta-expert meetings.
+* The assumptions about future trends in fertility, mortality, and migration include the scientific input of more than 550 population experts around the world who either participated in a series of five substantive meetings or took part in an extensive online survey.
 
-Version 1.2 includes the back projections from 2010 to 1950. More information in <a href="http://www.iiasa.ac.at/publication/more_IR-15-008.php">Speringer et al. 2015</a>.
+The new version also includes the back projections from 2015 to 1950. More information in <a href="NEW LINK NEEDS TO B ADDED ONCE WP IS DONE">Speringer et al. 2018</a>.
 
 ### Citation
 The suggested citation for data and plots from this website is:
 
-Wittgenstein Centre for Demography and Global Human Capital, (2015). *Wittgenstein Centre Data Explorer Version 1.2.* Available at: <a href="http://www.wittgensteincentre.org/dataexplorer">http://www.wittgensteincentre.org/dataexplorer</a>
+Wittgenstein Centre for Demography and Global Human Capital, (2018). *Wittgenstein Centre Data Explorer Version 2.0.* Available at: <a href="http://www.wittgensteincentre.org/dataexplorer">http://www.wittgensteincentre.org/dataexplorer</a>
 
 ### Credits
 Data Explorer Team at the Wittgenstein Centre for Demography and Global Human Capital:
