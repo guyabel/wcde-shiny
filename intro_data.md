@@ -1,4 +1,4 @@
 Wittgenstein Centre Data Explorer
 =================================
 
-Explore, select and download data of the global population projections by age, sex and education published by <a href="http://ukcatalogue.oup.com/product/9780198703167.do" target="_blank">Lutz, Butz, and K.C. (2014)</a>. Access the executive summary <a href="http://www.iiasa.ac.at/publication/more_XO-14-031.php" target="_blank"><i class="fa fa-external-link"></i></a>.
+Explore, select and download data of the global population projections by age, sex and education published by <a href="https://publications.europa.eu/en/publication-detail/-/publication/e1853ba8-4444-11e8-a9f4-01aa75ed71a1/language-en"_blank">Lutz, Goujon, KC, Stonawski, Stilianakis (Eds.) (2018)</a>.
