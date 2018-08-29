@@ -27,7 +27,7 @@ Concept and Coordination:
 
 Data:
 
-* <a href="http://www.iiasa.ac.at/web/home/research/researchPrograms/WorldPopulation/Staff/K-C-Samir.en.html"target="_blank">Samir K.C.</a>
+* <a href="http://www.iiasa.ac.at/staff/staff.php?type=auto&visibility=visible&search=true&login=kc" target="_blank">Samir K.C.</a>
 
 Web Interface:
 
