@@ -5,7 +5,7 @@ The new set of projections by levels of educational attainment was produced by a
 * They explicitly and systematically incorporate population heterogeneity by level of education, thereby illustrating how educational attainment can and should be routinely added to age and sex as a third demographic dimension.
 * The assumptions about future trends in fertility, mortality, and migration include the scientific input of more than 550 population experts around the world who either participated in a series of five substantive meetings or took part in an extensive online survey.
 
-The new version also includes the back projections from 2015 to 1950. More information in <a href="NEW LINK NEEDS TO B ADDED ONCE WP IS DONE">Speringer et al. 2018</a>.
+The new version also includes the back projections from 2015 to 1950. More information in <a href="NEW LINK NEEDS TO BE ADDED ONCE WP IS DONE">Speringer et al. 2018</a>.
 
 ### Citation
 The suggested citation for data and plots from this website is:
