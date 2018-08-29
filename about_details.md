@@ -17,13 +17,13 @@ Data Explorer Team at the Wittgenstein Centre for Demography and Global Human Ca
 
 Concept and Coordination:
 
-* <a href="http://www.oeaw.ac.at/vid/staff/staff_guy_abel.shtml"  target="_blank">Guy J. Abel</a>
+* <a href="http://www.iiasa.ac.at/staff/staff.php?type=auto&visibility=visible&search=true&login=abel">Guy J. Abel</a>
 
-* <a href="http://www.oeaw.ac.at/vid/staff/staff_anne_goujon.shtml" target="_blank">Anne Goujon</a>
+* <a href="https://www.oeaw.ac.at/en/vid/people/staff/anne-goujon/">Anne Goujon</a>
 
-* <a href="http://www.oeaw.ac.at/vid/staff/staff_jakob_eder.shtml" target="_blank">Jakob Eder</a>
+* <a href="https://www.oeaw.ac.at/isr/team/ag-innovation-und-urbane-oekonomie/jakob-eder/" target="_blank">Jakob Eder</a>
 
-* <a href="http://www.oeaw.ac.at/vid/staff/staff_ramon_bauer.shtml" target="_blank">Ramon Bauer</a>
+* <a href="https://raumforschung.univie.ac.at/team/bauer-ramon/" target="_blank">Ramon Bauer</a>
 
 Data:
 
