@@ -1,6 +1,8 @@
 
 For further details see:
 
-* Samir, K. C., & Lutz, W. (2014). <a href="http://www.sciencedirect.com/science/article/pii/S0959378014001095" target="_blank">The human core of the shared socioeconomic pathways: Population scenarios by age, sex and level of education for all countries to 2100.</a> *Global Environmental Change*.
+* European Commission, Joint Research Centre, Lutz, W., Goujon, A., KC, S., Stonawski, M., Stilianakis, N. (2018). <a href="https://ec.europa.eu/jrc/en/publication/demographic-and-human-capital-scenarios-21st-century-2018-assessment-201-countries">Demographic and Human Capital Scenarios for the 21st Century: 2018 assessment for 201 countries.</a> *Publications Office of the European Union, Luxembourg*.
 
-* Samir, K. C., Potan&#269;okov&aacute;, M., Bauer, R., Goujon, A. & Striessnig, E. (2013). <a href="http://webarchive.iiasa.ac.at/Admin/PUB/Documents/IR-13-018.pdf" target="_blank">Summary of Data, Assumptions and Methods for New Wittgenstein Centre for Demography and Global Human Capital (WIC) Population Projections by Age, Sex and Level of Education for 195 Countries to 2100.</a> (Interim Report No. IR-13-018). *Laxenburg, Austria: International Institute for Applied Systems Analysis*.
+* O'Neill, B.C., Kriegler, E., Ebi, K.L., Kemp-Benedict, E., Riahi, K. (2014). <a href="https://www.sciencedirect.com/science/article/pii/S0959378015000060" target="_blank">The roads ahead: Narratives for shared socioeconomic pathways describing world futures in the 21st century.</a> *Global Environmental Change*.
+
+* Riahi, K., van Vuuren, D.P., Kriegler, E., Edmonds, J., O'Neill, B.C., Fujimori, S. et al (2017). <a href="https://www.sciencedirect.com/science/article/pii/S0959378016300681" target="_blank">The Shared Socioeconomic Pathways and their energy, land use, and greenhouse gas emissions implications: An overview.</a> *Global Environmental Change*.
