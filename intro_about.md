@@ -1,4 +1,4 @@
 Further Details
 ===============
 
-More detailed information on how to use this web application. Further reading on the data from the global population projections by age, sex and education is provided in <a href="http://ukcatalogue.oup.com/product/9780198703167.do" target="_blank">Lutz, Butz, and K.C. (2014)</a>. Access the executive summary <a href="http://www.iiasa.ac.at/publication/more_XO-14-031.php" target="_blank"><i class="fa fa-external-link"></i></a>.
+More detailed information on how to use this web application. Further reading on the data from the global population projections by age, sex and education is provided in <a href="https://ec.europa.eu/jrc/en/publication/demographic-and-human-capital-scenarios-21st-century-2018-assessment-201-countries">Lutz, Goujon, KC, Stonawski, and Stilianakis (Eds.) (2018)</a>.
