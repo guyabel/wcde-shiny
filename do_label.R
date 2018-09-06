@@ -1,5 +1,7 @@
 # setwd("E:/VID/project/wcde/")
 rm(list=ls())
+library(tidyverse)
+library(readxl)
 
 ##
 ##copy about
@@ -13,7 +15,8 @@ rm(list=ls())
 library("xlsx")
 #ind<-read.csv("C:/Users/gabel/Dropbox/wicdata/indicator.csv", stringsAsFactors=FALSE , sep="|")
 # ind<-read.xlsx("C:/Users/gabel/Dropbox/wicdata/indicator.xlsx", stringsAsFactors=FALSE , sheetIndex=1)
-ind <- read.xlsx("./meta/indicator.xlsx", stringsAsFactors=FALSE , sheetIndex=1)
+ind <- read.xlsx("./meta/indicator.xlsx", stringsAsFactors=FALSE , sheetIndex=1) %>%
+  tbl_df()
 
 ind0<-as.list(unique(ind$type))
 names(ind0)<-unique(ind$type1)
@@ -40,21 +43,29 @@ ind4<-c(ind1,ind2,ind3)
 ##
 ##geography
 ##
-geog <- read.xlsx("./meta/geography.xlsx", stringsAsFactors=FALSE , sheetIndex=1)
+geog <- read_excel("./meta/geography.xlsx") %>%
+  tbl_df() %>%
+  mutate(isono = as.integer(isono),
+         ggarea = ifelse(str_detect(string = ggarea, pattern = "[:digit:]"), 
+                         str_pad(string = ggarea, width = 3, pad = "0"),
+                         ggarea))
 
-ggnum<-geog$ggarea[grep("[0-9]",geog$ggarea)]
-ggnum<-format(as.numeric(ggnum),width = 3, format = "d", flag = "0") 
-geog$ggarea[grep("[0-9]",geog$ggarea)]<-gsub(" ", "0",ggnum)
-rm(ggnum)
+an1 <- geog %>%
+  filter(dim == "area") %>%
+  pull(name)
 
-an1<-subset(geog, dim=="area")$name 
-rn1<-subset(geog, dim=="region")$name 
-nn1<-subset(geog, dim=="country")$name
+rn1 <- geog %>%
+  filter(dim == "region") %>%
+  pull(name)
 
-nn2<-as.list(an1[-1])
-names(nn2)<-an1[-1]
+nn1 <- geog %>%
+  filter(dim == "country") %>%
+  pull(name)
+
+nn2 <- as.list(an1[-1])
+names(nn2) <- an1[-1]
 for(i in an1[-1]){
-  nn2[[i]]<-subset(geog, continent==i)$name
+  nn2[[i]] <- subset(geog, continent==i)$name
 }
 
 geo1<-c(list("World","Continent","Region"),nn2)
@@ -73,7 +84,7 @@ geo3[[3]]<-NULL
 nn3<-as.list(an1[-1])
 names(nn3)<-an1[-1]
 for(i in an1[-1]){
-  nn3[[i]]<-subset(geog, continent==i & is171==1)$name
+  nn3[[i]]<-subset(geog, continent==i & is185==1)$name
 }
 geo3<-c(list("World","Continent"),nn3)
 names(geo3)[2]<-geo3[2]
@@ -84,7 +95,8 @@ geo3[[2]]<-an1[-1]
 ##
 ##dimensions
 ##
-dimen <- read.xlsx("./meta/dimension.xlsx", stringsAsFactors=FALSE , sheetIndex=1)
+dimen <- read.xlsx("./meta/dimension.xlsx", stringsAsFactors=FALSE , sheetIndex=1) %>%
+  tbl_df()
 
 sn1<-as.list(subset(dimen, dim=="scenario")$code)
 names(sn1)<-subset(dimen, dim=="scenario")$name
@@ -102,7 +114,7 @@ age1<-as.list(subset(dimen, dim=="age")$code)
 names(age1) <- subset(dimen, dim=="age")$name 
 sex1<-as.list(0:2)
 names(sex1) <- subset(dimen, dim=="sex")$name 
-edu1<-as.list(0:7)
+edu1<-as.list(0:10)
 names(edu1) <- subset(dimen, dim=="edu")$name 
 
 edu2<-edu1
@@ -129,7 +141,8 @@ names(bage1) <- subset(dimen, dim=="bage")$name
 ##
 ##assumptions
 ##
-assump <- read.xlsx("./meta/assumption.xlsx", stringsAsFactors=FALSE , sheetIndex=1)
+assump <- read.xlsx("./meta/assumption.xlsx", stringsAsFactors=FALSE , sheetIndex=1) %>%
+  tbl_df()
 #assump$country<-NULL
 # assump<-assump %>% left_join(geog %>% select(name,isono))
 # assump<-assump %>% rename(country=name)
