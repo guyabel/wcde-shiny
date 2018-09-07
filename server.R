@@ -1,6 +1,5 @@
 library(reshape2)
-library(dplyr)
-library(tidyr)
+library(tidyverse)
 library(magrittr)
 library(saves)
 library(shiny)
