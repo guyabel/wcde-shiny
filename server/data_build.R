@@ -86,7 +86,8 @@ df_build <- reactive({
       df2 <- loads(file = paste0("df", i, "/",fn), 
                    variables = v, ultra.fast = TRUE, to.data.frame=TRUE) %>%
         tbl_df() %>%
-        mutate(scenario = sn) %>%
+        mutate(age = fct_inorder(age),
+               scenario = sn) %>%
         select(scenario, everything()) %>%
         filter(ageno %in% if(df1$age==1 | df1$bage==1 | df1$sage==1) input$age else 0,
                year %in% input$year,
@@ -104,8 +105,6 @@ df_build <- reactive({
         
         if(input$isono==FALSE)
           df2 <- df2 %>% select(-isono)
-        if(input$isono==TRUE)
-          df2 <- df2 %>% rename(ISOCode=isono)
       }
       
       # drop columns
@@ -138,6 +137,9 @@ df_build <- reactive({
         select(-ageno, -sexno, -eduno) %>%
         set_names(str_to_title(names(.))) 
       
+      if(input$isono==TRUE)
+        df2 <- df2 %>% rename(ISOCode=Isono)
+      
       df3 <- df3 %>% bind_rows(df2)
       incProgress(1/length(input$scenario))
     }
@@ -156,7 +158,9 @@ output$data_dl <- downloadHandler(
   filename = function() { "wicdf.csv" },
   content = function(filename) {
     sn0<-dimen %>% filter(dim=="scenario") %>% filter(code==input$scenario) %>% .[["name"]]
-    df2 <- ind %>% filter(fullname==input$data_ind) %>% select(fullname, definition) %>% 
+    df2 <- ind %>% 
+      filter(fullname==input$data_ind) %>% 
+      select(fullname, definition) %>% 
       mutate(scen=ifelse(length(input$scenario)==1, sn0,"Multiple Scenarios"))
     df2 <- rbind(t(df2)," ") 
     colnames(df2)<-""

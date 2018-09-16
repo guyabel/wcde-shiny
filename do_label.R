@@ -149,12 +149,14 @@ edu4[[3]] <- 3:4
 edu4[[4]] <- 5:6
 edu4[[5]] <- 7:10
 names(edu4) <- str_remove_all(string = names(edu4), pattern = "Upper ")
+edu4 <- c(edu1[1], edu4)
 
 edu4 <- edu4 %>% 
   map_df(~ data_frame(eduno = .x), .id = "edu_name")
 
 edu6 <- edu1[c(1:7)+1]
 edu6[[7]] <- 7:10
+edu6 <- c(edu1[1], edu6)
 
 edu6 <- edu6 %>% 
   map_df(~ data_frame(eduno = .x), .id = "edu_name")

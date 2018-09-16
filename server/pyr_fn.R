@@ -1,4 +1,4 @@
-gpyr<-function(df_pyr, pyear, pcol=iiasa6, w=400, h=500, legend="top", pmax=NULL, no.edu=FALSE, prop=FALSE){
+gpyr <- function(df_pyr, pyear, pcol=iiasa6, w=400, h=500, legend="top", pmax=NULL, no.edu=FALSE, prop=FALSE){
   #df_pyr<-df_pyr1;pyear=2015; pcol=iiasa4; w=400;pmax=NULL; h=550; prop=FALSE; no.edu=FALSE
   dfm <- df_pyr %>% 
     ungroup() %>%
@@ -28,12 +28,16 @@ gpyr<-function(df_pyr, pyear, pcol=iiasa6, w=400, h=500, legend="top", pmax=NULL
     dfm <- dfm %>% select(-2)
     dff <- dff %>% select(-2)
   }
-  dft <- df_pyr %>% filter(year==pyear, sexno==0, ageno==0, eduno==0)
+  dft <- df_pyr %>% 
+    filter(year==pyear, sexno==0, ageno==0, eduno==0)
   if(is.null(pmax))
-    pmax<-max(df_pyr %>% filter(year==pyear, ageno!=0, sexno!=0, eduno==0) %>% .[["pop"]], na.rm=TRUE)
+    pmax <- df_pyr %>% 
+    filter(year==pyear, ageno!=0, sexno!=0, eduno==0) %>% 
+    pull(pop) %>%
+    max(., na.rm=TRUE)
   if(prop==TRUE)
     pmax <- 1
-  bar1 <- gvisBarChart(data = dfm, xvar="age", yvar=names(dfm)[-1],
+  bar1 <- gvisBarChart(data = dfm, xvar = "age", yvar = names(dfm)[-1],
             options = list(bar = "{groupWidth:'90%'}", 
                            isStacked = if(prop == TRUE) 'percent' else TRUE, 
                            title = paste0("Total Population: ",round(dft$pop/1000,2)," m"), 
@@ -66,3 +70,63 @@ gpyr<-function(df_pyr, pyear, pcol=iiasa6, w=400, h=500, legend="top", pmax=NULL
 # plot(gpyr(df1, 2010, legend="only"))
 # plot(gg)
 # plot(bar2)
+
+
+pyr_data <- function(geo = input$pyr_geo1, 
+                     sn = input$pyr_sn1,
+                     edu = input$pyr_edu){
+  v <- c("year", "age", "ageno", "sex", "sexno", "edu", "eduno")
+  v <- geog %>%
+    filter(name %in% geo) %>%
+    pull(isono) %>%
+    c(v, .)
+  
+  df1 <- loads(file = paste0("df", sn, "/epop"), 
+               variables = v, ultra.fast = TRUE, to.data.frame=TRUE) %>%
+    tbl_df() %>%
+    mutate_if(is.factor, as.character) %>%
+    mutate(edu = fct_inorder(edu)) %>%
+    gather(key = isono, value = pop, -(1:7)) %>% 
+    mutate(scenario = sn)
+  
+  if(edu==4){
+    df2 <- df1 %>%
+      left_join(edu4, by = "eduno") %>%
+      mutate(edu = fct_inorder(edu_name)) %>%
+      select(-edu_name) %>%
+      mutate(eduno = ifelse(eduno == 0, 0, 1)) %>%
+      group_by(scenario, year, ageno, age, sex, sexno, edu, eduno) %>%
+      summarise(pop=sum(pop)) %>%
+      ungroup()
+  }
+  if(edu==6){
+    df2 <- df1 %>%
+      left_join(edu6, by = "eduno") %>%
+      mutate(edu = fct_inorder(edu_name)) %>%
+      select(-edu_name) %>%
+      mutate(eduno = ifelse(eduno == 0, 0, 1)) %>%
+      group_by(scenario, year, ageno, age, sex, sexno, edu, eduno) %>%
+      summarise(pop=sum(pop)) %>%
+      ungroup()
+  }
+  if(edu==10){
+    df2 <- df1 %>%
+      left_join(edu10, by = "eduno") %>%
+      mutate(edu = fct_inorder(edu_name)) %>%
+      select(-edu_name) %>%
+      mutate(eduno = ifelse(eduno == 0, 0, 1)) %>%
+      group_by(scenario, year, ageno, age, sex, sexno, edu, eduno) %>%
+      summarise(pop=sum(pop)) %>%
+      ungroup()
+  }
+  return(df2)
+}
+
+leg_data <- function(d){
+  d %>%
+    select(edu_name) %>%
+    distinct() %>%
+    mutate(edu_name = fct_inorder(edu_name), 
+           age = 0) %>%
+    spread(key = edu_name, value = age)
+}

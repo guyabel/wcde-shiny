@@ -8,7 +8,7 @@ library(dplyr)
 # load("label.RData")
 # source("server/pyr_fn.R")
 # df0<-loads(file="df1", variables=c("area", "isono", "year","period", "ageno","sexno","eduno","age","bage","sage","sex","edu"), ultra.fast = TRUE, to.data.frame=TRUE)
-# input<-NULL; input$pyr_sn1<-2; input$pyr_geo1="France"; input$pyr_year1=2015; input$pyr_sn2<-2; input$pyr_geo2="Germany"; input$pyr_edu=6; input$pyr_dl="png"; input$pyr_prop = FALSE
+# input<-NULL; input$pyr_sn1<-2; input$pyr_geo1="France"; input$pyr_year1=2020; input$pyr_sn2<-2; input$pyr_geo2="Germany"; input$pyr_edu=6; input$pyr_dl="png"; input$pyr_prop = FALSE
 
 # output$temp <- renderPrint({
 #   list(max1=max1,max2=max2)
@@ -35,136 +35,105 @@ output$pyr_warn2 <- renderUI({
   )
   df1 <- geog %>% 
     filter(name %in% input$pyr_geo2)
-  if(df1$dim=="country" & df1$is171==0)
+  if(df1$dim=="country" & df1$is185==0)
     tt <-"<FONT COLOR='gray'>Your have selected a country with limited base year data on educational attainment. Please consult the FAQ in the About page for more information<br><br>"
   HTML(tt)
 })
 
-pyr_max<-reactive({
-  max1<-NULL;max2<-NULL
-  if(input$pyr_x=="allyear"){
+pyr_max <- reactive({
+  max1 <- max2 <- NULL
+  if(input$pyr_x != "data"){
+    df_pyr1 <- pyr_data(geo = input$pyr_geo1, 
+                        sn = input$pyr_sn1,
+                        edu = input$pyr_edu)
+    
+    df_pyr2 <- pyr_data(geo = input$pyr_geo1, 
+                        sn = input$pyr_sn1,
+                        edu = input$pyr_edu)
+
     max1 <- df_pyr1 %>% 
       filter(ageno!=0, sexno!=0, eduno==0, 
-             scenario==input$pyr_sn1, 
-             area==input$pyr_geo1) %>% 
+             scenario==input$pyr_sn1) %>% 
       pull(pop) %>%
       max(., na.rm = TRUE)
+    
     max2 <- df_pyr1 %>% 
       filter(ageno!=0, sexno!=0, eduno==0, 
-             scenario==input$pyr_sn2, 
-             area==input$pyr_geo2) %>% 
+             scenario==input$pyr_sn2) %>% 
       pull(pop) %>%
       max(., na.rm = TRUE)
   }
-  if(input$pyr_x=="allarea"){
-    df3 <- bind_rows(df_pyr1, df_pyr2)
-    max1 <- max2 <- df_pyr1 %>% 
-      filter(ageno!=0, sexno!=0, eduno==0, 
-             scenario %in% c(input$pyr_sn1,input$pyr_sn2),
-             area %in% c(input$pyr_geo1, input$pyr_geo2)) %>% 
-      pull(pop) %>%
-      max(., na.rm = TRUE)
+  if(input$pyr_x == "allarea"){
+    max1 <- max2 <- max(max1, max2)
   }
   return(list(max1 = max1, max2 = max2))
 })
 
+
+
 output$pyr1<- renderGvis({
-  gg<-NULL
+  gg <- df_pyr1 <- noedu_pyr1 <- NULL
   validate(
     need(input$pyr_geo1 != "", "Please select Area"),
     need(input$pyr_sn1 != "", "Please select Scenario")
   )
   withProgress(message = 'Loading Left Pyramid', value = 0, {
-    # columns of data to load
-    v <- c("year", "age", "ageno", "sex", "sexno", "edu", "eduno")
-    v <- geog %>%
-      filter(name %in% input$pyr_geo1) %>%
-      pull(isono) %>%
-      c(v, .)
-    
-    df1 <- loads(file = paste0("df", input$pyr_sn1, "/epop"), 
-                 variables = v, ultra.fast = TRUE, to.data.frame=TRUE) %>%
-      tbl_df() %>%
-      mutate_if(is.factor, as.character) %>%
-      mutate(edu = fct_inorder(edu))
     incProgress(1/4)
-    df_pyr1 <- df1 %>% 
-      mutate(scenario=input$pyr_sn1) %>% 
-      select(scenario, everything()) %>%
-      set_names(nm = c(names(.)[-ncol(.)], "pop"))
-    incProgress(2/4)
-    if(input$pyr_edu==4){
-      df_pyr1 <- df_pyr1 %>%
-        left_join(edu4) %>%
-        mutate(edu = fct_inorder(edu_name)) %>%
-        select(-edu_name) %>%
-        group_by(scenario, year, ageno, age, sex, sexno, edu) %>%
-        summarise(pop=sum(pop)) %>%
-        ungroup()
-      incProgress(3/4)
-    }
-    if(input$pyr_edu==6){
-      df_pyr1 <- df_pyr1 %>%
-        left_join(edu6) %>%
-        mutate(edu = fct_inorder(edu_name)) %>%
-        select(-edu_name) %>%
-        group_by(scenario, year, ageno, age, sex, sexno, edu) %>%
-        summarise(pop=sum(pop)) %>%
-        ungroup()
-      incProgress(3/4)
-    }
+    df_pyr1 <- pyr_data(geo = input$pyr_geo1, 
+                        sn = input$pyr_sn1,
+                        edu = input$pyr_edu)
     
-    df_pyr1 <<- df_pyr1
-    noedu_pyr1 <<- geog %>% filter(name==input$pyr_geo1) %>% .[["is171"]] %in% 0 & input$pyr_year1<2015
+    incProgress(2/4)
+    noedu_pyr1 <- geog %>% 
+      filter(name==input$pyr_geo1) %>% 
+      pull(is185) %in% 0 & input$pyr_year1<2015
     if(input$pyr_geo1=="Israel" & input$pyr_year1<2015)
       noedu_pyr1 <<- TRUE
+    max1 <- pyr_max()$max1
     
-    if(noedu_pyr1==FALSE)
-      gg <- gpyr(df_pyr = df_pyr1, 
-                 pyear = input$pyr_year1, 
-                 pcol = get(paste0("iiasa",input$pyr_edu)), 
-                 w = 295, legend="none", 
-                 # pmax = pyr_max()$max1, 
-                 pmax = max(df_pyr1 %>% 
-                              filter(ageno != 0, sexno != 0) %>%
-                              pull(pop)),
-                 prop = input$pyr_prop)
-    plot(gg)
-    if(noedu_pyr1==TRUE)
-      gg<-gpyr(df_pyr1, pyear=input$pyr_year1, pcol="['darkgrey']", w=295, legend="none", pmax=pyr_max()$max1, no.edu = TRUE, prop = input$pyr_prop)
+    incProgress(3/4)
+    gg <- gpyr(df_pyr = df_pyr1, 
+               pyear = input$pyr_year1, 
+               pcol = ifelse(noedu_pyr1, "['darkgrey']", get(paste0("iiasa",input$pyr_edu))), 
+               w = 295, legend="none", 
+               pmax = max1,
+               no.edu = noedu_pyr1, 
+               prop = input$pyr_prop)
+    # plot(gg)
     incProgress(4/4)
   })
   return(gg)
 })
 
 output$pyr2<- renderGvis({
-  gg<-NULL
+  gg <- df_pyr1 <- noedu_pyr1 <- NULL
   validate(
-    need(input$pyr_geo2 != "", "Please select an Area"),
-    need(input$pyr_sn2 != "", "Please select a Scenario")
+    need(input$pyr_geo2 != "", "Please select Area"),
+    need(input$pyr_sn2 != "", "Please select Scenario")
   )
   withProgress(message = 'Loading Right Pyramid', value = 0, {
-    df2<-loads(file=paste0("df",input$pyr_sn2), variables="epop", ultra.fast = TRUE, to.data.frame=TRUE) %>% rename(pop=epop)
     incProgress(1/4)
-    df_pyr2 <- cbind(df0,df2) %>% filter(area==input$pyr_geo2) %>% mutate(scenario=input$pyr_sn2)
+    df_pyr2 <- pyr_data(geo = input$pyr_geo2, 
+                        sn = input$pyr_sn2,
+                        edu = input$pyr_edu)
+    
     incProgress(2/4)
-    if(input$pyr_edu==4){
-      levels(df_pyr2$edu)<-names(edu2)
-      df_pyr2 <- df_pyr2 %>% mutate(eduno=ifelse(eduno==3, 4, eduno)) %>% mutate(eduno=ifelse(eduno==5, 6, eduno))
-      df_pyr2 <- df_pyr2 %>% group_by(area, isono, year, ageno, age, sex, sexno, edu, eduno, scenario) %>% summarise(pop=sum(pop))
-      incProgress(3/4)
-    }
+    noedu_pyr2 <- geog %>% 
+      filter(name==input$pyr_geo2) %>% 
+      pull(is185) %in% 0 & input$pyr_year2 < 2015
+    if(input$pyr_geo2 == "Israel" & input$pyr_year2 < 2015)
+      noedu_pyr2 <- TRUE
+    max2 <- pyr_max()$max2
     
-    df_pyr2 <<- df_pyr2
-    noedu_pyr2 <<- geog %>% filter(name==input$pyr_geo2) %>% .[["is171"]] %in% 0 & input$pyr_year2<2015
-    if(input$pyr_geo2=="Israel" & input$pyr_year2<2015)
-      noedu_pyr2 <<- TRUE
-    
-    if(noedu_pyr2==FALSE)
-      gg<-gpyr(df_pyr2, pyear=input$pyr_year2, pcol=get(paste0("iiasa",input$pyr_edu)), w=295, legend="none", pmax=pyr_max()$max2, prop = input$pyr_prop)
-    if(noedu_pyr2==TRUE)
-      gg<-gpyr(df_pyr2, pyear=input$pyr_year2, pcol="['darkgrey']", w=295, legend="none", pmax=pyr_max()$max2, no.edu = TRUE, prop = input$pyr_prop)
-    #gg<-gpyr(df_pyr2, pyear=input$pyr_year2, pcol=get(paste0("iiasa",input$pyr_edu)), w=295, legend="none", pmax=pyr_max()$max2)
+    incProgress(3/4)
+    gg <- gpyr(df_pyr = df_pyr2, 
+               pyear = input$pyr_year2, 
+               pcol = ifelse(noedu_pyr2, "['darkgrey']", get(paste0("iiasa",input$pyr_edu))), 
+               w = 295, legend="none", 
+               pmax = max2,
+               no.edu = noedu_pyr2, 
+               prop = input$pyr_prop)
+    # plot(gg)
     incProgress(4/4)
   })
   return(gg)
@@ -172,20 +141,28 @@ output$pyr2<- renderGvis({
 
 
 output$pyr_leg<- renderGvis({
-  #want to only react to tick box
-  df1 <- df0 %>% filter(year==2015, sexno==0, ageno==0, eduno!=0, isono==4) %>% select(edu,age,sexno) %>% 
-    dcast(age~edu, value.var="sexno")
-  w<-900
   if(input$pyr_edu==4){
-    df1 <- df0 %>% filter(year==2015, sexno==0, ageno==0, eduno %in% c(1,2,4,6,7), isono==4) %>% select(edu,age,sexno) 
-    levels(df1$edu)<-names(edu2)
-    df1 <- df1 %>% dcast(age~edu, value.var="sexno")
-    w<-600
+    leg <- edu4 %>%
+      leg_data()
+    w <- 600
   }
-  gvisBarChart(df1, xvar="age", yvar=names(df1)[-1], 
-               options=list(colors=get(paste0("iiasa",input$pyr_edu)), height=30, width=w, legend="{position:'top', textStyle: {fontSize: 12}}",
-                            chartArea="{right:'0%',left:'0%',width:'100%',top:'100%',height:'0%'}"))
+  if(input$pyr_edu==6){
+    leg <- edu6 %>%
+      leg_data()
+    w <- 900
+  }
+  if(input$pyr_edu==10){
+    leg <- edu10 %>%
+      leg_data()
+    w <- 900
+  }
+  g <- gvisBarChart(leg, xvar = "Total", yvar = names(leg)[-1], 
+               options = list(colors = get(paste0("iiasa", input$pyr_edu)), 
+                              height = 30, width = w, 
+                              legend="{position:'top', textStyle: {fontSize: 12}}",
+                              chartArea="{right:'0%',left:'0%',width:'100%',top:'100%',height:'0%'}"))
 })
+
 
 output$pyr1_dl <- downloadHandler(
   filename = function() { 
@@ -202,10 +179,25 @@ output$pyr1_dl <- downloadHandler(
     cat(ifelse(geog %>% filter(name %in% input$pyr_geo1) %>% .[["is171"]] %in% 0, paste0(tt,"<br>\n<br>\n"), ""), file = fh)
     close(fh)
     
-    if(noedu_pyr1==FALSE)
-      gg<-gpyr(df_pyr1, pyear=input$pyr_year1, pcol=get(paste0("iiasa",input$pyr_edu)), w=500, h=700, legend="top", pmax=pyr_max()$max1, prop = input$pyr_prop)
-    if(noedu_pyr1==TRUE)
-      gg<-gpyr(df_pyr1, pyear=input$pyr_year1, pcol="['darkgrey']", w=500, h=700, legend="top", legend="none", pmax=pyr_max()$max1, no.edu = TRUE, prop = input$pyr_prop)
+    df_pyr1 <- pyr_data(geo = input$pyr_geo1, 
+                        sn = input$pyr_sn1,
+                        edu = input$pyr_edu)
+    
+    noedu_pyr1 <- geog %>% 
+      filter(name==input$pyr_geo1) %>% 
+      pull(is185) %in% 0 & input$pyr_year1<2015
+    if(input$pyr_geo1=="Israel" & input$pyr_year1<2015)
+      noedu_pyr1 <<- TRUE
+    max1 <- pyr_max()$max1
+    
+    gg <- gpyr(df_pyr = df_pyr1, 
+               pyear = input$pyr_year1, 
+               pcol = ifelse(noedu_pyr1, "['darkgrey']", get(paste0("iiasa",input$pyr_edu))), 
+               w = 295, legend="none", 
+               pmax = max1,
+               no.edu = noedu_pyr1, 
+               prop = input$pyr_prop)
+    
     gg$html$caption<-readLines("head.html")
     print(gg, file="gg.html")
     
@@ -235,14 +227,32 @@ output$pyr2_dl <- downloadHandler(
     cat(paste0("Population (000's) Pyramid","<br>\n"), file = fh)
     cat(paste0(input$pyr_geo2, "<br>\n"), file = fh)
     cat(paste0(input$pyr_year2, "<br>"), file = fh)
-    cat(paste0(dimen %>% filter(dim=="scenario", code==input$pyr_sn2) %>% .[["name"]], "<br>\n<br>\n"), file = fh)
-    cat(ifelse(geog %>% filter(name %in% input$pyr_geo2) %>% .[["is171"]] %in% 0, paste0(tt,"<br>\n<br>\n"), ""), file = fh)
+    cat(paste0(dimen %>% 
+                 filter(dim=="scenario", code==input$pyr_sn2) %>% 
+                 pull(name), "<br>\n<br>\n"), file = fh)
+    cat(ifelse(geog %>% 
+                 filter(name %in% input$pyr_geo2) %>% 
+                 pull(is185) %in% 0, paste0(tt,"<br>\n<br>\n"), ""), file = fh)
     close(fh)
     
-    if(noedu_pyr2==FALSE)
-      gg<-gpyr(df_pyr2, pyear=input$pyr_year2, pcol=get(paste0("iiasa",input$pyr_edu)), w=500, h=700, legend="top", pmax=pyr_max()$max2, prop = input$pyr_prop)
-    if(noedu_pyr2==TRUE)
-      gg<-gpyr(df_pyr2, pyear=input$pyr_year2, pcol="['darkgrey']",  w=500, h=700, legend="top", pmax=pyr_max()$max2, no.edu = TRUE, prop = input$pyr_prop)
+    df_pyr2 <- pyr_data(geo = input$pyr_geo2, 
+                        sn = input$pyr_sn2,
+                        edu = input$pyr_edu)
+    
+    noedu_pyr2 <- geog %>% 
+      filter(name==input$pyr_geo2) %>% 
+      pull(is185) %in% 0 & input$pyr_year2<2015
+    if(input$pyr_geo2=="Israel" & input$pyr_year2<2015)
+      noedu_pyr2 <<- TRUE
+    max2 <- pyr_max()$max2
+    
+    gg <- gpyr(df_pyr = df_pyr2, 
+               pyear = input$pyr_year2, 
+               pcol = ifelse(noedu_pyr2, "['darkgrey']", get(paste0("iiasa",input$pyr_edu))), 
+               w = 295, legend="none", 
+               pmax = max2,
+               no.edu = noedu_pyr2, 
+               prop = input$pyr_prop)
     
     gg$html$caption<-readLines("head.html")
     print(gg, file="gg.html")
