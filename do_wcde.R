@@ -1,13 +1,8 @@
 #install.packages('shiny')
 
 #setwd("C:/Users/gabel/Documents/")
-<<<<<<< HEAD
-#setwd("C:/Users/gabel/Documents/")
-#setwd("C:/Users/Guy/Documents/Github/")
-=======
 #setwd("C:/Users/Guy/Documents/Github")
 # setwd("E:/VID/project/")
->>>>>>> 0a92129fb9dfabe3a39132b81699a9391bbebc68
 library(shiny)
 runApp(launch.browser = TRUE)
 
