@@ -1,15 +1,13 @@
 #install.packages('shiny')
 
 #setwd("C:/Users/gabel/Documents/")
-setwd("S:/VID/project/")
+#setwd("C:/Users/gabel/Documents/")
+#setwd("C:/Users/Guy/Documents/Github/")
 library(shiny)
 runApp("./wcde", launch.browser = TRUE)
 
 
 #runApp("./shiny/wcde")
-# install.packages("wppExplorer")
-# library(wppExplorer)
-# wpp.explore(2012)
 #shiny::runGitHub('wicpyr', 'gjabel')
 #setwd("./shiny/wcde")
 #setwd("C:/Users/gabel/Documents/")
