@@ -8,7 +8,7 @@ library(dplyr)
 # load("label.RData")
 # source("server/pyr_fn.R")
 # df0<-loads(file="df1", variables=c("area", "isono", "year","period", "ageno","sexno","eduno","age","bage","sage","sex","edu"), ultra.fast = TRUE, to.data.frame=TRUE)
-# input<-NULL; input$pyr_sn1<-2; input$pyr_geo1="France"; input$pyr_year1=2010; input$pyr_sn2<-2; input$pyr_geo2="Germany"; input$pyr_edu=6; input$pyr_dl="png"
+# input<-NULL; input$pyr_sn1<-2; input$pyr_geo1="France"; input$pyr_year1=2015; input$pyr_sn2<-2; input$pyr_geo2="Germany"; input$pyr_edu=6; input$pyr_dl="png"; input$pyr_prop = FALSE
 
 # output$temp <- renderPrint({
 #   list(max1=max1,max2=max2)
@@ -21,8 +21,9 @@ output$pyr_warn1 <- renderUI({
     need(input$pyr_geo1 != "", " "),
     need(input$pyr_sn1 != "", " ")
   )
-  df1 <- geog %>% filter(name %in% input$pyr_geo1)
-  if(df1$dim=="country" & df1$is171==0)
+  df1 <- geog %>% 
+    filter(name %in% input$pyr_geo1)
+  if(df1$dim=="country" & df1$is185==0)
     tt <-"<FONT COLOR='gray'>Your have selected a country with limited base year data on educational attainment. Please consult the FAQ in the About page for more information<br><br>"
   HTML(tt)
 })
@@ -32,7 +33,8 @@ output$pyr_warn2 <- renderUI({
     need(input$pyr_geo2 != "", " "),
     need(input$pyr_sn2 != "", " ")
   )
-  df1 <- geog %>% filter(name %in% input$pyr_geo2)
+  df1 <- geog %>% 
+    filter(name %in% input$pyr_geo2)
   if(df1$dim=="country" & df1$is171==0)
     tt <-"<FONT COLOR='gray'>Your have selected a country with limited base year data on educational attainment. Please consult the FAQ in the About page for more information<br><br>"
   HTML(tt)
@@ -41,16 +43,29 @@ output$pyr_warn2 <- renderUI({
 pyr_max<-reactive({
   max1<-NULL;max2<-NULL
   if(input$pyr_x=="allyear"){
-    max1<-max(df_pyr1 %>% filter(ageno!=0, sexno!=0, eduno==0, scenario==input$pyr_sn1, area==input$pyr_geo1) %>% .[["pop"]], na.rm=TRUE)
-    max2<-max(df_pyr2 %>% filter(ageno!=0, sexno!=0, eduno==0, scenario==input$pyr_sn2, area==input$pyr_geo2) %>% .[["pop"]], na.rm=TRUE)
+    max1 <- df_pyr1 %>% 
+      filter(ageno!=0, sexno!=0, eduno==0, 
+             scenario==input$pyr_sn1, 
+             area==input$pyr_geo1) %>% 
+      pull(pop) %>%
+      max(., na.rm = TRUE)
+    max2 <- df_pyr1 %>% 
+      filter(ageno!=0, sexno!=0, eduno==0, 
+             scenario==input$pyr_sn2, 
+             area==input$pyr_geo2) %>% 
+      pull(pop) %>%
+      max(., na.rm = TRUE)
   }
   if(input$pyr_x=="allarea"){
-    df3 <- bind_rows(df_pyr1,df_pyr2)
-    max1<-max(df3 %>% filter(ageno!=0, sexno!=0, eduno==0, scenario %in% c(input$pyr_sn1,input$pyr_sn2),
-                             area %in% c(input$pyr_geo1,input$pyr_geo2)) %>% .[["pop"]], na.rm=TRUE)
-    max2<-max1
+    df3 <- bind_rows(df_pyr1, df_pyr2)
+    max1 <- max2 <- df_pyr1 %>% 
+      filter(ageno!=0, sexno!=0, eduno==0, 
+             scenario %in% c(input$pyr_sn1,input$pyr_sn2),
+             area %in% c(input$pyr_geo1, input$pyr_geo2)) %>% 
+      pull(pop) %>%
+      max(., na.rm = TRUE)
   }
-  return(list(max1=max1,max2=max2))
+  return(list(max1 = max1, max2 = max2))
 })
 
 output$pyr1<- renderGvis({
@@ -60,24 +75,61 @@ output$pyr1<- renderGvis({
     need(input$pyr_sn1 != "", "Please select Scenario")
   )
   withProgress(message = 'Loading Left Pyramid', value = 0, {
-    df1<-loads(file=paste0("df",input$pyr_sn1), variables="epop", ultra.fast = TRUE, to.data.frame=TRUE)
+    # columns of data to load
+    v <- c("year", "age", "ageno", "sex", "sexno", "edu", "eduno")
+    v <- geog %>%
+      filter(name %in% input$pyr_geo1) %>%
+      pull(isono) %>%
+      c(v, .)
+    
+    df1 <- loads(file = paste0("df", input$pyr_sn1, "/epop"), 
+                 variables = v, ultra.fast = TRUE, to.data.frame=TRUE) %>%
+      tbl_df() %>%
+      mutate_if(is.factor, as.character) %>%
+      mutate(edu = fct_inorder(edu))
     incProgress(1/4)
-    df_pyr1 <- cbind(df0,df1) %>% filter(area==input$pyr_geo1) %>% mutate(scenario=input$pyr_sn1) %>% rename(pop=epop)
+    df_pyr1 <- df1 %>% 
+      mutate(scenario=input$pyr_sn1) %>% 
+      select(scenario, everything()) %>%
+      set_names(nm = c(names(.)[-ncol(.)], "pop"))
     incProgress(2/4)
     if(input$pyr_edu==4){
-      levels(df_pyr1$edu)<-names(edu2)
-      df_pyr1 <- df_pyr1 %>% mutate(eduno=ifelse(eduno==3, 4, eduno)) %>% mutate(eduno=ifelse(eduno==5, 6, eduno))
-      df_pyr1 <- df_pyr1 %>% group_by(area, isono, year, ageno, age, sex, sexno, edu, eduno, scenario) %>% summarise(pop=sum(pop))
+      df_pyr1 <- df_pyr1 %>%
+        left_join(edu4) %>%
+        mutate(edu = fct_inorder(edu_name)) %>%
+        select(-edu_name) %>%
+        group_by(scenario, year, ageno, age, sex, sexno, edu) %>%
+        summarise(pop=sum(pop)) %>%
+        ungroup()
+      incProgress(3/4)
+    }
+    if(input$pyr_edu==6){
+      df_pyr1 <- df_pyr1 %>%
+        left_join(edu6) %>%
+        mutate(edu = fct_inorder(edu_name)) %>%
+        select(-edu_name) %>%
+        group_by(scenario, year, ageno, age, sex, sexno, edu) %>%
+        summarise(pop=sum(pop)) %>%
+        ungroup()
       incProgress(3/4)
     }
     
     df_pyr1 <<- df_pyr1
-    noedu_pyr1 <<- geog %>% filter(name==input$pyr_geo1) %>% .[["is171"]] %in% 0 & input$pyr_year1<2010
-    if(input$pyr_geo1=="Israel" & input$pyr_year1<2010)
+    noedu_pyr1 <<- geog %>% filter(name==input$pyr_geo1) %>% .[["is171"]] %in% 0 & input$pyr_year1<2015
+    if(input$pyr_geo1=="Israel" & input$pyr_year1<2015)
       noedu_pyr1 <<- TRUE
     
     if(noedu_pyr1==FALSE)
-      gg<-gpyr(df_pyr1, pyear=input$pyr_year1, pcol=get(paste0("iiasa",input$pyr_edu)), w=295, legend="none", pmax=pyr_max()$max1, prop = input$pyr_prop)
+      gg <- gpyr(df_pyr = df_pyr1, 
+                 pyear = input$pyr_year1, 
+                 pcol = get(paste0("iiasa",input$pyr_edu)), 
+                 w = 295, legend="none", 
+                 # pmax = pyr_max()$max1, 
+                 pmax = max(df_pyr1 %>% 
+                              filter(ageno != 0, sexno != 0) %>%
+                              pull(pop)),
+                 prop = input$pyr_prop)
+    plot(gg)
     if(noedu_pyr1==TRUE)
       gg<-gpyr(df_pyr1, pyear=input$pyr_year1, pcol="['darkgrey']", w=295, legend="none", pmax=pyr_max()$max1, no.edu = TRUE, prop = input$pyr_prop)
     incProgress(4/4)
@@ -104,8 +156,8 @@ output$pyr2<- renderGvis({
     }
     
     df_pyr2 <<- df_pyr2
-    noedu_pyr2 <<- geog %>% filter(name==input$pyr_geo2) %>% .[["is171"]] %in% 0 & input$pyr_year2<2010
-    if(input$pyr_geo2=="Israel" & input$pyr_year2<2010)
+    noedu_pyr2 <<- geog %>% filter(name==input$pyr_geo2) %>% .[["is171"]] %in% 0 & input$pyr_year2<2015
+    if(input$pyr_geo2=="Israel" & input$pyr_year2<2015)
       noedu_pyr2 <<- TRUE
     
     if(noedu_pyr2==FALSE)
@@ -121,11 +173,11 @@ output$pyr2<- renderGvis({
 
 output$pyr_leg<- renderGvis({
   #want to only react to tick box
-  df1 <- df0 %>% filter(year==2010, sexno==0, ageno==0, eduno!=0, isono==4) %>% select(edu,age,sexno) %>% 
+  df1 <- df0 %>% filter(year==2015, sexno==0, ageno==0, eduno!=0, isono==4) %>% select(edu,age,sexno) %>% 
     dcast(age~edu, value.var="sexno")
   w<-900
   if(input$pyr_edu==4){
-    df1 <- df0 %>% filter(year==2010, sexno==0, ageno==0, eduno %in% c(1,2,4,6,7), isono==4) %>% select(edu,age,sexno) 
+    df1 <- df0 %>% filter(year==2015, sexno==0, ageno==0, eduno %in% c(1,2,4,6,7), isono==4) %>% select(edu,age,sexno) 
     levels(df1$edu)<-names(edu2)
     df1 <- df1 %>% dcast(age~edu, value.var="sexno")
     w<-600

@@ -5,7 +5,7 @@
 #setwd("C:/Users/gabel/Documents/shiny/wic2")
 #df0<-loads(file="df1", variables=c("area", "isono", "year","period", "ageno","sexno","eduno","age","bage","sage","sex","edu"), ultra.fast = TRUE, to.data.frame=TRUE)
 #source("./server/sac_fn.R")
-#input<-NULL; input$sac_sn1=2; input$sac_geo1="France"; input$sac_edu=6; input$sac_year1=c(1970,2100)
+#input<-NULL; input$sac_sn1=2; input$sac_geo1="France"; input$sac_edu=6; input$sac_year1=c(1950,2100)
 
 
 output$sac_warn1 <- renderUI({
@@ -98,11 +98,11 @@ output$sac2<- renderGvis({
 
 output$sac_leg<- renderGvis({
   #want to only react to tick box
-  df1 <- df0 %>% filter(year==2010, sexno==0, ageno==0, eduno!=0, isono==4) %>% select(edu,age,sexno) %>% 
+  df1 <- df0 %>% filter(year==2015, sexno==0, ageno==0, eduno!=0, isono==4) %>% select(edu,age,sexno) %>% 
     dcast(age~edu, value.var="sexno")
   w<-900
   if(input$sac_edu==4){
-    df1 <- df0 %>% filter(year==2010, sexno==0, ageno==0, eduno %in% c(1,2,4,6,7), isono==4) %>% select(edu,age,sexno) 
+    df1 <- df0 %>% filter(year==2015, sexno==0, ageno==0, eduno %in% c(1,2,4,6,7), isono==4) %>% select(edu,age,sexno) 
     levels(df1$edu)<-names(edu2)
     df1 <- df1 %>% dcast(age~edu, value.var="sexno")
     w<-600

@@ -21,10 +21,13 @@ output$nat0 <- renderUI({
   n1<-NULL
   if(input$regnat==TRUE){
     if(length(input$reg)>0){
-      if(input$reg!="World")
-        n1<-c(geog$name[geog$region %in% input$reg],geog$name[geog$continent %in% input$reg])
-      if(input$reg=="World")
-        n1<-nn1
+      if(all(input$reg !="World"))
+        n1 <- geog %>%
+          filter(region %in% input$reg | continent %in% input$reg) %>%
+          pull(name)
+        # n1<-c(geog$name[geog$region %in% input$reg],geog$name[geog$continent %in% input$reg])
+      if(any(input$reg == "World"))
+        n1 <- nn1
     }
   }
   if(!is.null(n1))
@@ -148,12 +151,8 @@ output$year0 <- renderUI({
       if(ind %>% filter(fullname %in% input$data_ind) %>% .[["name"]]=="asfr")
         year.c<-yn4[-(1:5)]
       year.s<-yn2[1]
-      
-        
       if(input$allyear==TRUE)
         year.s<-year.c
-      
-      
     }
     selectizeInput("year",year.l, choices = as.list(year.c), selected=year.s, multiple=TRUE, width="100%", options = list(placeholder = year.p))
   }

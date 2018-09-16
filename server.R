@@ -1,12 +1,12 @@
 library(reshape2)
-library(dplyr)
+library(tidyverse)
 library(magrittr)
 library(saves)
 library(shiny)
 library(googleVis)
 
 #setwd("./shiny/wic2")
-df0<-loads(file="df1", variables=c("area", "isono", "year","period", "ageno","sexno","eduno","age","bage","sage","sex","edu"), ultra.fast = TRUE, to.data.frame=TRUE)
+# df0 <- loads(file = "df1/pop", variables = c("year", "ageno", "sexno", "eduno"), ultra.fast = TRUE, to.data.frame=TRUE)
 
 shinyServer(function(input, output, session) {
   for (file in list.files("server")) {

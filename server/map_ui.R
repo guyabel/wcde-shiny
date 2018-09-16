@@ -67,7 +67,7 @@ output$map_edu0 <- renderUI({
       edu.c<-edu1
       edu.p<-'Type to select'
     }
-    if(ind %>% filter(fullname %in% input$map_ind) %>% .[["edu2"]]==1){
+    if(ind %>% filter(fullname %in% input$map_ind) %>% .[["name"]] %in% c("ggapedu15", "ggapedu25")){
       edu.s<-edu1[3]
       edu.c<-edu1[-(1:2)]
       if(ind %>% filter(fullname %in% input$map_ind) %>% .[["name"]]=="etfr")
@@ -90,11 +90,11 @@ output$map_sn0 <- renderUI({
 })
 
 output$map_year0 <- renderUI({
-  year.min<-2010
+  year.min<-2015
   year.l<-"Time"
   if(length(input$map_ind)>0){
     if(ind %>% filter(fullname %in% input$map_ind) %>% .[["past"]]==1){
-      year.min<-1970
+      year.min<-1950
     }
     if(ind %>% filter(fullname %in% input$map_ind) %>% .[["period"]]==1){
       year.l<-"Beginning of 5-Year Period"
@@ -103,5 +103,5 @@ output$map_year0 <- renderUI({
       year.min<-1995
     }
   }
-  sliderInput("map_year", year.l, min = year.min, max = 2100, value = c(2010), step= 5, sep="", ticks= FALSE, width="100%")
+  sliderInput("map_year", year.l, min = year.min, max = 2100, value = c(2015), step= 5, sep="", ticks= FALSE, width="100%")
 })
