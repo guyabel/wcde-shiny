@@ -1,7 +1,7 @@
-output$temp <- renderPrint({
-  #as.list(input)
-  map_build()
-})
+# output$temp <- renderPrint({
+#   #as.list(input)
+#   map_build()
+# })
 
 
 map_geo<-reactive({
@@ -18,8 +18,7 @@ map_geo<-reactive({
   return(geo)
 })
 
-#input=NULL;input$map_year=2010; input$map_ind=ind[[1]][1]; input$map_proj="mercator";input$map_area="Asia"; input$map_sn=1; 
-#input$map_age="";input$map_sex=1;input$map_edu=""
+#input=NULL;input$map_year=2015; input$map_ind=ind[[1]][1]; input$map_proj="mercator";input$map_area="Latin America and the Caribbean"; input$map_sn=1; input$map_age="";input$map_sex=1;input$map_edu=""
 map_build <- reactive({
   validate( 
     need(input$map_ind != "", "Please select Indicator"), 
@@ -29,26 +28,52 @@ map_build <- reactive({
   df1<-NULL;df2<-NULL; gg<-NULL
   withProgress(message = 'Loading Map', value = 0, {
     if(length(input$map_sn)>0){
-      fn <- ind %>% filter(fullname==input$map_ind)  %>% .[["name"]]
-      cn <- ind %>% filter(fullname==input$map_ind)  %>% .[["cname"]]
+      fn <- ind %>% 
+        filter(fullname == input$map_ind) %>%
+        pull(name)
+      
+      cn <- ind %>% 
+        filter(fullname == input$map_ind) %>%
+        pull(cname)
+      
+      v <- c("year", "ageno", "sexno", "eduno")
+      if(input$map_area != "World"){
+        v <- geog %>%
+          filter(continent == input$map_area | region == input$map_area) %>%
+          pull(isono) %>%
+          c(v, .)
+      }
+      if(input$map_area == "World"){
+        v <- geog %>%
+          filter(dim == "country") %>%
+          pull(isono) %>%
+          c(v, .)
+      }
+      
+      
       incProgress(1/4)
-      df1<-loads(file=paste0("df",input$map_sn), variables=fn, ultra.fast = TRUE, to.data.frame=TRUE)
+      df1 <- loads(file = paste0("df",input$map_sn, "/", fn, "/"), 
+                   variables = v, ultra.fast = TRUE, to.data.frame=TRUE) %>%
+        tbl_df()
       incProgress(2/4)
-      df2 <- cbind(df0,df1) %>% 
-        filter(area %in% map_geo(), #geo,#
-               year==input$map_year,
-               ageno==if(nchar(input$map_age)==0) 0 else input$map_age,
-               sexno==if(nchar(input$map_sex)==0) 0 else input$map_sex,
-               eduno==if(nchar(input$map_edu)==0) 0 else input$map_edu) %>%
+      df2 <- df1 %>% 
+        gather(key = isono, value = !!cn, -(1:4), convert = TRUE) %>%
+        filter(year==input$map_year,
+               ageno == if(nchar(input$map_age)==0) 0 else input$map_age,
+               sexno == if(nchar(input$map_sex)==0) 0 else input$map_sex,
+               eduno == if(nchar(input$map_edu)==0) 0 else input$map_edu) %>%
         left_join(geog, by="isono") 
-      names(df2)[names(df2)==fn]<-cn
       incProgress(3/4)
-      gg<-gvisGeoChart(df2, locationvar="ggarea", colorvar=cn, hovervar="area", chartid="map",
-                       options=list(width=1100, height=800, 
-                                    dataMode="regions", 
-                                    region=geog %>% filter(name==input$map_area) %>% .[["ggarea"]],
-                                    projection=input$map_proj,
-                                    colorAxis="{colors:['lightgrey', 'dodgerblue']}"))
+      gg <- gvisGeoChart(data = df2, locationvar = "ggarea", colorvar = cn, 
+                         hovervar = "name", chartid="map",
+                         options = list(
+                           width = 1100, height = 800, 
+                           projection = input$map_proj, dataMode = "regions", 
+                           region = geog %>% 
+                             filter(name == input$map_area) %>% 
+                             pull(ggarea),
+                           colorAxis="{colors:['lightgrey', 'dodgerblue']}")
+                         )
       incProgress(4/4)
     }
   })
@@ -80,7 +105,7 @@ output$map1_dl <- downloadHandler(
     cat("<br>\n", file = fh)
     close(fh)
 
-    gg<-map_build()
+    gg <- map_build()
     gg$html$caption<-readLines("head.html")
     print(gg, file="gg.html")
     

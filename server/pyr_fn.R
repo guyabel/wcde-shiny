@@ -1,4 +1,4 @@
-gpyr <- function(df_pyr, pyear, pcol=iiasa6, w=400, h=500, legend="top", pmax=NULL, no.edu=FALSE, prop=FALSE){
+pyr_gvis <- function(df_pyr, pyear, pcol=iiasa6, w=400, h=500, legend="top", pmax=NULL, no.edu=FALSE, prop=FALSE){
   #df_pyr<-df_pyr1;pyear=2015; pcol=iiasa4; w=400;pmax=NULL; h=550; prop=FALSE; no.edu=FALSE
   dfm <- df_pyr %>% 
     ungroup() %>%

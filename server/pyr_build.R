@@ -1,13 +1,9 @@
-##
-##PYRAMID
-##
 library(googleVis)
 library(saves)
-library(dplyr)
+
 # setwd("E:/VID/project/wcde")
 # load("label.RData")
 # source("server/pyr_fn.R")
-# df0<-loads(file="df1", variables=c("area", "isono", "year","period", "ageno","sexno","eduno","age","bage","sage","sex","edu"), ultra.fast = TRUE, to.data.frame=TRUE)
 # input<-NULL; input$pyr_sn1<-2; input$pyr_geo1="France"; input$pyr_year1=2020; input$pyr_sn2<-2; input$pyr_geo2="Germany"; input$pyr_edu=6; input$pyr_dl="png"; input$pyr_prop = FALSE
 
 # output$temp <- renderPrint({
@@ -52,14 +48,12 @@ pyr_max <- reactive({
                         edu = input$pyr_edu)
 
     max1 <- df_pyr1 %>% 
-      filter(ageno!=0, sexno!=0, eduno==0, 
-             scenario==input$pyr_sn1) %>% 
+      filter(ageno != 0, sexno != 0, eduno == 0) %>% 
       pull(pop) %>%
       max(., na.rm = TRUE)
     
-    max2 <- df_pyr1 %>% 
-      filter(ageno!=0, sexno!=0, eduno==0, 
-             scenario==input$pyr_sn2) %>% 
+    max2 <- df_pyr2 %>% 
+      filter(ageno != 0, sexno != 0, eduno == 0) %>% 
       pull(pop) %>%
       max(., na.rm = TRUE)
   }
@@ -92,13 +86,13 @@ output$pyr1<- renderGvis({
     max1 <- pyr_max()$max1
     
     incProgress(3/4)
-    gg <- gpyr(df_pyr = df_pyr1, 
-               pyear = input$pyr_year1, 
-               pcol = ifelse(noedu_pyr1, "['darkgrey']", get(paste0("iiasa",input$pyr_edu))), 
-               w = 295, legend="none", 
-               pmax = max1,
-               no.edu = noedu_pyr1, 
-               prop = input$pyr_prop)
+    gg <- pyr_gvis(df_pyr = df_pyr1, 
+                   pyear = input$pyr_year1, 
+                   pcol = ifelse(noedu_pyr1, "['darkgrey']", get(paste0("iiasa",input$pyr_edu))), 
+                   w = 295, legend="none", 
+                   pmax = max1,
+                   no.edu = noedu_pyr1, 
+                   prop = input$pyr_prop)
     # plot(gg)
     incProgress(4/4)
   })
@@ -126,13 +120,13 @@ output$pyr2<- renderGvis({
     max2 <- pyr_max()$max2
     
     incProgress(3/4)
-    gg <- gpyr(df_pyr = df_pyr2, 
-               pyear = input$pyr_year2, 
-               pcol = ifelse(noedu_pyr2, "['darkgrey']", get(paste0("iiasa",input$pyr_edu))), 
-               w = 295, legend="none", 
-               pmax = max2,
-               no.edu = noedu_pyr2, 
-               prop = input$pyr_prop)
+    gg <- pyr_gvis(df_pyr = df_pyr2, 
+                   pyear = input$pyr_year2, 
+                   pcol = ifelse(noedu_pyr2, "['darkgrey']", get(paste0("iiasa",input$pyr_edu))), 
+                   w = 295, legend="none", 
+                   pmax = max2,
+                   no.edu = noedu_pyr2, 
+                   prop = input$pyr_prop)
     # plot(gg)
     incProgress(4/4)
   })
@@ -190,13 +184,13 @@ output$pyr1_dl <- downloadHandler(
       noedu_pyr1 <<- TRUE
     max1 <- pyr_max()$max1
     
-    gg <- gpyr(df_pyr = df_pyr1, 
-               pyear = input$pyr_year1, 
-               pcol = ifelse(noedu_pyr1, "['darkgrey']", get(paste0("iiasa",input$pyr_edu))), 
-               w = 295, legend="none", 
-               pmax = max1,
-               no.edu = noedu_pyr1, 
-               prop = input$pyr_prop)
+    gg <- pyr_gvis(df_pyr = df_pyr1, 
+                   pyear = input$pyr_year1, 
+                   pcol = ifelse(noedu_pyr1, "['darkgrey']", get(paste0("iiasa",input$pyr_edu))), 
+                   w = 295, legend="none", 
+                   pmax = max1,
+                   no.edu = noedu_pyr1, 
+                   prop = input$pyr_prop)
     
     gg$html$caption<-readLines("head.html")
     print(gg, file="gg.html")
@@ -246,13 +240,13 @@ output$pyr2_dl <- downloadHandler(
       noedu_pyr2 <<- TRUE
     max2 <- pyr_max()$max2
     
-    gg <- gpyr(df_pyr = df_pyr2, 
-               pyear = input$pyr_year2, 
-               pcol = ifelse(noedu_pyr2, "['darkgrey']", get(paste0("iiasa",input$pyr_edu))), 
-               w = 295, legend="none", 
-               pmax = max2,
-               no.edu = noedu_pyr2, 
-               prop = input$pyr_prop)
+    gg <- pyr_gvis(df_pyr = df_pyr2, 
+                   pyear = input$pyr_year2, 
+                   pcol = ifelse(noedu_pyr2, "['darkgrey']", get(paste0("iiasa",input$pyr_edu))), 
+                   w = 295, legend="none", 
+                   pmax = max2,
+                   no.edu = noedu_pyr2, 
+                   prop = input$pyr_prop)
     
     gg$html$caption<-readLines("head.html")
     print(gg, file="gg.html")
