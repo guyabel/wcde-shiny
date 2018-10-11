@@ -246,3 +246,11 @@ rm(i)
 save.image(file="./label.RData")
 
 
+##
+## check pdf names
+##
+fn <- list.files("./pdf") %>%
+  str_remove_all(pattern = ".pdf")
+fn[!fn %in% geog$name]
+fn[!fn %in% geog$name]
+

@@ -52,11 +52,11 @@ d1_edu <- dimen %>%
 #   write_csv(x = d2, paste0("C:\\Users\\gabel\\Dropbox\\wcde2\\ToGuy V1\\df",sn,"epop.csv"))
 # }
   
-#sn=1; i = 4
+#sn=1; i = 1
 for(sn in 1:5){
   for(i in 1:length(ind$name)){
-    fn <- paste0("df",sn,ind$name[i],".csv")
-    zf <- unz(description = "C:\\Users\\Guy\\Dropbox\\wcde2\\ToGuy V2.zip", filename = fn)
+    fn <- paste0("ToGuy V3/df",sn,ind$name[i],".csv")
+    zf <- unz(description = "C:\\Users\\Guy\\Dropbox\\wcde2\\ToGuy V3.zip", filename = fn)
     
     d1a <- d1_age
     if(ind$bage[i] == 1)
@@ -66,7 +66,6 @@ for(sn in 1:5){
         
     d1 <- read_csv(zf, guess_max = 1e6) %>% 
       distinct() %>%
-      select(-X1) %>%
       select(isono, year, sexno, ageno, eduno, everything()) %>%
       arrange(year, isono, sexno, ageno, eduno)
       
