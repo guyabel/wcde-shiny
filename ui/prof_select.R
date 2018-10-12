@@ -2,7 +2,7 @@ tagList(
   fluidRow(
     column(width = 3, 
            includeMarkdown("md/prof_blurb.md"),
-           selectizeInput("prof_geo", "Area", choices = geo3, width="100%"),
+           selectizeInput("prof_geo", "Area", choices = nn2, width="100%"),
            strong("Download"),
            downloadButton('prof_dl', 'Profile'),
            br(),
