@@ -1,7 +1,6 @@
 # setwd("E:/VID/project/wcde/")
 rm(list=ls())
 library(tidyverse)
-library(magrittr)
 library(readxl)
 
 ##
@@ -13,21 +12,14 @@ library(readxl)
 ##Indicators
 ##
 
-# library("xlsx")
+library("xlsx")
 #ind<-read.csv("C:/Users/gabel/Dropbox/wicdata/indicator.csv", stringsAsFactors=FALSE , sep="|")
 # ind<-read.xlsx("C:/Users/gabel/Dropbox/wicdata/indicator.xlsx", stringsAsFactors=FALSE , sheetIndex=1)
-library(fs)
-dir_delete("C://Users//Guy//Documents//GitHub//wcde//md//")
-dir_delete("C://Users//Guy//Documents//GitHub//wcde//meta//")
-dir_copy(path = "C:\\Users\\Guy\\Dropbox\\wcde2\\md-to-wcde\\", 
-         new_path = "C://Users//Guy//Documents//GitHub//wcde//md//")
-dir_copy(path = "C:\\Users\\Guy\\Dropbox\\wcde2\\meta-to-wcde\\", 
-         new_path = "C://Users//Guy//Documents//GitHub//wcde//meta//")
-
-
 ind <- read_excel("./meta/indicator.xlsx")
+
 ind0<-as.list(unique(ind$type))
 names(ind0)<-unique(ind$type1)
+
 
 ind1<-as.list(unique(ind$type2[ind$type=="phcs"]))
 names(ind1)<-unique(ind$type2[ind$type=="phcs"])
@@ -111,20 +103,13 @@ sn1 <- dimen %>%
   as.list()
 
 
-yn1 <- seq(2015, 2100,5)
-
+yn1<-seq(2015, 2100,5)
 yn2<-as.list(yn1)[-length(yn1)]
 names(yn2)<-paste0(yn1[-length(yn1)],"-",substr(yn1[-length(yn1)]+5,3,4))
 
 yn3<-seq(1950, 2100,5)
 yn4<-as.list(yn3)[-length(yn1)]
 names(yn4)<-paste0(yn3[-length(yn1)],"-",substr(yn3[-length(yn1)]+5,3,4))
-
-yn0 <- data_frame(
-  year = seq(1950, 2100,5), 
-  name = year) %>%
-  {'names<-'(.$year, .$name)} %>%
-  as.list()
 
 
 age1 <- dimen %>%
@@ -268,3 +253,4 @@ fn <- list.files("./pdf") %>%
   str_remove_all(pattern = ".pdf")
 fn[!fn %in% geog$name]
 fn[!fn %in% geog$name]
+
