@@ -147,6 +147,14 @@ df_build <- reactive({
   return(df3)
 })
 
+allarea <- reactive({
+  # validate(
+  #   need(input$reg, label = "region"),
+  #   need(input$nat, label = "nation")
+  # )
+  c(input$reg,input$nat)
+})
+
 output$df <- renderDataTable({
   df_build()
 },  options = list(searching = TRUE, paging = TRUE, 

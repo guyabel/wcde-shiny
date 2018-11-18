@@ -1,35 +1,101 @@
-load("label.RData")
-
 tagList(
   br(),
   fluidRow(class = "myRow1", 
-    column(3, 
-           br(), h4("1. Indicators"), br(), 
-           selectizeInput('data_cat', 'Indicator Type', choices = ind0, selected=ind0[[1]][1], width="100%"),
-           uiOutput("data_ind")
+    column(
+      width = 3, 
+      br(), 
+      h4("1. Indicators"), 
+      br(), 
+      selectizeInput(
+        inputId = 'data_cat', label = 'Indicator Type',
+        choices = ind0, selected = ind0[[1]][1],
+        width="100%"
+      ),
+      uiOutput("data_ind")
+      # selectizeInput(
+      #   inputId = 'data_ind', label = 'Indicator', 
+      #   choices = ind1, selected = ind1[1], 
+      #   width="100%"
+      # )
     ), 
-    column(3, 
-           br(), h4("2. Geography"), br(), 
-           uiOutput("nat0"),
-           uiOutput("reg0"),
-           checkboxInput('regnat', 'Include countries of selected regions', FALSE)
+    column(
+      width = 3, 
+      br(), 
+      h4("2. Geography"), 
+      br(),
+      uiOutput("nat0"),
+      uiOutput("reg0"),
+      # selectizeInput(
+      #   inputId = "nat", label = "Country", 
+      #   choices = nn2, 
+      #   multiple = TRUE, width="100%", 
+      #   options = list(placeholder = 'Type or click for countries')
+      # ),
+      # selectizeInput(
+      #   inputId = "reg", label = "Region", 
+      #   choices = geo2,  
+      #   multiple = TRUE, width="100%", 
+      #   options = list(placeholder = 'Type or click for countries')
+      # ),
+      checkboxInput(
+        inputId = 'regnat', label = 'Include countries of selected regions', 
+        value = FALSE
+      )
     ),
-    column(3, 
-           br(), h4("3. Breakdown"),  br(),
-           uiOutput("sex0"), 
-           uiOutput("age0"), 
-           checkboxInput('allage', 'Include all age groups', FALSE)
+    column(
+      width = 3, 
+      br(), 
+      h4("3. Breakdown"),  
+      br(),
+      uiOutput("sex0"), 
+      uiOutput("age0"), 
+      # selectizeInput(
+      #   inputId = "sex", label = "Sex", 
+      #   choices = NULL, multiple = TRUE, 
+      #   width = "100%", 
+      #   options = list(placeholder = 'Type or click for multiple options')
+      # ),
+      # selectizeInput(
+      #   inputId = "age", label = "Age", 
+      #   choices = NULL, multiple = TRUE, 
+      #   width = "100%", 
+      #   options = list(placeholder = 'Type or click for multiple options')
+      # ),
+      checkboxInput('allage', 'Include all age groups', FALSE)
     ),
-    column(3, 
-           br(), h4("4. Time Horizon"), br(),
-           uiOutput("scenario0"), 
-           uiOutput("year0"), 
-           checkboxInput('allyear', 'Include all times', FALSE),
-           br(),
-           HTML("<div id='linkToData'><button type='button' class='btn btn-block btn-default'>View Data <span class='glyphicon glyphicon-new-window'></span></button></div>"), 
-           br(),
-           downloadButton('data_dl0', 'Download'),
-           br(), br()
+    column(
+      width = 3, 
+      br(),
+      h4("4. Time Horizon"),
+      br(),
+      uiOutput("scenario0"), 
+      uiOutput("year0"), 
+      # selectizeInput(
+      #   inputId = "scenario", label = "Scenario", 
+      #   choices = NULL, multiple = TRUE, 
+      #   width = "100%", 
+      #   options = list(placeholder = 'Type or click for multiple options')
+      # ),
+      # selectizeInput(
+      #   inputId = "year", label = "Year", 
+      #   choices = NULL, multiple = TRUE, 
+      #   width = "100%", 
+      #   options = list(placeholder = 'Type or click for multiple options')
+      # ),
+      checkboxInput('allyear', 'Include all times', FALSE),
+      br(),
+      HTML("
+        <div id='linkToData'>
+        <button type='button' class='btn btn-block btn-default'>
+           View Data 
+          <span class='glyphicon glyphicon-new-window'></span>
+        </button>
+        </div>"
+      ), 
+      br(),
+      downloadButton('data_dl0', 'Download'),
+      br(), 
+      br()
     )
   ),
   tags$script("$('#linkToData').click(function() {
