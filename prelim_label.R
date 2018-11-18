@@ -2,24 +2,25 @@
 rm(list=ls())
 library(tidyverse)
 library(readxl)
+library(fs)
 
 ##
 ##copy about
 ##
+dir_copy(path = "C:\\Users\\Guy\\Dropbox\\wcde2\\meta-to-wcde", 
+         new_path = "./meta")
+dir_copy(path = "C:\\Users\\Guy\\Dropbox\\wcde2\\md-to-wcde", 
+         new_path = "./md")
 # file.copy(from = "C:/Users/gabel/Dropbox/wicdata/about_details.md", to = "C:/Users/gabel/Documents/shiny/wcde/about_details.md", overwrite = TRUE)
 
 ##
 ##Indicators
 ##
 
-library("xlsx")
-#ind<-read.csv("C:/Users/gabel/Dropbox/wicdata/indicator.csv", stringsAsFactors=FALSE , sep="|")
-# ind<-read.xlsx("C:/Users/gabel/Dropbox/wicdata/indicator.xlsx", stringsAsFactors=FALSE , sheetIndex=1)
 ind <- read_excel("./meta/indicator.xlsx")
 
 ind0<-as.list(unique(ind$type))
 names(ind0)<-unique(ind$type1)
-
 
 ind1<-as.list(unique(ind$type2[ind$type=="phcs"]))
 names(ind1)<-unique(ind$type2[ind$type=="phcs"])

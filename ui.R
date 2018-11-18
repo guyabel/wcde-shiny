@@ -17,8 +17,8 @@ shinyUI(
       tabsetPanel(
         type = "tabs", 
         tabPanel("Selection", source("ui/data_select.R", local=TRUE)$value),
-        tabPanel("Data", source("ui/data_show.R", local=TRUE)$value),
-        tabPanel("Assumptions", source("ui/ass_select.R", local=TRUE)$value)
+        tabPanel("Data", source("ui/data_data.R", local=TRUE)$value),
+        tabPanel("Assumptions", source("ui/data_assumption.R", local=TRUE)$value)
       )
     ),
     tabPanel(
@@ -31,10 +31,10 @@ shinyUI(
       br(),
       tabsetPanel(
         type = "tabs", 
-        tabPanel("Pyramids", br(), source("ui/pyr_select.R", local=TRUE)$value),
-        tabPanel("Population Size", br(), source("ui/sac_select.R", local=TRUE)$value),
-        tabPanel("Map", br(), source("ui/map_select.R", local=TRUE)$value),
-        tabPanel("Profile", br(), source("ui/prof_select.R", local=TRUE)$value),
+        tabPanel("Pyramids", br(), source("ui/graphic_pyr.R", local=TRUE)$value),
+        tabPanel("Population Size", br(), source("ui/graphic_sac.R", local=TRUE)$value),
+        tabPanel("Map", br(), source("ui/graphic_map.R", local=TRUE)$value),
+        tabPanel("Profile", br(), source("ui/graphic_profile.R", local=TRUE)$value),
         tabPanel("Output", verbatimTextOutput("temp"))
       )
     ),

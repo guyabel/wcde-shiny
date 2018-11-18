@@ -1,10 +1,14 @@
-#install.packages('shiny')
-
 #setwd("C:/Users/gabel/Documents/")
 #setwd("C:/Users/Guy/Documents/Github")
 # setwd("E:/VID/project/")
 library(shiny)
 runApp(launch.browser = TRUE)
+
+
+# library(profvis)
+# profvis({
+#   runApp(launch.browser = TRUE)
+# })
 
 
 #runApp("./shiny/wcde")
