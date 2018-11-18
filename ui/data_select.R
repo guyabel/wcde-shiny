@@ -5,7 +5,8 @@ tagList(
   fluidRow(class = "myRow1", 
     column(3, 
            br(), h4("1. Indicators"), br(), 
-           selectizeInput('data_cat', 'Indicator Type', choices = ind0, selected=ind0[[1]][1], width="100%"),
+           selectizeInput('data_cat', 'Indicator Type', choices = ind0, selected=ind0[[1]][1],
+                          width="100%"),
            uiOutput("data_ind")
     ), 
     column(3, 
