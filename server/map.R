@@ -106,7 +106,7 @@ output$map1_dl <- downloadHandler(
     close(fh)
 
     gg <- map_build()
-    gg$html$caption<-readLines("head.html")
+    gg$html$caption <- includeHTML("head.html")
     print(gg, file="gg.html")
     
     if(input$sac_dl=="pdf"){

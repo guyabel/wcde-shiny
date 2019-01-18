@@ -134,6 +134,7 @@ df_build <- reactive({
         df2 <- df2 %>% select(-scenario)
       
       df2 <- df2 %>%
+        drop_na() %>%
         select(-ageno, -sexno, -eduno) %>%
         set_names(str_to_title(names(.))) 
       
@@ -149,9 +150,10 @@ df_build <- reactive({
 
 output$df <- renderDataTable({
   df_build()
-},  options = list(searching = TRUE, paging = TRUE, 
-                   aoColumnDefs = list(list(sClass="alignRight",aTargets=list(-1))),
-                   drawCallback = I("function( settings ) {document.getElementById('df').style.width = '800px';}") ))
+},  options = list(
+  searching = TRUE, paging = TRUE, 
+  aoColumnDefs = list(list(sClass="alignRight",aTargets=list(-1))),
+  drawCallback = I("function( settings ) {document.getElementById('df').style.width = '800px';}") ))
 
 
 output$data_dl <- downloadHandler(
@@ -185,8 +187,13 @@ output$data_dl <- downloadHandler(
 output$data_dl0 <- downloadHandler(
   filename = function() { "wicdf.csv" },
   content = function(filename) {
-    sn0<-dimen %>% filter(dim=="scenario") %>% filter(code==input$scenario) %>% .[["name"]]
-    df2 <- ind %>% filter(fullname==input$data_ind) %>% select(fullname, definition) %>% 
+    sn0 <- dimen %>% 
+      filter(dim=="scenario") %>% 
+      filter(code==input$scenario) %>% 
+      .[["name"]]
+    df2 <- ind %>% 
+      filter(fullname==input$data_ind) %>% 
+      select(fullname, definition) %>% 
       mutate(scen=ifelse(length(input$scenario)==1, sn0,"Multiple Scenarios"))
     df2 <- rbind(t(df2)," ") 
     colnames(df2)<-""

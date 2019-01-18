@@ -63,6 +63,7 @@ sac_data <- function(geo = input$sac_geo1,
       mutate(edu = fct_inorder(edu_name)) %>%
       select(-edu_name) %>%
       mutate(eduno = ifelse(eduno == 0, 0, 1)) %>%
+      drop_na() %>%
       group_by(scenario, year, ageno, age, sex, sexno, edu, eduno) %>%
       summarise(pop=sum(pop)) %>%
       ungroup()
@@ -73,6 +74,7 @@ sac_data <- function(geo = input$sac_geo1,
       mutate(edu = fct_inorder(edu_name)) %>%
       select(-edu_name) %>%
       mutate(eduno = ifelse(eduno == 0, 0, 1)) %>%
+      drop_na() %>%
       group_by(scenario, year, ageno, age, sex, sexno, edu, eduno) %>%
       summarise(pop=sum(pop)) %>%
       ungroup()
@@ -83,6 +85,7 @@ sac_data <- function(geo = input$sac_geo1,
       mutate(edu = fct_inorder(edu_name)) %>%
       select(-edu_name) %>%
       mutate(eduno = ifelse(eduno == 0, 0, 1)) %>%
+      drop_na() %>%
       group_by(scenario, year, ageno, age, sex, sexno, edu, eduno) %>%
       summarise(pop=sum(pop)) %>%
       ungroup()

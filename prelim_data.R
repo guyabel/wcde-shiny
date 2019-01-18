@@ -55,8 +55,8 @@ d1_edu <- dimen %>%
 #sn=1; i = 1
 for(sn in 1:5){
   for(i in 1:length(ind$name)){
-    fn <- paste0("ToGuy V3/df",sn,ind$name[i],".csv")
-    zf <- unz(description = "C:\\Users\\Guy\\Dropbox\\wcde2\\ToGuy V3.zip", filename = fn)
+    fn <- paste0("ToGuy V5/df",sn,ind$name[i],".csv")
+    zf <- unz(description = "C:\\Users\\Guy\\Dropbox\\wcde2\\ToGuy V5.zip", filename = fn)
     
     d1a <- d1_age
     if(ind$bage[i] == 1)

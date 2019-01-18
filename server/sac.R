@@ -164,7 +164,7 @@ output$sac1_dl <- downloadHandler(
                    pmax = sac_max()$max1,
                    prop = input$sac_prop)
     
-    gg$html$caption<-readLines("head.html")
+    gg$html$caption <- includeHTML("head.html")
     print(gg, file="gg.html")
     
     if(input$sac_dl=="pdf"){
@@ -207,7 +207,7 @@ output$sac2_dl <- downloadHandler(
                    pmax = sac_max()$max2,
                    prop = input$sac_prop)
     
-    gg$html$caption<-readLines("head.html")
+    gg$html$caption<- includeHTML("head.html")
     print(gg, file="gg.html")
     
     if(input$sac_dl=="pdf"){

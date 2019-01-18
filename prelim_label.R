@@ -3,12 +3,15 @@ rm(list=ls())
 library(tidyverse)
 library(readxl)
 library(fs)
+library(magrittr)
 
 ##
 ##copy about
 ##
+dir_delete("./meta")
 dir_copy(path = "C:\\Users\\Guy\\Dropbox\\wcde2\\meta-to-wcde", 
          new_path = "./meta")
+dir_delete("./md")
 dir_copy(path = "C:\\Users\\Guy\\Dropbox\\wcde2\\md-to-wcde", 
          new_path = "./md")
 # file.copy(from = "C:/Users/gabel/Dropbox/wicdata/about_details.md", to = "C:/Users/gabel/Documents/shiny/wcde/about_details.md", overwrite = TRUE)
@@ -163,7 +166,8 @@ edu6 <- edu6 %>%
   map_df(~ data_frame(eduno = .x), .id = "edu_name")
 
 edu10 <- edu1 %>% 
-  map_df(~ data_frame(eduno = .x), .id = "edu_name")
+  map_df(~ data_frame(eduno = .x), .id = "edu_name") %>%
+  mutate(eduno = ifelse(edu_name == "Post Secondary", NA, eduno))
 
 
 age2 <- list("Five Year Age Groups" = dimen %>%
@@ -216,6 +220,30 @@ pdfinfo<-
 "<br> Source: Wittgenstein Centre for Demography and Global Human Capital, (2018). <i> Wittgenstein Centre Data Explorer Version 2.0</i> <br>
 Available at: <a href='www.wittgensteincentre.org/dataexplorer'>www.wittgensteincentre.org/dataexplorer</a> <br><br>"
 
+# 8 categories:
+#   No education: 178,24,43
+# Incomplete primary: 214,96,77
+# Primary: 244,165,130
+# Lower secondary: 253,219,199
+# Higher Secondary: 209,229,240
+# Short post secondary: 146,197,222
+# Bachelor: 67,147,195
+# Master and higher: 33,102,172
+# 
+# 6 categories:
+#   No education: 178,24,43
+# Incomplete primary: 239,138,98
+# Primary: 253,219,199
+# Lower secondary: 209,229,240
+# Higher secondary: 103,169,207
+# Post secondary: 33,102,172
+# 
+# 4 categories:
+#   No education: 202,0,32
+# Primary: 244,165,130
+# Secondary: 146,197,222
+# Post secondary: 5,113,176
+
 iiasa4<-paste0("['lightgrey','",
                  rgb(192,0,0, max=255),"','",
                  #rgb(255,102,0, max=255),"','",
@@ -231,6 +259,16 @@ iiasa6<-paste0("['lightgrey','",
                   rgb(153,204,255, max=255),"','",
                   rgb(0,102,255, max=255),"','",
                   rgb(0,0,153, max=255),"']")
+
+iiasa8<-paste0("['lightgrey','",
+               rgb(192,0,0, max=255),"','",
+               rgb(255,102,0, max=255),"','",
+               rgb(255,192,0, max=255),"','",
+               rgb(153,204,255, max=255),"','",
+               rgb(0,102,255, max=255),"','",
+               rgb(0,102,255, max=255),"','",
+               rgb(0,102,255, max=255),"','",
+               rgb(0,0,153, max=255),"']")
 
 #iiasacol6<-c("lightgrey", rgb(192,0,0, max=255), rgb(255,102,0, max=255), rgb(255,192,0, max=255), rgb(153,204,255, max=255), rgb(0,102,255, max=255), rgb(0,0,153, max=255))
 

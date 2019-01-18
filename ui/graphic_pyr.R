@@ -15,9 +15,9 @@ tagList(
     column(width = 6, htmlOutput("pyr_warn1")),
     column(width = 6, htmlOutput("pyr_warn2"))
   ),
-  fluidRow(
-    column(width=12, align="center", htmlOutput("pyr_leg"))
-  ),
+  # fluidRow(
+  #   column(width=12, align="center", htmlOutput("pyr_leg"))
+  # ),
   br(),
   fluidRow(
     column(width = 6, htmlOutput("pyr1")),
@@ -30,7 +30,17 @@ tagList(
         column(6, 
           h4("Graphic Options:"),
           fluidRow(
-            column(4, selectizeInput("pyr_edu", "Educational Breakdown", width="100%",  choices = list("Four Categories"=4,"Six Categories"=6))),
+            column(width = 4, 
+                   selectizeInput(
+                     inputId = "pyr_edu", "Educational Breakdown", 
+                     width="100%",  
+                     choices = list(
+                       "Four Categories" = 4, 
+                       "Six Categories" = 6,
+                       "Eight Categories" = 8 
+                       )
+                     )
+                   ),
             column(4, selectizeInput("pyr_x", "Horizontal Axis", width="100%",
                                      choices = list("Data Specific"="data","Entire Time Horizon"="allyear","Both Plots"="allarea"))),
             column(4, selectizeInput("pyr_prop", "Data", width="100%",
