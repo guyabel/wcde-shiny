@@ -21,23 +21,39 @@ shinyUI(
         tabPanel("Assumptions", source("ui/data_assumption.R", local=TRUE)$value)
       )
     ),
-    # tabPanel(
-    #   title = "Graphic Explorer",
-    #   id='graphic_tabs',
-    #   fluidRow(
-    #     column(width = 8, includeMarkdown("md/intro_graphic.md")),
-    #     column(width = 4, includeHTML("md/intro_logo.html"))
-    #   ),
-    #   br(),
-    #   tabsetPanel(
-    #     type = "tabs",
-    #     tabPanel("Pyramids", br(), source("ui/graphic_pyr.R", local=TRUE)$value),
-    #     tabPanel("Population Size", br(), source("ui/graphic_sac.R", local=TRUE)$value),
-    #     tabPanel("Map", br(), source("ui/graphic_map.R", local=TRUE)$value),
-    #     tabPanel("Profile", br(), source("ui/graphic_profile.R", local=TRUE)$value),
-    #     tabPanel("Output", verbatimTextOutput("temp"))
-    #   )
-    # ),
+    tabPanel(
+      title = "Graphic Explorer",
+      id='graphic_tabs',
+      fluidRow(
+        column(width = 8, includeMarkdown("md/intro_graphic.md")),
+        column(width = 4, includeHTML("md/intro_logo.html"))
+      ),
+      br(),
+      tabsetPanel(
+        type = "tabs",
+        tabPanel(
+          title = "Pyramids", 
+          br(), 
+          source("ui/graphic_pyr.R", local=TRUE)$value
+        ),
+        tabPanel(
+          title = "Population Size", 
+          br(), 
+          source("ui/graphic_sac.R", local=TRUE)$value
+        ),
+        tabPanel(
+          title = "Map", 
+          br(), 
+          source("ui/graphic_map.R", local=TRUE)$value
+        ),
+        tabPanel(
+          title = "Profile", 
+          br(), 
+          source("ui/graphic_profile.R", local=TRUE)$value
+        ),
+        tabPanel("Output", verbatimTextOutput("temp"))
+      )
+    ),
     tabPanel(
       title = "About",
       id='about_tabs',

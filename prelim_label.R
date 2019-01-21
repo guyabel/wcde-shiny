@@ -48,6 +48,7 @@ ind4<-c(ind1,ind2,ind3)
 ##
 geog <- read_excel("./meta/geography.xlsx") %>%
   tbl_df() %>%
+  replace_na(list(edu8 = 0)) %>%
   mutate(isono = as.integer(isono),
          ggarea = ifelse(str_detect(string = ggarea, pattern = "[:digit:]"), 
                          str_pad(string = ggarea, width = 3, pad = "0"),
@@ -220,57 +221,43 @@ pdfinfo<-
 "<br> Source: Wittgenstein Centre for Demography and Global Human Capital, (2018). <i> Wittgenstein Centre Data Explorer Version 2.0</i> <br>
 Available at: <a href='www.wittgensteincentre.org/dataexplorer'>www.wittgensteincentre.org/dataexplorer</a> <br><br>"
 
-# 8 categories:
-#   No education: 178,24,43
-# Incomplete primary: 214,96,77
-# Primary: 244,165,130
-# Lower secondary: 253,219,199
-# Higher Secondary: 209,229,240
-# Short post secondary: 146,197,222
-# Bachelor: 67,147,195
-# Master and higher: 33,102,172
-# 
-# 6 categories:
-#   No education: 178,24,43
-# Incomplete primary: 239,138,98
-# Primary: 253,219,199
-# Lower secondary: 209,229,240
-# Higher secondary: 103,169,207
-# Post secondary: 33,102,172
-# 
-# 4 categories:
-#   No education: 202,0,32
-# Primary: 244,165,130
-# Secondary: 146,197,222
-# Post secondary: 5,113,176
-
-iiasa4<-paste0("['lightgrey','",
-                 rgb(192,0,0, max=255),"','",
-                 #rgb(255,102,0, max=255),"','",
-                 rgb(255,192,0, max=255),"','",
-                 #rgb(153,204,255, max=255),"','",
-                 rgb(0,102,255, max=255),"','",
-                 rgb(0,0,153, max=255),"']")
+iiasa4 <- paste0("['lightgrey','",
+                 rgb(202,0,32, max=255),"','",
+                 rgb(244,165,130, max=255),"','",
+                 rgb(146,197,222, max=255),"','",
+                 rgb(5,113,176, max=255),"']")
 
 iiasa6<-paste0("['lightgrey','",
-                  rgb(192,0,0, max=255),"','",
-                  rgb(255,102,0, max=255),"','",
-                  rgb(255,192,0, max=255),"','",
-                  rgb(153,204,255, max=255),"','",
-                  rgb(0,102,255, max=255),"','",
-                  rgb(0,0,153, max=255),"']")
+               rgb(178,24,43, max=255),"','",
+               rgb(239,138,98, max=255),"','",
+               rgb(253,219,199, max=255),"','",
+               rgb(209,229,240, max=255),"','",
+               rgb(103,169,207, max=255),"','",
+               rgb(33,102,172, max=255),"']")
 
 iiasa8<-paste0("['lightgrey','",
-               rgb(192,0,0, max=255),"','",
-               rgb(255,102,0, max=255),"','",
-               rgb(255,192,0, max=255),"','",
-               rgb(153,204,255, max=255),"','",
-               rgb(0,102,255, max=255),"','",
-               rgb(0,102,255, max=255),"','",
-               rgb(0,102,255, max=255),"','",
-               rgb(0,0,153, max=255),"']")
+               rgb(178,24,43, max=255),"','",
+               rgb(214,96,77, max=255),"','",
+               rgb(244,165,130, max=255),"','",
+               rgb(253,219,199, max=255),"','",
+               rgb(209,229,240, max=255),"','",
+               rgb(146,197,222, max=255),"','",
+               rgb(67,147,195, max=255),"','",
+               rgb(33,102,172, max=255),"']")
 
-#iiasacol6<-c("lightgrey", rgb(192,0,0, max=255), rgb(255,102,0, max=255), rgb(255,192,0, max=255), rgb(153,204,255, max=255), rgb(0,102,255, max=255), rgb(0,0,153, max=255))
+# iiasa4<-paste0("['lightgrey','",
+#                  rgb(192,0,0, max=255),"','",
+#                  rgb(255,192,0, max=255),"','",
+#                  rgb(0,102,255, max=255),"','",
+#                  rgb(0,0,153, max=255),"']")
+# 
+# iiasa6<-paste0("['lightgrey','",
+#                   rgb(192,0,0, max=255),"','",
+#                   rgb(255,102,0, max=255),"','",
+#                   rgb(255,192,0, max=255),"','",
+#                   rgb(153,204,255, max=255),"','",
+#                   rgb(0,102,255, max=255),"','",
+#                   rgb(0,0,153, max=255),"']")
 
 ##
 ##faq

@@ -1,7 +1,7 @@
 pyr_gvis <- function(d_pyr, 
                      pyr_year, 
                      pyr_col = iiasa6, 
-                     w = 400, h = 500, 
+                     w = 295, h = 500, 
                      legend = "top", 
                      pmax = NULL, no_edu = FALSE, 
                      prop = FALSE){
@@ -18,19 +18,15 @@ pyr_gvis <- function(d_pyr,
     select(-ageno)
   
   f_pyr <- d_pyr %>% 
-    # ungroup() %>%
-    filter(year==pyr_year, 
-           sexno==2, 
-           ageno!=0) %>% 
+    filter(year == pyr_year, 
+           sexno == 2, 
+           ageno != 0) %>% 
     select(ageno, age ,edu,pop) %>% 
     mutate(pop = ifelse(pop == 0, NA, pop)) %>%
     spread(key = edu, value = pop) %>%
     arrange(desc(ageno)) %>% 
     select(-ageno) 
-#   if(prop == TRUE){
-#     m_pyr <- m_pyr %>% mutate_each(funs(./Total), -(1:2)) %>% mutate_each(funs(round(., 2)), -(1:2))
-#     f_pyr <- f_pyr %>% mutate_each(funs(./Total), -(1:2)) %>% mutate_each(funs(round(., 2)), -(1:2))
-#   }
+
   if(no_edu == TRUE){
     m_pyr <- m_pyr %>% select(age, Total)
     f_pyr <- f_pyr %>% select(age, Total)
@@ -40,6 +36,7 @@ pyr_gvis <- function(d_pyr,
     f_pyr <- f_pyr %>% select(-Total)
   }
   
+  # pyramid sum
   s_pyr <- d_pyr %>% 
     filter(year == pyr_year, 
            sexno == 0, 
@@ -65,7 +62,7 @@ pyr_gvis <- function(d_pyr,
     data = m_pyr, 
     xvar = "age", yvar = names(m_pyr)[-1],
     options = list(
-      legend="none", 
+      legend = "none", 
       bar = "{groupWidth:'90%'}", 
       isStacked = if(prop == TRUE) 'percent' else TRUE, 
       title = paste0("Total Population: ", s_pyr," m"), 
@@ -122,6 +119,31 @@ pyr_gvis <- function(d_pyr,
 # pyr_gvis(d_pyr = d1, pyr_year = 2010, pyr_col = iiasa4) %>%
 #   plot()
 
+pyr_fill <- function(year = input$pyr_year1, edu = input$pyr_edu, geo = input$pyr_geo1){
+  p <- FALSE
+  if(year < 2015 & edu == "8"){
+    p <- TRUE
+  }
+  g <- geog %>%
+    filter(name %in% geo) %>%
+    pull(edu8)
+  if(g == 0 & edu == "8"){
+    p <- TRUE
+  }
+  return(p)
+}
+
+pyr_warn <- function(f = NULL, year = input$pyr_year1){
+  w <- "xxx"
+  if(f == TRUE & year < 2015)
+    w0 <- "You have selected eight categories for the educational background. Data on this level of information is only available starting from 2015. Please consult the FAQ in the About page for more information."
+  if(f == TRUE & year >= 2015)
+    w0 <- "You have selected eight categories for the educational background. Data on this level of information is only available starting from 2015 for selected countries. Please consult the FAQ in the About page for more information."
+  if(f == TRUE)
+    w <- paste0("<FONT COLOR='gray'>", w0, "<br><br>")
+  return(w)
+}
+
 pyr_data <- function(geo = input$pyr_geo1, 
                      sn = input$pyr_sn1,
                      edu = input$pyr_edu){
@@ -133,11 +155,11 @@ pyr_data <- function(geo = input$pyr_geo1,
   # v <- c(v, 250)
   # v <- c(v, 44)
   
-  edu8_avail <- geog %>%
-    replace_na(list(edu8 = 0)) %>%
-    filter(name %in% geo) %>%
-    pull(edu8) %>%
-    sum()
+  # edu8_avail <- geog %>%
+  #   replace_na(list(edu8 = 0)) %>%
+  #   filter(name %in% geo) %>%
+  #   pull(edu8) %>%
+  #   sum()
   
   df1 <- loads(file = paste0("df", sn, "/epop"), 
                variables = v, ultra.fast = TRUE, to.data.frame=TRUE) %>%
@@ -147,7 +169,7 @@ pyr_data <- function(geo = input$pyr_geo1,
     gather(key = isono, value = pop, -(1:7)) %>% 
     mutate(scenario = sn)
   
-  if(edu==4){
+  if(edu == "4"){
     df2 <- df1 %>%
       left_join(edu4, by = "eduno") %>%
       mutate(edu = fct_inorder(edu_name)) %>%
@@ -158,7 +180,7 @@ pyr_data <- function(geo = input$pyr_geo1,
       ungroup() %>%
       mutate(eduno = ifelse(edu == "Total", 0, 1))
   }
-  if(edu==6){
+  if(edu == "6"){
     df2 <- df1 %>%
       left_join(edu6, by = "eduno") %>%
       mutate(edu = fct_inorder(edu_name)) %>%
@@ -169,7 +191,7 @@ pyr_data <- function(geo = input$pyr_geo1,
       ungroup() %>%
       mutate(eduno = ifelse(edu == "Total", 0, 1))
   }
-  if(edu==8){
+  if(edu == "8"){
   # filter(df2, eduno == 10)
   # filter(df3, edu == "Master and higher", age == "20--24", sex == "Both") %>%
     # print(n= 30)
@@ -187,10 +209,10 @@ pyr_data <- function(geo = input$pyr_geo1,
       complete(scenario, year, age, sex, edu, fill = list(pop = 0)) %>%
       fill(ageno, sexno) %>%
       mutate(eduno = ifelse(edu == "Total", 0, 1))
-    if(edu8_avail == 0)
-      # all education splits to zero
-      df2 <- df2 %>%
-        mutate(pop = ifelse(edu != "Total", 0, pop))
+    # if(edu8_avail == 0)
+    #   # all education splits to zero
+    #   df2 <- df2 %>%
+    #     mutate(pop = ifelse(edu != "Total", 0, pop))
   }
   return(df2)
 }
