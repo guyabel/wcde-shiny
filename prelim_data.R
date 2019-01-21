@@ -64,7 +64,7 @@ for(sn in 1:5){
     if(ind$sage[i] == 1)
       d1a <- d1_sage
         
-    d1 <- read_csv(zf, guess_max = 1e6) %>% 
+    d1 <- read_csv(zf, guess_max = 1e6, col_types = cols()) %>% 
       distinct() %>%
       select(isono, year, sexno, ageno, eduno, everything()) %>%
       arrange(year, isono, sexno, ageno, eduno)
@@ -79,11 +79,11 @@ for(sn in 1:5){
       distinct() %>%
       drop_na() %>%
       spread(key = isono, value = names(d1)[ncol(d1)]) %>%
-      left_join(d1a) %>%
-      left_join(d1_sex) %>%
-      left_join(d1_edu) %>%
-      mutate(period = paste(year, year+5, sep = "-"))
-    message(ind$name[i])
+      left_join(d1a, by = "ageno") %>%
+      left_join(d1_sex, by = "sexno") %>%
+      left_join(d1_edu, by = "eduno") %>%
+      mutate(period = paste(year, year+5, sep = "-")) 
+    message(paste0("scenario: ", sn, "  indicator: ", ind$name[i]))
     
     # save for ultra fast loading  
     unlink(x = paste0("df", sn, "/",ind$name[i]), recursive = TRUE)

@@ -21,43 +21,55 @@ shinyUI(
         tabPanel("Assumptions", source("ui/data_assumption.R", local=TRUE)$value)
       )
     ),
+    # tabPanel(
+    #   title = "Graphic Explorer",
+    #   id='graphic_tabs',
+    #   fluidRow(
+    #     column(width = 8, includeMarkdown("md/intro_graphic.md")),
+    #     column(width = 4, includeHTML("md/intro_logo.html"))
+    #   ),
+    #   br(),
+    #   tabsetPanel(
+    #     type = "tabs",
+    #     tabPanel("Pyramids", br(), source("ui/graphic_pyr.R", local=TRUE)$value),
+    #     tabPanel("Population Size", br(), source("ui/graphic_sac.R", local=TRUE)$value),
+    #     tabPanel("Map", br(), source("ui/graphic_map.R", local=TRUE)$value),
+    #     tabPanel("Profile", br(), source("ui/graphic_profile.R", local=TRUE)$value),
+    #     tabPanel("Output", verbatimTextOutput("temp"))
+    #   )
+    # ),
     tabPanel(
-      title = "Graphic Explorer",
-      id='graphic_tabs',
+      title = "About",
+      id='about_tabs',
       fluidRow(
-        column(width = 8, includeMarkdown("md/intro_graphic.md")),
+        column(width = 8, includeMarkdown("md/intro_about.md")),
         column(width = 4, includeHTML("md/intro_logo.html"))
       ),
       br(),
       tabsetPanel(
         type = "tabs",
-        tabPanel("Pyramids", br(), source("ui/graphic_pyr.R", local=TRUE)$value),
-        tabPanel("Population Size", br(), source("ui/graphic_sac.R", local=TRUE)$value),
-        tabPanel("Map", br(), source("ui/graphic_map.R", local=TRUE)$value),
-        tabPanel("Profile", br(), source("ui/graphic_profile.R", local=TRUE)$value),
-        tabPanel("Output", verbatimTextOutput("temp"))
+        tabPanel("Details", includeMarkdown("md/about_details.md")),
+        tabPanel(
+          title = "FAQ", 
+          br(),
+          h4("General:"), 
+          dataTableOutput("about_faq2"),
+          h4("Data and Graphic Explorer:"), 
+          dataTableOutput("about_faq1")
+        ),
+        tabPanel(
+          title = "Scenario Defintions", 
+          dataTableOutput("about_scenario"),
+          includeMarkdown("md/about_scenario.md")
+        ),
+        tabPanel(
+          title = "Education Definitions",
+          dataTableOutput("about_edu"),
+          includeMarkdown("md/about_edu.md")
+        )
+        #tabPanel("Output", verbatimTextOutput("temp"))
       )
     ),
-    # tabPanel(
-    #   title = "About",
-    #   id='about_tabs',
-    #   fluidRow(
-    #     column(width = 8, includeMarkdown("md/intro_about.md")),
-    #     column(width = 4, includeHTML("md/intro_logo.html"))
-    #   ),
-    #   br(),
-    #   tabsetPanel(
-    #     type = "tabs", 
-    #     tabPanel("Details", includeMarkdown("md/about_details.md")),
-    #     tabPanel("FAQ", br(),
-    #              h4("General:"), dataTableOutput("about_faq2"),
-    #              h4("Data and Graphic Explorer:"), dataTableOutput("about_faq1")
-    #              ),
-    #     tabPanel("Scenario Defintions", dataTableOutput("about_scenario"), includeMarkdown("md/about_scenario.md")),
-    #     tabPanel("Education Definitions", dataTableOutput("about_edu"), includeMarkdown("md/about_edu.md"))
-    #     #tabPanel("Output", verbatimTextOutput("temp"))
-    #   )
-    # ),
     includeCSS("style.css"),
     tags$head(includeScript("google-analytics.js")),
     tags$script(includeHTML("sm-share.html")),
