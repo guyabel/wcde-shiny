@@ -3,141 +3,145 @@
 ##
 #library(googleVis)
 #source("./server/sac_fn.R")
+#source("./server/pyr_fn.R")
 #input<-NULL; input$sac_sn1=2; input$sac_geo1="France"; input$sac_edu=6; input$sac_year1=c(1950,2100); input$sac_prop = TRUE
 
 output$sac_warn1 <- renderUI({
-  tt<-""
+  f <- sac_fill1()
+  # can use pyr_warn with sac inputs
+  w <- pyr_warn(f = f, year = input$sac_year1[1])
+  HTML(w)
+})
+
+output$sac_warn2 <- renderUI({
+  f <- sac_fill2()
+  # can use pyr_warn with sac inputs
+  w <- pyr_warn(f = f, year = input$sac_year2[1])
+  HTML(w)
+})
+
+sac_fill1 <- reactive({
+  validate(
+    need(input$sac_year1 != "", " "),
+    need(input$sac_geo1 != "", " "),
+    need(input$sac_sn1 != "", " ")
+  )
+  # can use pyr_fill with sac inputs
+  f <- pyr_fill(year = input$sac_year1[1], edu = input$sac_edu, geo = input$sac_geo1)
+  return(f)
+})
+
+sac_fill2 <- reactive({
+  validate(
+    need(input$sac_year2 != "", " "),
+    need(input$sac_geo2 != "", " "),
+    need(input$sac_sn2 != "", " ")
+  )
+  # can use pyr_fill with sac inputs
+  f <- pyr_fill(year = input$sac_year2[1], edu = input$sac_edu, geo = input$sac_geo2)
+  return(f)
+})
+
+sac_max1 <- reactive({
+  m <- NULL
+  d1 <- sac_d1()
+  if(input$sac_y == "allarea"){
+    d2 <- pyr_d2()
+    m <- d1 %>%
+      bind_rows(d2) %>%
+      max_age_sex()
+  }
+  return(m)
+})
+
+sac_max2 <- reactive({
+  m <- NULL
+  d2 <- sac_d1()
+  if(input$sac_y == "allarea"){
+    d1 <- pyr_d1()
+    m <- d2 %>%
+      bind_rows(d1) %>%
+      max_age_sex()
+  }
+  return(m)
+})
+
+sac_d1 <- reactive({
   validate(
     need(input$sac_geo1 != "", " "),
     need(input$sac_sn1 != "", " ")
   )
-  df1 <- geog %>% filter(name %in% input$sac_geo1)
-  if(df1$dim=="country" & df1$is185 == 0)
-    tt <-"<FONT COLOR='gray'>Your have selected a country with limited base year data on educational attainment. Please consult the FAQ in the About page for more information<br><br>"
-  HTML(tt)
+  d <- sac_data(geo = input$sac_geo1, sn = input$sac_sn1, edu = input$sac_edu, 
+                year_range = c(input$sac_year1[1], input$sac_year1[2]))
+  return(d)
 })
-output$sac_warn2 <- renderUI({
-  tt<-""
+
+sac_d2 <- reactive({
   validate(
     need(input$sac_geo2 != "", " "),
     need(input$sac_sn2 != "", " ")
   )
-  df1 <- geog %>% filter(name %in% input$sac_geo2)
-  if(df1$dim=="country" & df1$is185 == 0)
-    tt <-"<FONT COLOR='gray'>Your have selected a country with limited base year data on educational attainment. Please consult the FAQ in the About page for more information<br><br>"
-  HTML(tt)
-})
-
-sac_max <- reactive({
-  max1 <- max2 <- NULL
-  if(input$sac_y=="allarea"){
-    df_sac1 <- sac_data(geo = input$sac_geo1, 
-                        sn = input$sac_sn1,
-                        edu = input$sac_edu,
-                        year_range = c(input$sac_year1[1], input$sac_year1[2]))
-    
-    df_sac2 <- sac_data(geo = input$sac_geo1, 
-                        sn = input$sac_sn1,
-                        edu = input$sac_edu,
-                        year_range = c(input$sac_year2[1], input$sac_year2[2]))
-    
-    max1 <- df_sac1 %>% 
-      filter(ageno != 0, sexno != 0, eduno == 0) %>% 
-      pull(pop) %>%
-      max(., na.rm = TRUE)
-    
-    max2 <- df_sac2 %>% 
-      filter(ageno != 0, sexno != 0, eduno == 0) %>% 
-      pull(pop) %>%
-      max(., na.rm = TRUE)
-    
-    max1 <- max2 <- max(max1, max2)
-  }
-  return(list(max1 = max1, max2 = max2))
+  d <- sac_data(geo = input$sac_geo2, sn = input$sac_sn2, edu = input$sac_edu,
+                year_range = c(input$sac_year2[1], input$sac_year2[2]))
+  return(d)
 })
 
 
-output$sac1<- renderGvis({
-  gg<-NULL
+output$sac1 <- renderGvis({
+  gg <- NULL
   validate(
     need(input$sac_geo1 != "", "Please select Area"),
     need(input$sac_sn1 != "", "Please select Scenario")
   )
   withProgress(message = 'Loading Left Plot', value = 0, {
-    incProgress(1/4)
-    df_sac1 <- sac_data(geo = input$sac_geo1, 
-                        sn = input$sac_sn1,
-                        edu = input$sac_edu, 
-                        year_range = c(input$sac_year1[1], input$sac_year1[2]))
-    
-    incProgress(2/4)
-    max1 <- sac_max()$max1
-    
-    incProgress(3/4)
-    gg <- sac_gvis(df_sac = df_sac1, 
-                   pcol = get(paste0("iiasa",input$sac_edu)), 
-                   w = 300, legend="none", 
-                   pmax = max1,
-                   prop = input$sac_prop)
-
-    # plot(gg)
-    incProgress(4/4)
+    m <- sac_max1()
+    # m = NULL; f = FALSE
+    f <- sac_fill1()
+    incProgress(1/3)
+    d <- sac_d1()
+    incProgress(2/3)
+    gg <- sac_gvis(
+      df_sac = d,
+      pcol = ifelse(test = f, yes = "['darkgrey']", no = get(paste0("iiasa",input$sac_edu))),
+      no_edu = f,
+      pmax = m,
+      prop = input$sac_prop,
+      legend = "none"
+    )
+    incProgress(3/3)
   })
   return(gg)
 })
 
-output$sac2<- renderGvis({
-  gg<-NULL
+output$sac2 <- renderGvis({
+  gg <- NULL
   validate(
     need(input$sac_geo2 != "", "Please select Area"),
     need(input$sac_sn2 != "", "Please select Scenario")
   )
-  withProgress(message = 'Loading Right Plot', value = 0, {
-    incProgress(1/4)
-    df_sac1 <- sac_data(geo = input$sac_geo2, 
-                        sn = input$sac_sn2,
-                        edu = input$sac_edu, 
-                        year_range = c(input$sac_year2[1], input$sac_year2[2]))
-    
-    incProgress(2/4)
-    max2 <- sac_max()$max2
-    
-    incProgress(3/4)
-    gg <- sac_gvis(df_sac = df_sac1, 
-                   pcol = get(paste0("iiasa",input$sac_edu)), 
-                   w = 300, legend="none", 
-                   pmax = max2,
-                   prop = input$sac_prop)
-    
-    # plot(gg)
-    incProgress(4/4)
+  withProgress(message = 'Loading Left Plot', value = 0, {
+    m <- sac_max2()
+    f <- sac_fill2()
+    incProgress(1/3)
+    d <- sac_d2()
+    incProgress(2/3)
+    gg <- sac_gvis(
+      df_sac = d,
+      pcol = ifelse(test = f, yes = "['darkgrey']", no = get(paste0("iiasa",input$sac_edu))),
+      no_edu = f,
+      pmax = m,
+      prop = input$sac_prop,
+      legend = "none"
+    )
+    incProgress(3/3)
   })
   return(gg)
 })
 
-output$sac_leg<- renderGvis({
-  if(input$sac_edu==4){
-    leg <- edu4 %>%
-      leg_data()
-    w <- 600
-  }
-  if(input$sac_edu==6){
-    leg <- edu6 %>%
-      leg_data()
-    w <- 900
-  }
-  if(input$sac_edu==10){
-    leg <- edu10 %>%
-      leg_data()
-    w <- 900
-  }
-  g <- gvisBarChart(leg, xvar = "Total", yvar = names(leg)[-1], 
-                    options = list(colors = get(paste0("iiasa", input$pyr_edu)), 
-                                   height = 30, width = w, 
-                                   legend="{position:'top', textStyle: {fontSize: 12}}",
-                                   chartArea="{right:'0%',left:'0%',width:'100%',top:'100%',height:'0%'}"))
+output$sac_leg <- renderGvis({
+  gg <- leg_gvis(edu = input$sac_edu)
+  return(gg)
 })
-
 
 output$sac1_dl <- downloadHandler(
   filename = function() { 

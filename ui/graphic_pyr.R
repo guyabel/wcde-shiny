@@ -37,7 +37,7 @@ tagList(
       sliderInput(
         inputId = "pyr_year1", label = "Year", 
         min = 1950, max = 2100, value = 2015, step= 5, ticks= FALSE, 
-        # animate = TRUE,
+        animate = animationOptions(interval = 2000),
         sep="", width = "100%"
       )
     ),
@@ -46,18 +46,18 @@ tagList(
       sliderInput(
         inputId = "pyr_year2", label = "Year", 
         min = 1950, max = 2100, value = 2050, step= 5, ticks= FALSE, 
-        # animate = TRUE,
+        animate = animationOptions(interval = 2000),
         sep="", width = "100%"
       )
     )
   ),
   fluidRow(
-    column(width = 6, htmlOutput("pyr_warn1")),
-    column(width = 6, htmlOutput("pyr_warn2"))
+    column(width = 6, uiOutput("pyr_warn1")),
+    column(width = 6, uiOutput("pyr_warn2"))
   ),
-  # fluidRow(
-  #   column(width=12, align="center", htmlOutput("pyr_leg"))
-  # ),
+  fluidRow(
+    column(width=12, align="center", htmlOutput("pyr_leg"))
+  ),
   br(),
   fluidRow(
     column(width = 6, htmlOutput("pyr1")),
@@ -77,7 +77,7 @@ tagList(
               selectizeInput(
                 inputId = "pyr_edu", label = "Educational Breakdown", 
                 width = "100%",  
-                selected = 8,
+                selected = 4,
                 choices = list(
                   "Four Categories" = 4, 
                   "Six Categories" = 6,

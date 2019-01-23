@@ -3,7 +3,7 @@ tagList(
     column(width = 3, selectizeInput("sac_geo1", "Area", choices = geo1, width="100%")),
     column(width = 3, selectizeInput("sac_sn1", "Scenario", choices = sn1, selected=sn1[1], width="100%")),
     column(width = 3, selectizeInput("sac_geo2", "Area", choices = geo1, width="100%")),
-    column(width = 3, selectizeInput("sac_sn2", "Scenario", choices = sn1, selected=sn1[4], width="100%"))
+    column(width = 3, selectizeInput("sac_sn2", "Scenario", choices = sn1, selected=sn1[2], width="100%"))
   ),
   fluidRow(
     column(width = 6, sliderInput("sac_year1", "Year", min = 1950, max = 2100, value = c(1950,2100), step= 5, ticks= FALSE, sep="", width="100%")),

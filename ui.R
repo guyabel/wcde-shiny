@@ -10,10 +10,10 @@ shinyUI(
       title = "Data Explorer",
       id='data_tabs',
       fluidRow(
-        column(width = 8, includeMarkdown("md/intro_data.md")),
-        column(width = 4, includeHTML("md/intro_logo.html"))
+        column(width = 7, includeMarkdown("md/intro_data.md")),
+        column(width = 5, includeHTML("md/intro_logo.html"))
       ),
-      br(),
+      # br(),
       tabsetPanel(
         type = "tabs",
         tabPanel("Selection", source("ui/data_select.R", local=TRUE)$value),
@@ -25,10 +25,10 @@ shinyUI(
       title = "Graphic Explorer",
       id='graphic_tabs',
       fluidRow(
-        column(width = 8, includeMarkdown("md/intro_graphic.md")),
-        column(width = 4, includeHTML("md/intro_logo.html"))
+        column(width = 7, includeMarkdown("md/intro_graphic.md")),
+        column(width = 5, includeHTML("md/intro_logo.html"))
       ),
-      br(),
+      # br(),
       tabsetPanel(
         type = "tabs",
         tabPanel(
@@ -50,18 +50,18 @@ shinyUI(
           title = "Profile", 
           br(), 
           source("ui/graphic_profile.R", local=TRUE)$value
-        ),
-        tabPanel("Output", verbatimTextOutput("temp"))
+        )
+        # tabPanel("Output", verbatimTextOutput("temp"))
       )
     ),
     tabPanel(
       title = "About",
       id='about_tabs',
       fluidRow(
-        column(width = 8, includeMarkdown("md/intro_about.md")),
-        column(width = 4, includeHTML("md/intro_logo.html"))
+        column(width = 7, includeMarkdown("md/intro_about.md")),
+        column(width = 5, includeHTML("md/intro_logo.html"))
       ),
-      br(),
+      # br(),
       tabsetPanel(
         type = "tabs",
         tabPanel("Details", includeMarkdown("md/about_details.md")),
