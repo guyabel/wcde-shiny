@@ -4,7 +4,7 @@ This website presents a set of different scenarios of future population and huma
 
 The present version (2.0) benefitted from the partnership with the Joint Research Centre in the Centre of Expertise on Population and Migration <a href="http://www.iiasa.ac.at/web/home/research/researchPrograms/WorldPopulation/Research/Centre_of_Expertise_on_Population_and_Migration.html">(CEPAM)</a>. On top of the assumptions about future trends in fertility, mortality, and education, the projections study the effect of several migration assumptions applied to the context of the set of Shared Socioeconomic Pathways (SSP) scenarios related to the Intergovernmental Panel on Climate Change <a href="http://www.ipcc.ch/" target="_blank">(IPCC)</a>.
 
-The new version also includes the reconstruction of population by levels of educational attainment from 1950 to 2015 for 185 countries. More information in <a href="https://www.oeaw.ac.at/fileadmin/subsites/Institute/VID/PDF/Publications/Working_Papers/WP2018_14.pdf">Speringer et al. 2018</a>.
+The new version also includes the reconstruction of population by levels of educational attainment from 1950 to 2015 for 185 countries. More information in <a href="https://www.oeaw.ac.at/fileadmin/subsites/Institute/VID/PDF/Publications/Working_Papers/WP2019_02.pdf">Speringer et al. 2019</a>.
 
 ### Citation
 The suggested citation for data and plots from this website is:
@@ -196,11 +196,3 @@ Additional R packages used for data manipulations and visualisation:
 Converting HTML plots to PDF and PNG:
 
 * <a href="http://wkhtmltopdf.org"  target="_blank">http://wkhtmltopdf.org</a>
-
-English language editior:
-
-* <a href="http://www.iiasa.ac.at/staff/staff.php?type=auto&visibility=visible&search=true&login=cantele" target="_blank">Matthew Cantele</a> 
-
-IT Server:
-
-* <a href="http://www.null2.net"  target="_blank">Null2 Berlin</a>

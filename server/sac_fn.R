@@ -4,7 +4,8 @@ sac_gvis <- function(df_sac, pcol=iiasa6, no_edu = FALSE,
   df1 <- df_sac %>%
     filter(eduno != 0) %>%
     select(year, edu, pop) %>% 
-    spread(key = edu, value = pop)
+    spread(key = edu, value = pop) %>%
+    mutate(year = as.character(year))
   
   if(no_edu == TRUE){
     d1 <- df_sac %>% select(age, Total)
@@ -26,8 +27,7 @@ sac_gvis <- function(df_sac, pcol=iiasa6, no_edu = FALSE,
       colors = pcol, 
       chartArea="{left:'12.5%',top:'5%',height:'90%',width:'80%'}",
       height = h, width = w*2, areaOpacity = 0.8,
-      hAxis = "{format:'####'}",
-      tooltip = "{format:'####'}",
+      hAxis = "{showTextEvery:5}",
       legend = "{position:'none'}",
       vAxis=paste0("{maxValue:",pmax,", viewWindowMode:'explicit'}")
       )

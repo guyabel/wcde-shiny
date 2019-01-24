@@ -24,7 +24,7 @@ pyr_max1 <- reactive({
 
 pyr_max2 <- reactive({
   m <- NULL
-  d2 <- pyr_d1()
+  d2 <- pyr_d2()
   if(input$pyr_x == "allyear"){
     m <- d2 %>%
       max_age_sex()

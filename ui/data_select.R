@@ -1,36 +1,84 @@
-load("label.RData")
+# load("label.RData")
 
 tagList(
   br(),
   fluidRow(class = "myRow1", 
-    column(3, 
-           br(), h4("1. Indicators"), br(), 
-           selectizeInput('data_cat', 'Indicator Type', choices = ind0, selected=ind0[[1]][1],
-                          width="100%"),
-           uiOutput("data_ind")
-    ), 
-    column(3, 
-           br(), h4("2. Geography"), br(), 
-           uiOutput("nat0"),
-           uiOutput("reg0"),
-           checkboxInput('regnat', 'Include countries of selected regions', FALSE)
+    column(
+      width = 3, 
+      br(), 
+      h4("1. Indicators"), 
+      br(), 
+      selectizeInput(
+        inputId = 'data_cat', label = 'Indicator Type', width = "100%",
+        choices = ind0, selected = ind0[[1]][1]
+      ),
+      selectizeInput(
+        inputId = 'data_ind', label = 'Indicator', width = "100%",
+        choices = NULL, selected = NULL
+      )
     ),
-    column(3, 
-           br(), h4("3. Breakdown"),  br(),
-           uiOutput("sex0"), 
-           uiOutput("age0"), 
-           checkboxInput('allage', 'Include all age groups', FALSE)
+    column(
+      width = 3,
+      br(),
+      h4("2. Geography"),
+      br(),
+      selectizeInput(
+        inputId = 'nat', label = 'Country', width = "100%", multiple = TRUE,
+        choices = NULL, selected = 1, 
+        options = list(placeholder = 'Type or click for multiple choices')
+      ),
+      selectizeInput(
+        inputId = 'reg', label = 'Region', width = "100%", multiple = TRUE,
+        choices = NULL, selected = 1,
+        options = list(placeholder = 'Type or click for multiple choices')
+      ),
+      checkboxInput(
+        inputId = 'allnat', label = 'Include countries of selected regions',
+        value = FALSE
+      )
     ),
-    column(3, 
-           br(), h4("4. Time Horizon"), br(),
-           uiOutput("scenario0"), 
-           uiOutput("year0"), 
-           checkboxInput('allyear', 'Include all times', FALSE),
-           br(),
-           HTML("<div id='linkToData'><button type='button' class='btn btn-block btn-default'>View Data <span class='glyphicon glyphicon-new-window'></span></button></div>"), 
-           br(),
-           downloadButton('data_dl0', 'Download'),
-           br(), br()
+    column(
+      width = 3,
+      br(),
+      h4("3. Breakdown"),
+      br(),
+      selectizeInput(
+        inputId = 'sex', label = 'Sex', width = "100%", multiple = TRUE,
+        choices = NULL, selected = 1
+      ),
+      selectizeInput(
+        inputId = 'age', label = 'Age', width = "100%", multiple = TRUE,
+        choices = NULL, selected = 1,
+        options = list(placeholder = 'Not available')
+      ),
+      checkboxInput(
+        inputId = 'allage', label = 'Include all age groups',
+        value = FALSE
+      )
+    ),
+    column(
+      width = 3,
+      br(),
+      h4("4. Time Horizon"),
+      br(),
+      selectizeInput(
+        inputId = 'scenario', label = 'Scenario', width = "100%", multiple = TRUE,
+        choices = NULL, selected = 1
+      ),
+      selectizeInput(
+        inputId = 'year', label = 'Year', width = "100%", multiple = TRUE,
+        choices = NULL, selected = NULL
+      ),
+      checkboxInput(
+        inputId = 'allyear', label = 'Include all times',
+        value = FALSE
+      ),
+      br(),
+      HTML("<div id='linkToData'><button type='button' class='btn btn-block btn-default'>View Data <span class='glyphicon glyphicon-new-window'></span></button></div>"),
+      br(),
+      downloadButton('data_dl0', 'Download'),
+      br(),
+      br()
     )
   ),
   tags$script("$('#linkToData').click(function() {

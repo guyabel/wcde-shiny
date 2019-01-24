@@ -5,6 +5,14 @@
 #   as.list(input)
 # })
 
+allarea <- reactive({
+  # validate(
+  #   need(input$reg, label = "region"),
+  #   need(input$nat, label = "nation")
+  # )
+  c(input$reg,input$nat)
+})
+
 output$tit_ind <- renderText({
   ind  %>% 
     filter(fullname %in% input$data_ind) %>% 
@@ -57,7 +65,7 @@ df_build <- reactive({
   
   withProgress(message = 'Creating Data', detail = 'May take a few seconds...', value = 0, {
     for(i in input$scenario){
-      #input<-NULL; input$age=0;  input$sex=0;  input$year=0;  input$year=2020; input$data_ind=ind2[[1]][1]; input$scenario=c(sn1[1],sn1[2]); input$isono=TRUE; i=2
+      #input<-NULL; input$age=4;  input$sex=0;  input$year=0;  input$year=2020; input$data_ind=ind1[[1]][2]; input$scenario=c(sn1[1],sn1[2]); input$isono=TRUE; i=2
       # input$reg <- c("Oceania", "Asia")
       df2 <- NULL
       
@@ -72,7 +80,7 @@ df_build <- reactive({
       sn <- dimen %>% 
         filter(dim=="scenario", code==i) %>% 
         pull(sname)
-      
+
       # education to filter (there is no options in data explorer to choose education)
       edu0 <- 0 
       if(df1$edu == 1)
@@ -89,10 +97,12 @@ df_build <- reactive({
         mutate(age = fct_inorder(age),
                scenario = sn) %>%
         select(scenario, everything()) %>%
-        filter(ageno %in% if(df1$age==1 | df1$bage==1 | df1$sage==1) input$age else 0,
-               year %in% input$year,
-               eduno %in% edu0,
-               sexno %in% if(df1$sex!=0) input$sex else 0)
+        filter(
+          ageno %in% input$age,
+          year %in% input$year,
+          eduno %in% edu0,
+          sexno %in% input$sex
+        )
 
       # when get country or regions selected flip the data frame
       if(length(v)>8){
@@ -113,9 +123,9 @@ df_build <- reactive({
       if(df1$period==1)
         df2 <- df2 %>% select(-year)
       
-      if(df1$age==0)
+      if(sum(df1$age, df1$bage, df1$sage) == 0)
         df2 <- df2 %>% select(-age)
-      if(sum(as.numeric(input$age))==0 & sum(df1$age,df1$bage,df1$sage)>0)
+      if(sum(df1$age,df1$bage,df1$sage)>0 & sum(as.numeric(input$age))==0 )
         df2 <- df2 %>% select(-age)
       
       if(df1$sex==0)

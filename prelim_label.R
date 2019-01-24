@@ -167,8 +167,8 @@ edu6 <- edu6 %>%
   map_df(~ data_frame(eduno = .x), .id = "edu_name")
 
 edu10 <- edu1 %>% 
-  map_df(~ data_frame(eduno = .x), .id = "edu_name") %>%
-  mutate(eduno = ifelse(edu_name == "Post Secondary", NA, eduno))
+  map_df(~ data_frame(eduno = .x), .id = "edu_name") 
+  # mutate(eduno = ifelse(edu_name == "Post Secondary", NA, eduno))
 
 
 age2 <- list("Five Year Age Groups" = dimen %>%
@@ -284,6 +284,7 @@ rm(i)
 
 save.image(file="./label.RData")
 
+save(ind0, file="./ind0.RData")
 
 ##
 ## check pdf names

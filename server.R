@@ -8,6 +8,8 @@ library(googleVis)
 #setwd("./shiny/wic2")
 # df0 <- loads(file = "df1/pop", variables = c("year", "ageno", "sexno", "eduno"), ultra.fast = TRUE, to.data.frame=TRUE)
 
+load("label.RData")
+
 shinyServer(function(input, output, session) {
   for (file in list.files("server")) {
     source(file.path("server", file), local = TRUE)

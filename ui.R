@@ -20,6 +20,7 @@ shinyUI(
         tabPanel("Data", source("ui/data_data.R", local=TRUE)$value),
         tabPanel("Assumptions", source("ui/data_assumption.R", local=TRUE)$value)
       )
+      # tabPanel("Output", verbatimTextOutput("temp"))
     ),
     tabPanel(
       title = "Graphic Explorer",

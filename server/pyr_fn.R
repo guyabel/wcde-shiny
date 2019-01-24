@@ -214,6 +214,8 @@ pyr_warn <- function(f = NULL, year = input$pyr_year1){
   return(w)
 }
 
+# input$pyr_geo1 = 250; input$pyr_sn1 = 2; input$pyr_edu = 8
+# geo = input$pyr_geo1; sn = input$pyr_sn1; edu = input$pyr_edu
 pyr_data <- function(geo = input$pyr_geo1, 
                      sn = input$pyr_sn1,
                      edu = input$pyr_edu){
@@ -239,7 +241,7 @@ pyr_data <- function(geo = input$pyr_geo1,
     gather(key = isono, value = pop, -(1:7)) %>% 
     mutate(pop = pop/1e3) %>%
     mutate(scenario = sn) 
-  
+  # df1 %>% filter(year == 2015, sexno != 0, ageno == 14, sexno == 1)
   if(edu == "4"){
     df2 <- df1 %>%
       left_join(edu4, by = "eduno") %>%
@@ -264,6 +266,7 @@ pyr_data <- function(geo = input$pyr_geo1,
   }
   if(edu == "8"){
     df2 <- df1 %>%
+      # filter(eduno != 7) %>%
       left_join(edu10, by = "eduno") %>%
       mutate(edu = fct_inorder(edu_name)) %>%
       select(-edu_name) %>%
