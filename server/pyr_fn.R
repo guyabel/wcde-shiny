@@ -8,7 +8,7 @@ leg_gvis <- function(edu = input$pyr_edu){
   }
   if(edu==8){
     leg <- edu10 %>%
-      drop_na() %>%
+      filter(eduno != 7) %>%
       leg_data()
   }
   if(edu != 8){
@@ -36,7 +36,7 @@ leg_gvis <- function(edu = input$pyr_edu){
     )
     g2 <- gvisBarChart(
       data = leg, 
-      xvar = "Total", yvar = names(leg)[7:10], 
+      xvar = "Total", yvar = names(leg)[8:10], 
       options = list(
         colors = iiasa8b,
         height = 30, width = 900, 
@@ -244,6 +244,7 @@ pyr_data <- function(geo = input$pyr_geo1,
   # df1 %>% filter(year == 2015, sexno != 0, ageno == 14, sexno == 1)
   if(edu == "4"){
     df2 <- df1 %>%
+      filter(!eduno %in% 8:10) %>%
       left_join(edu4, by = "eduno") %>%
       mutate(edu = fct_inorder(edu_name)) %>%
       select(-edu_name) %>%
@@ -255,6 +256,7 @@ pyr_data <- function(geo = input$pyr_geo1,
   }
   if(edu == "6"){
     df2 <- df1 %>%
+      filter(!eduno %in% 8:10) %>%
       left_join(edu6, by = "eduno") %>%
       mutate(edu = fct_inorder(edu_name)) %>%
       select(-edu_name) %>%
@@ -266,7 +268,7 @@ pyr_data <- function(geo = input$pyr_geo1,
   }
   if(edu == "8"){
     df2 <- df1 %>%
-      # filter(eduno != 7) %>%
+      filter(eduno != 7) %>%
       left_join(edu10, by = "eduno") %>%
       mutate(edu = fct_inorder(edu_name)) %>%
       select(-edu_name) %>%
@@ -283,12 +285,13 @@ pyr_data <- function(geo = input$pyr_geo1,
   }
   return(df2)
 }
-
+# leg_data(df2)
+# 
 leg_data <- function(d){
   d %>%
     select(edu_name) %>%
     distinct() %>%
-    mutate(edu_name = fct_inorder(edu_name), 
+    mutate(edu_name = fct_inorder(edu_name),
            age = 0) %>%
     spread(key = edu_name, value = age)
 }
