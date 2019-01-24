@@ -87,15 +87,23 @@ sex_choice <- reactive({
   ch <- sex1
   if(ind_sex$sex == 0)
     ch <- sex1[1]
-  if(ind_sex$name %in% c("assr","eassr", "prop", "bprop"))
+  if(ind_sex$name %in% c("assr","eassr", "prop", "bprop", "e0", "ryl15", "pryl15"))
     ch <- sex1[-1]
   if(ind_sex$name %in% c("tfr", "etfr", "asfr", "cbr", "macb", "easfr"))
-    ch <- sex1[-2]
+    ch <- sex1[-c(1:2)]
   return(ch)
 })
 
+
+sex_select <- reactive({
+  s <- sex_choice()
+  if(length(s) == 3)
+    s <- s[1]
+  return(s)
+})
+
 observe({
-  updateSelectizeInput(session, inputId = "sex", choices = sex_choice(), selected = sex_choice()[1])
+  updateSelectizeInput(session, inputId = "sex", choices = sex_choice(), selected = sex_select())
   # options = list(placeholder = sex_placeholder()))
 })
 

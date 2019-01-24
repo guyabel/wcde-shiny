@@ -65,7 +65,7 @@ df_build <- reactive({
   
   withProgress(message = 'Creating Data', detail = 'May take a few seconds...', value = 0, {
     for(i in input$scenario){
-      #input<-NULL; input$age=4;  input$sex=0;  input$year=0;  input$year=2020; input$data_ind=ind1[[1]][2]; input$scenario=c(sn1[1],sn1[2]); input$isono=TRUE; i=2
+      #input<-NULL; input$age=4;  input$sex=0;  input$year=0;  input$year=2020; input$data_ind=ind1[[2]][5]; input$scenario=c(sn1[1],sn1[2]); input$isono=TRUE; i=2
       # input$reg <- c("Oceania", "Asia")
       df2 <- NULL
       
@@ -82,15 +82,14 @@ df_build <- reactive({
         pull(sname)
 
       # education to filter (there is no options in data explorer to choose education)
-      edu0 <- 0 
-      if(df1$edu == 1)
-        edu0 <- unlist(edu1)
-      if(fn %in% c("ggapedu15", "ggapedu25", "etfr"))
-        edu0 <- unlist(edu1)[-(1:2)]
-      if(fn == "etfr")
-        edu0 <- unlist(edu1)[-2]
+      # edu0 <- 0 
+      # if(df1$edu == 1)
+      #   edu0 <- unlist(edu1)
+      # if(fn %in% c("ggapedu15", "ggapedu25", "etfr"))
+      #   edu0 <- unlist(edu1)[-(1:2)]
+      # if(fn == "etfr")
+      #   edu0 <- unlist(edu1)[-2]
       
-      # initial load
       df2 <- loads(file = paste0("df", i, "/",fn), 
                    variables = v, ultra.fast = TRUE, to.data.frame=TRUE) %>%
         tbl_df() %>%
@@ -100,7 +99,7 @@ df_build <- reactive({
         filter(
           ageno %in% input$age,
           year %in% input$year,
-          eduno %in% edu0,
+          # eduno %in% edu0,
           sexno %in% input$sex
         )
 
