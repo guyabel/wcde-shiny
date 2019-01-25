@@ -1,13 +1,25 @@
 tagList(
   fluidRow(
-    column(width = 3, selectizeInput("sac_geo1", "Area", choices = geo1, width="100%")),
+    column(
+      width = 3, 
+      selectizeInput(
+        inputId = "sac_geo1", label = "Area", width = "100%",
+        choices = geo1
+      )
+    ),
     column(width = 3, selectizeInput("sac_sn1", "Scenario", choices = sn1, selected=sn1[1], width="100%")),
     column(width = 3, selectizeInput("sac_geo2", "Area", choices = geo1, width="100%")),
     column(width = 3, selectizeInput("sac_sn2", "Scenario", choices = sn1, selected=sn1[2], width="100%"))
   ),
   fluidRow(
-    column(width = 6, sliderInput("sac_year1", "Year", min = 1950, max = 2100, value = c(1950,2100), step= 5, ticks= FALSE, sep="", width="100%")),
-    column(width = 6, sliderInput("sac_year2", "Year", min = 1950, max = 2100, value = c(1950,2100), step= 5, ticks= FALSE, sep="", width="100%"))
+    column(
+      width = 6, 
+      uiOutput(outputId = "sac_year10")
+    ),
+    column(
+      width = 6, 
+      uiOutput(outputId = "sac_year20")
+    )
   ),
   fluidRow(
     column(width = 6, htmlOutput("sac_warn1")),
@@ -28,7 +40,20 @@ tagList(
         column(6, 
           h4("Graphic Options:"),
           fluidRow(
-            column(4, selectizeInput("sac_edu", "Educational Categories", width="100%",  list("Four Categories"=4,"Six Categories"=6))),
+            column(
+              width = 4, 
+              selectizeInput(
+                inputId = "sac_edu", 
+                label = "Educational Categories", 
+                width = "100%",  
+                choices = 
+                  list(
+                    "Four Categories" = 4,
+                    "Six Categories" = 6,
+                    "Eight Categories" = 8
+                  )
+              )
+            ),
             column(4, selectizeInput("sac_y", "Vertical Axis", width="100%",
                                      choices = list("Plot Specific"="data","Both Plots"="allarea"))),
             column(4, selectizeInput("sac_prop", "Data", width="100%",

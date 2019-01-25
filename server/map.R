@@ -5,7 +5,7 @@
 
 
 map_geo<-reactive({
-  geo<-NULL
+  geo <- NULL
   if(input$map_area=="World"){
     geo <- geog %>% filter(dim=="country") %>% .[["name"]]
   }
@@ -18,20 +18,20 @@ map_geo<-reactive({
   return(geo)
 })
 
-#input=NULL;input$map_year=2015; input$map_ind=ind[[1]][1]; input$map_proj="mercator";input$map_area="Latin America and the Caribbean"; input$map_sn=1; input$map_age="";input$map_sex=1;input$map_edu=""
+#input=NULL;input$map_year=2015; input$map_ind=ind4[[1]][3]; input$map_proj="mercator";input$map_area="Latin America and the Caribbean"; input$map_sn=1; input$map_age="";input$map_sex=1;input$map_edu=""
 map_build <- reactive({
   validate( 
     need(input$map_ind != "", "Please select Indicator"), 
     need(input$map_area != "", "Please select Area"), 
-    need(input$map_sn != "", "Please select Scenario")
+    need(input$map_sn != "", "Please select Scenario"),
+    need(input$map_age != "", "Please select Age"),
+    need(input$map_sex != "", "Please select Sex"),
+    need(input$map_edu != "", "Please select Education"),
+    need(input$map_year != "", "Please select Years")
   )
   df1<-NULL;df2<-NULL; gg<-NULL
   withProgress(message = 'Loading Map', value = 0, {
     if(length(input$map_sn)>0){
-      fn <- ind %>% 
-        filter(fullname == input$map_ind) %>%
-        pull(name)
-      
       cn <- ind %>% 
         filter(fullname == input$map_ind) %>%
         pull(cname)
@@ -50,30 +50,49 @@ map_build <- reactive({
           c(v, .)
       }
       
-      
+      fn <- ind %>% 
+        filter(fullname == input$map_ind) %>%
+        pull(name)
+
       incProgress(1/4)
       df1 <- loads(file = paste0("df",input$map_sn, "/", fn, "/"), 
                    variables = v, ultra.fast = TRUE, to.data.frame=TRUE) %>%
         tbl_df()
       incProgress(2/4)
+      d2a <- geog %>% 
+        filter(dim == "country") %>%
+        select(name, ggarea, isono)
+      
       df2 <- df1 %>% 
-        gather(key = isono, value = !!cn, -(1:4), convert = TRUE) %>%
-        filter(year==input$map_year,
-               ageno == if(nchar(input$map_age)==0) 0 else input$map_age,
-               sexno == if(nchar(input$map_sex)==0) 0 else input$map_sex,
-               eduno == if(nchar(input$map_edu)==0) 0 else input$map_edu) %>%
-        left_join(geog, by="isono") 
+        gather(key = isono, value = x, -(1:4), convert = TRUE) %>%
+        # fill in missing rows for masters etc pre 2015
+        # complete(year, ageno, sexno, eduno, isono) %>%
+        filter(year == input$map_year,
+               ageno == input$map_age,
+               sexno == input$map_sex,
+               eduno == input$map_edu) %>%
+               # ageno == if(nchar(input$map_age)==0) 0 else input$map_age,
+               # sexno == if(nchar(input$map_sex)==0) 0 else input$map_sex,
+               # eduno == if(nchar(input$map_edu)==0) 0 else input$map_edu) %>%
+        full_join(d2a, by="isono") %>%
+        # replace_na(list(x = 0)) %>%
+        rename(!!cn := x)
+      
       incProgress(3/4)
-      gg <- gvisGeoChart(data = df2, locationvar = "ggarea", colorvar = cn, 
-                         hovervar = "name", chartid="map",
-                         options = list(
-                           width = 1100, height = 800, 
-                           projection = input$map_proj, dataMode = "regions", 
-                           region = geog %>% 
-                             filter(name == input$map_area) %>% 
-                             pull(ggarea),
-                           colorAxis="{colors:['lightgrey', 'dodgerblue']}")
-                         )
+      gg <- gvisGeoChart(
+        data = df2, 
+        locationvar = "ggarea", colorvar = cn, 
+        hovervar = "name", chartid = "map",
+        options = list(
+          width = 1100, height = 600, 
+          projection = input$map_proj, 
+          dataMode = "regions", 
+          region = geog %>% 
+            filter(name == input$map_area) %>% 
+            pull(ggarea),
+          colorAxis = "{colors:['lightgrey', 'dodgerblue']}",
+          defaultColor = 'white')
+      )
       incProgress(4/4)
     }
   })
@@ -84,50 +103,32 @@ output$map <- renderGvis({
   map_build()
 })
 
-
 output$map1_dl <- downloadHandler(
-  filename = function() { 
-    paste0('wic_map.', if(input$map_dl=="pdf") 'pdf' else 'png')
+  filename = function() {
+    paste0("wic_map_", Sys.time(), ".", if(input$map_dl=="pdf") 'pdf' else 'png')
   },
   content = function(file) {
-    fh <- file("head.html", "w")
-    cat(pdfinfo, file = fh)
-    cat(paste0(input$map_ind,  "<br>\n"), file = fh)
-    cat(paste0(input$map_area, "<br>\n"), file = fh)
-    cat(paste0(dimen %>% filter(dim=="scenario", code==input$map_sn) %>% .[["name"]], "<br>\n"), file = fh)
-    cat(paste0(input$map_year, "<br>\n"), file = fh)
-    if(length(input$map_age)>0)
-      cat(paste0("Age: ", dimen %>% filter(dim=="sex", code==input$map_age) %>% .[["name"]], "<br>\n"), file = fh)
-    if(length(input$map_sex)>0)
-      cat(paste0("Sex: ", dimen %>% filter(dim=="sex", code==input$map_sex) %>% .[["name"]], "<br>\n"), file = fh)
-    if(length(input$map_edu)>0)
-      cat(paste0("Education: ", dimen %>% filter(dim=="sex", code==input$map_edu) %>% .[["name"]], "<br>\n"), file = fh)
-    cat("<br>\n", file = fh)
-    close(fh)
-
     gg <- map_build()
-    gg$html$caption <- includeHTML("head.html")
-    print(gg, file="gg.html")
     
-    if(input$sac_dl=="pdf"){
-      system("wkhtmltopdf   --enable-javascript --javascript-delay 2000 gg.html gg.pdf")
-      file.copy("./gg.pdf", file)
-      file.remove("gg.pdf")
-    }
-    if(input$sac_dl=="png"){
-      system("wkhtmltoimage --enable-javascript --javascript-delay 4000 gg.html gg.png"); #file.show("gg.png")
-      file.copy("./gg.png", file)
-      file.remove("gg.png")
-    }
+    #generate head.html
+    dl_head(year = input$map_year, scenario = input$map_sn, geo = input$map_area, 
+            type = "map", 
+            ind = input$map_ind, age = input$map_age, 
+            sex = input$map_sex, edu = input$map_edu)
+    #generate gg.html
+    gg$html$caption <- includeHTML("head.html")
+    print(gg, file = "gg.html")
+    
+    webshot(
+      url = "gg.html", 
+      file = paste0("./output.", input$map_dl), 
+      delay = 5,
+      zoom = ifelse(input$map_dl == ".pdf", 0.5, 1)
+    )
+    
+    file.copy(paste0("output.", input$map_dl), file)
     file.remove("gg.html")
     file.remove("head.html")
+    file.remove(paste0("output.", input$map_dl))
   }
 )
-
-output$map_dlwarn <- renderUI({
-  tt<-""
-  if(input$map_dl=="png")
-    tt <-"<FONT COLOR='gray'>PNG Download of maps is not always possible, especially for more complex map images based on larger areas."
-  HTML(tt)
-})
-#plot(gmap)

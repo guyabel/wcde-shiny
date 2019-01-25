@@ -111,8 +111,7 @@ output$pyr1 <- renderGvis({
       pyr_col = ifelse(test = f, yes = "['darkgrey']", no = get(paste0("iiasa",input$pyr_edu))),
       no_edu = f,
       pmax = m,
-      prop = input$pyr_prop,
-      legend = "none"
+      prop = input$pyr_prop
     )
     incProgress(3/3)
   })
@@ -136,8 +135,7 @@ output$pyr2 <- renderGvis({
       pyr_col = ifelse(test = f, yes = "['darkgrey']", no = get(paste0("iiasa",input$pyr_edu))),
       no_edu = f,
       pmax = m,
-      prop = input$pyr_prop,
-      legend = "none"
+      prop = input$pyr_prop
     )
     incProgress(3/3)
   })
@@ -158,76 +156,84 @@ output$pyr_leg <- renderGvis({
 
 output$pyr1_dl <- downloadHandler(
   filename = function() {
-    paste0('wic_pyr.', if(input$pyr_dl=="pdf") 'pdf' else 'png')
+    # paste0("wic_pyr.", if(input$pyr_dl=="pdf") 'pdf' else 'png')
+    paste0("pyr_",
+           tolower(input$pyr_geo1), "_", input$pyr_year1, "_s", input$pyr_sn1, "_e", input$pyr_edu, ".",
+           if(input$pyr_dl=="pdf") 'pdf' else 'png')
   },
   content = function(file) {
-    #objects
-    m <- pyr_max1()
     f <- pyr_fill1()
-    d <- pyr_d1()
     gg <- pyr_gvis(
-      d_pyr = d,
+      d_pyr =  pyr_d1(),
       pyr_year = input$pyr_year1,
       pyr_col = ifelse(test = f, yes = "['darkgrey']", no = get(paste0("iiasa",input$pyr_edu))),
       no_edu = f,
-      pmax = m,
+      pmax = pyr_max1(),
       prop = input$pyr_prop,
-      legend = "top",
-      edu = input$pyr_edu
+      legend = TRUE,
+      edu = input$pyr_edu,
+      dl = TRUE
     )
-    w <- pyr_warn(f = f, year = input$pyr_year1)
-    sn <- dimen %>%
-      filter(dim=="scenario", code==input$pyr_sn1) %>%
-      pull(name)
+    
+    #generate head.html
+    dl_head(year = input$pyr_year1, scenario = input$pyr_sn1, geo = input$pyr_geo1, type = "pyr")
+    #generate gg.html
+    gg$html$caption <- includeHTML("head.html")
+    print(gg, file = "gg.html")
 
-    # head file
-    fh <- file("head.html", "w")
-    cat(pdfinfo, file = fh)
-    cat(paste0("Population (000's) Pyramid","<br>\n"), file = fh)
-    cat(paste0(input$pyr_geo1, "<br>\n"), file = fh)
-    cat(paste0(input$pyr_year1, "<br>"), file = fh)
-    cat(paste0(sn, "<br>\n<br>\n"), file = fh)
-    cat(w, file = fh)
-    close(fh)
-
-    dl_gvis(g = gg, h = "head.html", file_type = input$pyr_dl)
+    webshot(
+      url = "gg.html", 
+      file = paste0("./output.", input$pyr_dl), 
+      delay = 2,
+      zoom = ifelse(input$pyr_dl == ".pdf", 0.5, 1)
+    )
+    
+    file.copy(paste0("output.", input$pyr_dl), file)
+    file.remove("gg.html")
+    file.remove("head.html")
+    file.remove(paste0("output.", input$pyr_dl))
   }
 )
 
+
+
 output$pyr2_dl <- downloadHandler(
   filename = function() {
-    paste0('wic_pyr.', if(input$pyr_dl=="pdf") 'pdf' else 'png')
+    # paste0("wic_pyr.", if(input$pyr_dl=="pdf") 'pdf' else 'png')
+    paste0("pyr_",
+           tolower(input$pyr_geo2), "_", input$pyr_year2, "_s", input$pyr_sn2, "_e", input$pyr_edu, ".",
+           if(input$pyr_dl=="pdf") 'pdf' else 'png')
   },
   content = function(file) {
-    #objects
-    m <- pyr_max2()
     f <- pyr_fill2()
-    d <- pyr_d2()
     gg <- pyr_gvis(
-      d_pyr = d,
+      d_pyr =  pyr_d2(),
       pyr_year = input$pyr_year2,
       pyr_col = ifelse(test = f, yes = "['darkgrey']", no = get(paste0("iiasa",input$pyr_edu))),
       no_edu = f,
-      pmax = m,
+      pmax = pyr_max2(),
       prop = input$pyr_prop,
-      legend = "top",
-      edu = input$pyr_edu
+      legend = TRUE,
+      edu = input$pyr_edu,
+      dl = TRUE
     )
-    w <- pyr_warn(f = f, year = input$pyr_year2)
-    sn <- dimen %>%
-      filter(dim=="scenario", code==input$pyr_sn2) %>%
-      pull(name)
-
-    # head file
-    fh <- file("head.html", "w")
-    cat(pdfinfo, file = fh)
-    cat(paste0("Population (000's) Pyramid","<br>\n"), file = fh)
-    cat(paste0(input$pyr_geo2, "<br>\n"), file = fh)
-    cat(paste0(input$pyr_year2, "<br>"), file = fh)
-    cat(paste0(sn, "<br>\n<br>\n"), file = fh)
-    cat(w, file = fh)
-    close(fh)
-
-    dl_gvis(g = gg, h = "head.html", file_type = input$pyr_dl)
+    
+    #generate head.html
+    dl_head(year = input$pyr_year2, scenario = input$pyr_sn2, geo = input$pyr_geo2, type = "pyr")
+    #generate gg.html
+    gg$html$caption <- includeHTML("head.html")
+    print(gg, file = "gg.html")
+    
+    webshot(
+      url = "gg.html", 
+      file = paste0("./output.", input$pyr_dl), 
+      delay = 2,
+      zoom = ifelse(input$pyr_dl == ".pdf", 0.5, 1)
+    )
+    
+    file.copy(paste0("output.", input$pyr_dl), file)
+    file.remove("gg.html")
+    file.remove("head.html")
+    file.remove(paste0("output.", input$pyr_dl))
   }
 )

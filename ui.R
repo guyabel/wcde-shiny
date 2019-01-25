@@ -33,13 +33,13 @@ shinyUI(
       tabsetPanel(
         type = "tabs",
         tabPanel(
-          title = "Pyramids", 
-          br(), 
+          title = "Pyramids",
+          br(),
           source("ui/graphic_pyr.R", local=TRUE)$value
         ),
         tabPanel(
-          title = "Population Size", 
-          br(), 
+          title = "Population Size",
+          br(),
           source("ui/graphic_sac.R", local=TRUE)$value
         ),
         tabPanel(

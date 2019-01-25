@@ -24,7 +24,7 @@ tagList(
       br(),
       selectizeInput(
         inputId = 'nat', label = 'Country', width = "100%", multiple = TRUE,
-        choices = NULL, selected = 1, 
+        choices = nn2, selected = 1, 
         options = list(placeholder = 'Type or click for multiple choices')
       ),
       selectizeInput(

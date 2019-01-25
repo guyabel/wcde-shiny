@@ -1,25 +1,29 @@
-sac_gvis <- function(df_sac, pcol=iiasa6, no_edu = FALSE,
-                     w = 295, h = 500, legend="none", pmax=NULL, prop=FALSE){
-  #df_sac<-df_sac1;pyear=2010; pcol=iiasa6; w=400;h=500
-  df1 <- df_sac %>%
-    filter(eduno != 0) %>%
+sac_gvis <- function(d_sac, pcol=iiasa6, no_edu = FALSE,
+                     w = 295, h = 500, legend= FALSE, pmax=NULL, prop=FALSE, ...){
+  #d_sac<-d;pyear=2010; pcol=iiasa6; w=400;h=500
+  df1 <- d_sac %>%
+    # filter(eduno != 0) %>%
     select(year, edu, pop) %>% 
     spread(key = edu, value = pop) %>%
     mutate(year = as.character(year))
   
+  if(no_edu == FALSE){
+    df1 <- df1 %>% select(-Total)
+  }
   if(no_edu == TRUE){
-    d1 <- df_sac %>% select(age, Total)
+    df1 <- df1 %>% select(year, Total)
   }
 
   if(is.null(pmax))
-    pmax <- df_sac %>% 
+    pmax <- d_sac %>% 
       filter(eduno==0) %>% 
       pull(pop) %>%
       max(., na.rm=TRUE)
   if(prop==TRUE)
     pmax <- 1
 
-  gg <- gvisAreaChart(
+  
+  gg0 <- gvisAreaChart(
     data = df1, 
     xvar = "year", yvar = names(df1[,-1]),
     options = list(
@@ -33,6 +37,18 @@ sac_gvis <- function(df_sac, pcol=iiasa6, no_edu = FALSE,
       )
     )
   
+  if(legend == FALSE)
+    gg <- gg0
+  
+  if(legend == TRUE){
+    top1 <- leg_gvis(edu = edu, ...)
+    if(no_edu == TRUE){
+      top1 <- NULL
+    }
+    gg <- gvisMerge(x = top1,
+                    y = gg0,
+                    tableOptions = "cellspacing=0, cellpadding=0")
+  }
   return(gg)
 }
 
@@ -62,6 +78,7 @@ sac_data <- function(geo = input$sac_geo1,
   
   if(edu==4){
     df2 <- df1 %>%
+      filter(!eduno %in% 8:10) %>%
       left_join(edu4, by = "eduno") %>%
       mutate(edu = fct_inorder(edu_name)) %>%
       select(-edu_name) %>%
@@ -73,6 +90,7 @@ sac_data <- function(geo = input$sac_geo1,
   }
   if(edu==6){
     df2 <- df1 %>%
+      filter(!eduno %in% 8:10) %>%
       left_join(edu6, by = "eduno") %>%
       mutate(edu = fct_inorder(edu_name)) %>%
       select(-edu_name) %>%
@@ -84,6 +102,7 @@ sac_data <- function(geo = input$sac_geo1,
   }
   if(edu == "8"){
     df2 <- df1 %>%
+      filter(eduno != 7) %>%
       left_join(edu10, by = "eduno") %>%
       mutate(edu = fct_inorder(edu_name)) %>%
       select(-edu_name) %>%
@@ -91,11 +110,11 @@ sac_data <- function(geo = input$sac_geo1,
       group_by(scenario, year, ageno, age, sex, sexno, edu, eduno) %>%
       summarise(pop=sum(pop)) %>%
       ungroup() %>%
-      # all education splits to zero if less than 2015
-      mutate(pop = ifelse(year < 2015 & edu != "Total", 0, pop)) %>%
-      # fill in missing rows for masters etc pre 2015
-      complete(scenario, year, age, sex, edu, fill = list(pop = 0)) %>%
-      fill(ageno, sexno) %>%
+      # # all education splits to zero if less than 2015
+      # mutate(pop = ifelse(year < 2015 & eduno != 0, 0, pop)) %>%
+      # # fill in missing rows for masters etc pre 2015
+      # complete(scenario, year, age, sex, edu, fill = list(pop = 0)) %>%
+      # fill(ageno, sexno) %>%
       mutate(eduno = ifelse(edu == "Total", 0, 1))
   }
   return(df2)

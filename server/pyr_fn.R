@@ -1,5 +1,5 @@
 #legend works for sac as well
-leg_gvis <- function(edu = input$pyr_edu){
+leg_gvis <- function(edu = input$pyr_edu, dl = FALSE){
   if(edu==4){
     leg <- leg_data(d = edu4)
   }
@@ -11,6 +11,7 @@ leg_gvis <- function(edu = input$pyr_edu){
       filter(eduno != 7) %>%
       leg_data()
   }
+  
   if(edu != 8){
     g <- gvisBarChart(
       data = leg, 
@@ -18,11 +19,43 @@ leg_gvis <- function(edu = input$pyr_edu){
       options = list(
         colors = get(paste0("iiasa", edu)),
         height = 30, width = 900, 
-        legend = "{position:'top', textStyle: {fontSize: 12}, alignment:'center'}",
+        legend = ifelse(dl == FALSE, 
+                        "{position:'top', textStyle: {fontSize: 12}, alignment:'center'}",
+                        "{position:'top', textStyle: {fontSize: 12}}"),
         chartArea = "{right:'0%',left:'0%',width:'100%',top:'100%',height:'0%'}"
       )
     )
   }
+  
+  if(edu == 6 & dl == TRUE){
+    g1 <- gvisBarChart(
+      data = leg, 
+      xvar = "Total", yvar = names(leg)[2:5], 
+      options = list(
+        colors = iiasa8a,
+        height = 30, width = 900, 
+        legend = ifelse(dl == FALSE, 
+                        "{position:'top', textStyle: {fontSize: 12}, alignment:'center'}",
+                        "{position:'top', textStyle: {fontSize: 12}}"),
+        chartArea = "{right:'0%',left:'0%',width:'100%',top:'100%',height:'0%'}"
+      )
+    )
+    g2 <- gvisBarChart(
+      data = leg, 
+      xvar = "Total", yvar = names(leg)[6:8], 
+      options = list(
+        colors = iiasa8b,
+        height = 30, width = 900, 
+        legend = ifelse(dl == FALSE, 
+                        "{position:'top', textStyle: {fontSize: 12}, alignment:'center'}",
+                        "{position:'top', textStyle: {fontSize: 12}}"),
+        chartArea = "{right:'0%',left:'0%',width:'100%',top:'100%',height:'0%'}"
+      )
+    )
+    g <- gvisMerge(x = g1, y = g2)
+  }
+  
+  
   if(edu == 8){
     g1 <- gvisBarChart(
       data = leg, 
@@ -30,7 +63,9 @@ leg_gvis <- function(edu = input$pyr_edu){
       options = list(
         colors = iiasa8a,
         height = 30, width = 900, 
-        legend = "{position:'top', textStyle: {fontSize: 12}, alignment:'center'}",
+        legend = ifelse(dl == FALSE, 
+                        "{position:'top', textStyle: {fontSize: 12}, alignment:'center'}",
+                        "{position:'top', textStyle: {fontSize: 12}}"),
         chartArea = "{right:'0%',left:'0%',width:'100%',top:'100%',height:'0%'}"
       )
     )
@@ -40,7 +75,9 @@ leg_gvis <- function(edu = input$pyr_edu){
       options = list(
         colors = iiasa8b,
         height = 30, width = 900, 
-        legend = "{position:'top', textStyle: {fontSize: 12}, alignment:'center'}",
+        legend = ifelse(dl == FALSE, 
+                        "{position:'top', textStyle: {fontSize: 12}, alignment:'center'}",
+                        "{position:'top', textStyle: {fontSize: 12}}"),
         chartArea = "{right:'0%',left:'0%',width:'100%',top:'100%',height:'0%'}"
       )
     )
@@ -49,35 +86,73 @@ leg_gvis <- function(edu = input$pyr_edu){
   return(g)
 }
 
-dl_gvis <- function(g = gg, h = "head.html", file_type = input$pyr_dl){
-  g$html$caption <- includeHTML(h)
+dl_head <- function(year = input$pyr_year1, scenario = input$pyr_sn1, 
+                    geo = input$pyr_geo1, type = "pyr", 
+                    ind = NULL, age = NULL, sex = NULL, edu = NULL){
+  w <- NULL
+  if(type != "map"){
+    w <- pyr_warn(f = f, year = year)
+  }
+  sn <- dimen %>%
+    filter(dim=="scenario", code==scenario) %>%
+    pull(name)
   
-  # print google vis
-  print(g, file = "gg.html")
-
-  if(file_type == "pdf"){
-    system("wkhtmltopdf   --enable-javascript --javascript-delay 2000 gg.html gg.pdf") #; file.show("gg.pdf")
-    file.copy("./gg.pdf", file)
-    file.remove("gg.pdf")
+  # head file
+  fh <- file("head.html", "w")
+  cat(pdfinfo, file = fh)
+  if(type == "pyr")
+    cat(paste0("Population Pyramid  (in millions)","<br>\n"), file = fh)
+  if(type == "sac")
+    cat(paste0("Population (in millions)","<br>\n"), file = fh)
+  cat(paste0(geo, "<br>\n"), file = fh)
+  cat(paste0(year, "<br>"), file = fh)
+  cat(paste0(sn, "<br>\n<br>\n"), file = fh)
+  
+  if(type == "map"){
+    cat(paste0(ind,  "<br>\n"), file = fh)
+    if(age != 0){
+      cat(paste0("Age: ", 
+                 dimen %>% 
+                   filter(dim =="age", 
+                          code== age) %>% 
+                   pull(name), 
+                 "<br>\n"), 
+          file = fh)
+    }
+    if(sex != 0){
+      cat(paste0("Sex: ", 
+                 dimen %>% 
+                   filter(dim =="sex", 
+                          code== sex) %>% 
+                   pull(name), 
+                 "<br>\n"), 
+          file = fh)
+    }
+    if(edu != 0){
+      cat(paste0("Education: ", 
+                 dimen %>% 
+                   filter(dim =="edu", 
+                          code== edu) %>% 
+                   pull(name), 
+                 "<br>\n"), 
+          file = fh)
+    }
   }
-  if(file_type == "png"){
-    system("wkhtmltoimage --enable-javascript --javascript-delay 2000 gg.html gg.png") #; file.show("gg.png")
-    file.copy("./gg.png", file)
-    file.remove("gg.png")
-  }
-  file.remove("gg.html")
-  file.remove("head.html")
+  cat(w, file = fh)
+  close(fh)
 }
+
 
 
 pyr_gvis <- function(d_pyr, 
                      pyr_year, 
                      pyr_col = iiasa6, 
                      w = 295, h = 500, 
-                     legend = "top", 
+                     legend = FALSE, 
                      pmax = NULL, no_edu = FALSE, 
                      prop = FALSE, 
-                     edu = 6){
+                     edu = 6, 
+                     ...){
   #d_pyr<-d1;pyr_year=2015; pyr_col=iiasa4; w=400;pmax=NULL; h=550; prop=FALSE; no_edu=FALSE
   m_pyr <- d_pyr %>% 
     filter(year == pyr_year, 
@@ -164,24 +239,24 @@ pyr_gvis <- function(d_pyr,
     )
   )
   
-  # this will make both pyramids redraw
-  # top1 <- leg_gvis(edu = edu)
-  # if(no_edu == TRUE){
-  #   top1 <- NULL
-  # }
-
+  if(legend){
+    top1 <- leg_gvis(edu = edu, ...)
+    if(no_edu == TRUE){
+      top1 <- NULL
+    }
+  }
+  
   gg0 <- gvisMerge(x = bar1, y = bar2, 
                    horizontal = TRUE, 
                    tableOptions = "cellspacing=0, cellpadding=0")
   
-  # if(legend == "none")
-  #   gg <- gg0
-  # if(legend == "top"){
-  #   gg <- gvisMerge(x = top1, 
-  #                   y = gg0,
-  #                   tableOptions = "cellspacing=0, cellpadding=0")
-  # }
-  gg <- gg0
+  if(legend == FALSE)
+    gg <- gg0
+  if(legend == TRUE){
+    gg <- gvisMerge(x = top1,
+                    y = gg0,
+                    tableOptions = "cellspacing=0, cellpadding=0")
+  }
   return(gg)
 }
 # pyr_gvis(d_pyr = d1, pyr_year = 2010, pyr_col = iiasa4, edu = 4) %>%

@@ -1,3 +1,28 @@
+# ass_nat_select <- reactive({
+#   # validate(
+#   #   need(input)
+#   # )
+#   n <- NULL
+#   if(input$ass_prevnat)
+#     n <- nat_select()
+#   return(n)
+# })
+# 
+# observe({
+#   updateSelectizeInput(session, inputId = "ass_nat", selected = ass_nat_select())
+# })
+# 
+# ass_sn_select <- reactive({
+#   s <- NULL
+#   if(input$ass_prevsn)
+#     s <- sn_select()
+#   return(n)
+# })
+# 
+# observe({
+#   updateSelectizeInput(session, inputId = "ass_nat", selected = ass_nat_select())
+# })
+
 output$ass_nat0 <- renderUI({
   nat.s<-NULL
   nat.c<-nn2

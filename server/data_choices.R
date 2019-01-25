@@ -25,27 +25,27 @@ observe({
 ##
 
 nat_select <- reactive({
-  # validate(
-  #   need(input$data_ind, label = "indicator"),
-  #   need(input$reg, label = "region"),
-  #   need(input$allnat, label = "all countries in region")
-  # )
-  n1 <- NULL
+  validate(
+    # need(input$data_ind, label = "indicator"),
+    # need(input$reg, label = "region"),
+    need(input$allnat, label = "all countries in region")
+  )
+  n <- NULL
   if(input$allnat){
     if(all(input$reg !="World"))
-      n1 <- geog %>%
+      n <- geog %>%
         filter(region %in% input$reg | continent %in% input$reg) %>%
         pull(name)
     if(any(input$reg == "World"))
-      n1 <- nn1
+      n <- nn1
   }
-  if(!is.null(n1))
-    n1<-sort(n1)
-  return(n1)
+  if(!is.null(n))
+    n <- sort(n)
+  return(n)
 })
 
 observe({
-  updateSelectizeInput(session, inputId = "nat", choice = nn2, selected = nat_select())
+  updateSelectizeInput(session, inputId = "nat", selected = nat_select())
 })
 
 
@@ -81,16 +81,9 @@ sex_choice <- reactive({
   validate(
     need(input$data_ind, label = "indicator")
   )
-  ind_sex <- ind %>%
-    filter(fullname %in% input$data_ind)
-
-  ch <- sex1
-  if(ind_sex$sex == 0)
-    ch <- sex1[1]
-  if(ind_sex$name %in% c("assr","eassr", "prop", "bprop", "e0", "ryl15", "pryl15"))
-    ch <- sex1[-1]
-  if(ind_sex$name %in% c("tfr", "etfr", "asfr", "cbr", "macb", "easfr"))
-    ch <- sex1[-c(1:2)]
+  ch <- ind %>%
+    filter(fullname %in% input$data_ind) %>%
+    sex_choice0()
   return(ch)
 })
 
@@ -113,7 +106,6 @@ observe({
 #     need(input$data_ind, label = "indicator")
 #   )
 #   sex <- ind %>%
-#     filter(fullname %in% input$data_ind) %>%
 #     pull(sex)
 #
 #   if(sex == 1)
@@ -129,31 +121,10 @@ age_choice <- reactive({
   validate(
     need(input$data_ind, label = "indicator")
   )
-
-  ind_age <- ind %>%
-    filter(fullname %in% input$data_ind)
-
-  ch <- NULL
-  if(sum(ind_age$age, ind_age$bage, ind_age$sage) == 0)
-    ch <- age1[1]
-
-  if(ind_age$age == 1)
-    ch <- age1
-  if(ind_age$name == "asfr")
-    ch <- age1[5:11]
-  if(ind_age$name == "prop")
-    ch <- age1[-(1:4)]
-
-  if(ind_age$bage == 1)
-    ch <- bage1[-1]
-  if(ind_age$name == "bprop")
-    ch <- bage1[-(1:3)]
-  if(ind_age$name %in% c("mys", "bmys"))
-    ch <- bage1[-1]
-
-  if(ind_age$sage == 1)
-    ch <- sage1
-
+  # input$data_ind = ind$fullname[2]
+  ch <- ind %>%
+    filter(fullname %in% input$data_ind) %>%
+    age_choice0()
   return(ch)
 })
 

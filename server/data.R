@@ -1,10 +1,3 @@
-# setwd("C:/Users/gabel/Documents/shiny/wic2")
-# df0<- loads(file="df1", variables=c("area", "isono", "year","period", "ageno","sexno","eduno","age","bage","sage","sex","edu"), ultra.fast = TRUE, to.data.frame=TRUE) %>% tbl_df()
-
-# output$temp <- renderPrint({
-#   as.list(input)
-# })
-
 allarea <- reactive({
   # validate(
   #   need(input$reg, label = "region"),
@@ -60,12 +53,9 @@ df_build <- reactive({
   df1 <- ind %>%
     filter(fullname == input$data_ind)
   
-  fn <- df1 %>% 
-    pull(name)
-  
   withProgress(message = 'Creating Data', detail = 'May take a few seconds...', value = 0, {
     for(i in input$scenario){
-      #input<-NULL; input$age=4;  input$sex=0;  input$year=0;  input$year=2020; input$data_ind=ind1[[2]][5]; input$scenario=c(sn1[1],sn1[2]); input$isono=TRUE; i=2
+      #input<-NULL; input$age=0;  input$sex=2;  input$year=0;  input$year=2020; input$data_ind=ind2[[3]][4]; input$scenario=c(sn1[1],sn1[2]); input$isono=TRUE; i=2
       # input$reg <- c("Oceania", "Asia")
       df2 <- NULL
       
@@ -89,8 +79,8 @@ df_build <- reactive({
       #   edu0 <- unlist(edu1)[-(1:2)]
       # if(fn == "etfr")
       #   edu0 <- unlist(edu1)[-2]
-      
-      df2 <- loads(file = paste0("df", i, "/",fn), 
+
+      df2 <- loads(file = paste0("df", i, "/",df1$name), 
                    variables = v, ultra.fast = TRUE, to.data.frame=TRUE) %>%
         tbl_df() %>%
         mutate(age = fct_inorder(age),

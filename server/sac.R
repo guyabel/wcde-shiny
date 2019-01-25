@@ -4,7 +4,7 @@
 #library(googleVis)
 #source("./server/sac_fn.R")
 #source("./server/pyr_fn.R")
-#input<-NULL; input$sac_sn1=2; input$sac_geo1="France"; input$sac_edu=6; input$sac_year1=c(1950,2100); input$sac_prop = TRUE
+#input<-NULL; input$sac_sn1=2; input$sac_geo1="France"; input$sac_edu=8; input$sac_year1=c(1950,2100); input$sac_prop = TRUE
 
 output$sac_warn1 <- renderUI({
   f <- sac_fill1()
@@ -69,7 +69,8 @@ sac_max2 <- reactive({
 sac_d1 <- reactive({
   validate(
     need(input$sac_geo1 != "", " "),
-    need(input$sac_sn1 != "", " ")
+    need(input$sac_sn1 != "", " "),
+    need(input$sac_year1 != "", " ")
   )
   d <- sac_data(geo = input$sac_geo1, sn = input$sac_sn1, edu = input$sac_edu, 
                 year_range = c(input$sac_year1[1], input$sac_year1[2]))
@@ -79,7 +80,8 @@ sac_d1 <- reactive({
 sac_d2 <- reactive({
   validate(
     need(input$sac_geo2 != "", " "),
-    need(input$sac_sn2 != "", " ")
+    need(input$sac_sn2 != "", " "),
+    need(input$sac_year2 != "", " ")
   )
   d <- sac_data(geo = input$sac_geo2, sn = input$sac_sn2, edu = input$sac_edu,
                 year_range = c(input$sac_year2[1], input$sac_year2[2]))
@@ -91,7 +93,8 @@ output$sac1 <- renderGvis({
   gg <- NULL
   validate(
     need(input$sac_geo1 != "", "Please select Area"),
-    need(input$sac_sn1 != "", "Please select Scenario")
+    need(input$sac_sn1 != "", "Please select Scenario"),
+    need(input$sac_year1 != "", " ")
   )
   withProgress(message = 'Loading Left Plot', value = 0, {
     m <- sac_max1()
@@ -101,12 +104,11 @@ output$sac1 <- renderGvis({
     d <- sac_d1()
     incProgress(2/3)
     gg <- sac_gvis(
-      df_sac = d,
+      d_sac = d,
       pcol = ifelse(test = f, yes = "['darkgrey']", no = get(paste0("iiasa",input$sac_edu))),
       no_edu = f,
       pmax = m,
-      prop = input$sac_prop,
-      legend = "none"
+      prop = input$sac_prop
     )
     incProgress(3/3)
   })
@@ -117,7 +119,8 @@ output$sac2 <- renderGvis({
   gg <- NULL
   validate(
     need(input$sac_geo2 != "", "Please select Area"),
-    need(input$sac_sn2 != "", "Please select Scenario")
+    need(input$sac_sn2 != "", "Please select Scenario"),
+    need(input$sac_year2 != "", " ")
   )
   withProgress(message = 'Loading Left Plot', value = 0, {
     m <- sac_max2()
@@ -126,12 +129,11 @@ output$sac2 <- renderGvis({
     d <- sac_d2()
     incProgress(2/3)
     gg <- sac_gvis(
-      df_sac = d,
+      d_sac = d,
       pcol = ifelse(test = f, yes = "['darkgrey']", no = get(paste0("iiasa",input$sac_edu))),
       no_edu = f,
       pmax = m,
-      prop = input$sac_prop,
-      legend = "none"
+      prop = input$sac_prop
     )
     incProgress(3/3)
   })
@@ -144,87 +146,76 @@ output$sac_leg <- renderGvis({
 })
 
 output$sac1_dl <- downloadHandler(
-  filename = function() { 
-    paste0('wic_sac.', if(input$sac_dl=="pdf") 'pdf' else 'png')
+  filename = function() {
+    # paste0("wic_sac.", if(input$sac_dl=="pdf") 'pdf' else 'png')
+    paste0("pop_",
+           tolower(input$sac_geo1), "_", input$sac_year1, "_s", input$sac_sn1, "_e", input$sac_edu, ".",
+           if(input$sac_dl=="pdf") 'pdf' else 'png')
   },
   content = function(file) {
-    tt <-"Your have selected a country with limited base year data on educational attainment. Please consult the FAQ in the About page for more information"
-    fh <- file("head.html", "w")
-    cat(pdfinfo, file = fh)
-    cat(paste0("Population (000's)","<br>\n"), file = fh)
-    cat(paste0(input$sac_geo1, "<br>\n"), file = fh)
-    cat(paste0(dimen %>% filter(dim=="scenario", code==input$sac_sn1) %>% .[["name"]], "<br>\n<br>\n"), file = fh)
-    cat(ifelse(geog %>% filter(name %in% input$sac_geo1) %>% .[["is171"]] %in% 0, paste0(tt,"<br>\n<br>\n"), ""), file = fh)
-    close(fh)
+    f <- sac_fill1()
+    gg <- sac_gvis(
+      d_sac =  sac_d1(),
+      pcol = ifelse(test = f, yes = "['darkgrey']", no = get(paste0("iiasa",input$sac_edu))),
+      no_edu = f,
+      pmax = m,
+      prop = input$sac_prop
+    )
     
-    df_sac1 <- sac_data(geo = input$sac_geo1, 
-                        sn = input$sac_sn1,
-                        edu = input$sac_edu, 
-                        year_range = c(input$sac_year1[1], input$sac_year1[2]))
-    
-    gg <- sac_gvis(df_sac = df_sac1, 
-                   pcol = get(paste0("iiasa",input$sac_edu)), 
-                   w = 300, legend="none", 
-                   pmax = sac_max()$max1,
-                   prop = input$sac_prop)
-    
+    #generate head.html
+    dl_head(year = input$sac_year1, scenario = input$sac_sn1, geo = input$sac_geo1, type = "sac")
+    #generate gg.html
     gg$html$caption <- includeHTML("head.html")
-    print(gg, file="gg.html")
+    print(gg, file = "gg.html")
     
-    if(input$sac_dl=="pdf"){
-      system("wkhtmltopdf   --enable-javascript --javascript-delay 2000 gg.html gg.pdf")
-      file.copy("./gg.pdf", file)
-      file.remove("gg.pdf")
-    }
-    if(input$sac_dl=="png"){
-      system("wkhtmltoimage --enable-javascript --javascript-delay 2000 gg.html gg.png")
-      file.copy("./gg.png", file)
-      file.remove("gg.png")
-    }
+    webshot(
+      url = "gg.html", 
+      file = paste0("./output.", input$sac_dl), 
+      delay = 2,
+      zoom = ifelse(input$sac_dl == ".pdf", 0.5, 1)
+    )
+    
+    file.copy(paste0("output.", input$sac_dl), file)
     file.remove("gg.html")
     file.remove("head.html")
+    file.remove(paste0("output.", input$sac_dl))
   }
 )
 
 output$sac2_dl <- downloadHandler(
-  filename = function() { 
-    paste0('wic_sac.', if(input$sac_dl=="pdf") 'pdf' else 'png')
+  filename = function() {
+    # paste0("wic_sac.", if(input$sac_dl=="pdf") 'pdf' else 'png')
+    paste0("pop_",
+           tolower(input$sac_geo2), "_", input$sac_year2, "_s", input$sac_sn2, "_e", input$sac_edu, ".",
+           if(input$sac_dl=="pdf") 'pdf' else 'png')
   },
   content = function(file) {
-    tt <-"Your have selected a country with limited base year data on educational attainment. Please consult the FAQ in the About page for more information"
-    fh <- file("head.html", "w")
-    cat(pdfinfo, file = fh)
-    cat(paste0("Population (000's)","<br>\n"), file = fh)
-    cat(paste0(input$sac_geo2, "<br>\n"), file = fh)
-    cat(paste0(dimen %>% filter(dim=="scenario", code==input$sac_sn2) %>% .[["name"]], "<br>\n<br>\n"), file = fh)
-    cat(ifelse(geog %>% filter(name %in% input$sac_geo2) %>% .[["is171"]] %in% 0, paste0(tt,"<br>\n<br>\n"), ""), file = fh)
-    close(fh)
+    f <- sac_fill2()
+    gg <- sac_gvis(
+      d_sac =  sac_d2(),
+      pcol = ifelse(test = f, yes = "['darkgrey']", no = get(paste0("iiasa",input$sac_edu))),
+      no_edu = f,
+      pmax = m,
+      prop = input$sac_prop, 
+      legend = TRUE, dl = TRUE
+    )
+
+    #generate head.html
+    dl_head(year = input$sac_year2, scenario = input$sac_sn2, geo = input$sac_geo2, type = "sac")
+    #generate gg.html
+    gg$html$caption <- includeHTML("head.html")
+    print(gg, file = "gg.html")
     
-    df_sac1 <- sac_data(geo = input$sac_geo2, 
-                        sn = input$sac_sn2,
-                        edu = input$sac_edu, 
-                        year_range = c(input$sac_year2[1], input$sac_year2[2]))
+    webshot(
+      url = "gg.html", 
+      file = paste0("./output.", input$sac_dl), 
+      delay = 2,
+      zoom = ifelse(input$sac_dl == ".pdf", 0.5, 1)
+    )
     
-    gg <- sac_gvis(df_sac = df_sac1, 
-                   pcol = get(paste0("iiasa",input$sac_edu)), 
-                   w = 300, legend="none", 
-                   pmax = sac_max()$max2,
-                   prop = input$sac_prop)
-    
-    gg$html$caption<- includeHTML("head.html")
-    print(gg, file="gg.html")
-    
-    if(input$sac_dl=="pdf"){
-      system("wkhtmltopdf   --enable-javascript --javascript-delay 2000 gg.html gg.pdf")
-      file.copy("./gg.pdf", file)
-      file.remove("gg.pdf")
-    }
-    if(input$sac_dl=="png"){
-      system("wkhtmltoimage --enable-javascript --javascript-delay 2000 gg.html gg.png")
-      file.copy("./gg.png", file)
-      file.remove("gg.png")
-    }
+    file.copy(paste0("output.", input$sac_dl), file)
     file.remove("gg.html")
     file.remove("head.html")
+    file.remove(paste0("output.", input$sac_dl))
   }
 )
