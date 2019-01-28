@@ -111,31 +111,25 @@ dl_head <- function(year = input$pyr_year1, scenario = input$pyr_sn1,
   if(type == "map"){
     cat(paste0(ind,  "<br>\n"), file = fh)
     if(age != 0){
-      cat(paste0("Age: ", 
-                 dimen %>% 
-                   filter(dim =="age", 
-                          code== age) %>% 
-                   pull(name), 
-                 "<br>\n"), 
-          file = fh)
+      a <- dimen %>% 
+        filter(dim =="age", 
+               code== age) %>% 
+        pull(name)
+      cat(paste0("Age: ", a, "<br>\n"), file = fh)
     }
     if(sex != 0){
-      cat(paste0("Sex: ", 
-                 dimen %>% 
-                   filter(dim =="sex", 
-                          code== sex) %>% 
-                   pull(name), 
-                 "<br>\n"), 
-          file = fh)
+      s <- dimen %>% 
+        filter(dim =="sex", 
+               code== sex) %>% 
+        pull(name)
+      cat(paste0("Sex: ", s, "<br>\n"), file = fh)
     }
     if(edu != 0){
-      cat(paste0("Education: ", 
-                 dimen %>% 
-                   filter(dim =="edu", 
-                          code== edu) %>% 
-                   pull(name), 
-                 "<br>\n"), 
-          file = fh)
+      e <- dimen %>% 
+        filter(dim =="edu", 
+               code== edu) %>% 
+        pull(name)
+      cat(paste0("Education: ", e, "<br>\n"), file = fh)
     }
   }
   cat(w, file = fh)
