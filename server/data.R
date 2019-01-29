@@ -1,18 +1,20 @@
 allarea <- reactive({
-  # validate(
-  #   need(input$reg, label = "region"),
-  #   need(input$nat, label = "nation")
-  # )
   c(input$reg,input$nat)
 })
 
 output$tit_ind <- renderText({
+  validate(
+    need(expr = input$data_ind, message = "", label = "")
+  )
   ind  %>% 
     filter(fullname %in% input$data_ind) %>% 
     pull(fullname)
 })
 
 output$def_ind <- renderUI({
+  validate(
+    need(expr = input$data_ind, message = "", label = "")
+  )
   tt <- ind %>% 
     select(definition,fullname) %>% 
     filter(fullname %in% input$data_ind) %>% 
@@ -21,33 +23,50 @@ output$def_ind <- renderUI({
 })
 
 output$tit_scen <- renderText({
-  if(length(input$scenario)==1)
-    tt <- dimen %>% 
-      filter(dim=="scenario") %>% 
-      filter(code==input$scenario) %>% 
-      pull(name)
+  validate(
+    need(expr = input$scenario, message = "", label = "")
+  )
+  tt <- dimen %>% 
+    filter(dim=="scenario") %>% 
+    filter(code==input$scenario) %>% 
+    pull(name)
   if(length(input$scenario)>1)
     tt <- "Multiple Scenarios Selected"
   return(tt)
 })
 
 output$def_scen <- renderUI({
-  if(length(input$scenario)==1)
-    tt <- dimen %>% filter(dim=="scenario") %>% filter(code==input$scenario) %>% .[["details"]]
+  validate(
+    need(expr = input$scenario, message = "", label = "")
+  )
+  tt <- dimen %>% 
+    filter(dim=="scenario") %>% 
+    filter(code==input$scenario) %>% 
+    pull(details)
   if(length(input$scenario)>1)
     tt <- "See About tab for full scenario details."
   return(HTML(tt))
 })
 
 output$df_warn <- renderUI({
-  tt<-""
-  if(length(input$nat)>0)
-    if(sum(geog %>% filter(name %in% input$nat) %>% .[["is171"]]==0)>0)
-      tt <-"<FONT COLOR='gray'>Your selection includes at least one country with limited base year data on educational attainment. Please consult the FAQ in the About page for more information<br><br>"
+  tt <- ""
+  w0 <- 0
+  # geog %>%
+  #   filter(name %in% input$nat) %>%
+  #   pull(is171)
+  if(sum(w0 == 0)>0)
+      tt <- "<FONT COLOR='gray'>Your selection includes at least one country with limited base year data on educational attainment. Please consult the FAQ in the About page for more information<br><br>"
   HTML(tt)
 })
 
 df_build <- reactive({
+  validate(
+    need(expr = input$data_ind, message = "", label = ""),
+    need(expr = input$scenario, message = "", label = ""),
+    need(expr = input$age, message = "", label = ""),
+    need(expr = input$sex, message = "", label = ""),
+    need(expr = input$year, message = "", label = "")
+  )
   df1 <- df2 <- df3<- NULL
   
   df1 <- ind %>%
@@ -70,15 +89,6 @@ df_build <- reactive({
       sn <- dimen %>% 
         filter(dim=="scenario", code==i) %>% 
         pull(sname)
-
-      # education to filter (there is no options in data explorer to choose education)
-      # edu0 <- 0 
-      # if(df1$edu == 1)
-      #   edu0 <- unlist(edu1)
-      # if(fn %in% c("ggapedu15", "ggapedu25", "etfr"))
-      #   edu0 <- unlist(edu1)[-(1:2)]
-      # if(fn == "etfr")
-      #   edu0 <- unlist(edu1)[-2]
 
       df2 <- loads(file = paste0("df", i, "/",df1$name), 
                    variables = v, ultra.fast = TRUE, to.data.frame=TRUE) %>%

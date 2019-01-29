@@ -8,18 +8,14 @@ age_choice0 <- function(d){
     ch <- age1
   if(d$name == "asfr")
     ch <- age1[5:11]
-  if(d$name == "prop")
+  if(d$name %in% c("prop", "mys"))
     ch <- age1[-(1:4)]
-  if(d$name == "mys")
-    ch <- age1[-1]
-  
+
   if(d$bage == 1)
     ch <- bage1[-1]
-  if(d$name == "bprop")
+  if(d$name %in% c("bprop", "bmys"))
     ch <- bage1[-(1:3)]
-  if(d$name == "bmys")
-    ch <- bage1[-1]
-  
+
   if(d$sage == 1)
     ch <- sage1
   return(ch)
@@ -32,7 +28,7 @@ sex_choice0 <- function(d){
     ch <- sex1[1]
   if(d$name %in% c("assr","eassr",  "e0", "ryl15", "pryl15")) #"prop", "bprop",
     ch <- sex1[-1]
-  if(d$name %in% c("tfr", "etfr", "asfr", "cbr", "macb", "easfr"))
+  if(d$name %in% c("tfr", "etfr", "asfr", "macb", "easfr"))
     ch <- sex1[-c(1:2)]
   return(ch)
 }

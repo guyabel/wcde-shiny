@@ -14,7 +14,7 @@ tagList(
       ),
       selectizeInput(
         inputId = 'data_ind', label = 'Indicator', width = "100%",
-        choices = NULL, selected = NULL
+        choices = ind1, selected = ind1[[1]][1]
       )
     ),
     column(
@@ -24,12 +24,12 @@ tagList(
       br(),
       selectizeInput(
         inputId = 'nat', label = 'Country', width = "100%", multiple = TRUE,
-        choices = nn2, selected = 1, 
+        choices = nn2, 
         options = list(placeholder = 'Type or click for multiple choices')
       ),
       selectizeInput(
         inputId = 'reg', label = 'Region', width = "100%", multiple = TRUE,
-        choices = NULL, selected = 1,
+        choices = geo2, 
         options = list(placeholder = 'Type or click for multiple choices')
       ),
       checkboxInput(
@@ -44,11 +44,11 @@ tagList(
       br(),
       selectizeInput(
         inputId = 'sex', label = 'Sex', width = "100%", multiple = TRUE,
-        choices = NULL, selected = 1
+        choices = sex1, selected = 1
       ),
       selectizeInput(
         inputId = 'age', label = 'Age', width = "100%", multiple = TRUE,
-        choices = NULL, selected = 1,
+        choices = age1, selected = 1,
         options = list(placeholder = 'Not available')
       ),
       checkboxInput(
@@ -63,11 +63,11 @@ tagList(
       br(),
       selectizeInput(
         inputId = 'scenario', label = 'Scenario', width = "100%", multiple = TRUE,
-        choices = NULL, selected = 1
+        choices = sn1, selected = 1
       ),
       selectizeInput(
         inputId = 'year', label = 'Year', width = "100%", multiple = TRUE,
-        choices = NULL, selected = NULL
+        choices = yn1, selected = 1
       ),
       checkboxInput(
         inputId = 'allyear', label = 'Include all times',

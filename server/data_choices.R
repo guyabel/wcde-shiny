@@ -216,7 +216,8 @@ year_select <- reactive({
 })
 
 observe({
-  updateSelectizeInput(session, inputId = "year", label = year_label(), 
+  updateSelectizeInput(session, inputId = "year", 
+                       # label = year_label(), 
                        choices = year_choice(), selected = year_select())
 })
 

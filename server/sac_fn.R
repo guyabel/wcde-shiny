@@ -119,3 +119,12 @@ sac_data <- function(geo = input$sac_geo1,
   }
   return(df2)
 }
+
+max_total <- function(d){
+  d %>% 
+    filter(ageno == 0, 
+           sexno == 0, 
+           eduno == 0) %>% 
+    pull(pop) %>%
+    max(., na.rm=TRUE)
+}

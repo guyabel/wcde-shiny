@@ -49,19 +49,19 @@ sac_max1 <- reactive({
     d2 <- pyr_d2()
     m <- d1 %>%
       bind_rows(d2) %>%
-      max_age_sex()
+      max_total()
   }
   return(m)
 })
 
 sac_max2 <- reactive({
   m <- NULL
-  d2 <- sac_d1()
+  d2 <- sac_d2()
   if(input$sac_y == "allarea"){
     d1 <- pyr_d1()
     m <- d2 %>%
       bind_rows(d1) %>%
-      max_age_sex()
+      max_total()
   }
   return(m)
 })
