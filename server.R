@@ -4,7 +4,7 @@ library(magrittr)
 library(saves)
 library(shiny)
 library(googleVis)
-# library(webshot)
+library(webshot)
 
 load("label.RData")
 
