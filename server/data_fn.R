@@ -6,7 +6,7 @@ age_choice0 <- function(d){
   
   if(d$age == 1)
     ch <- age1
-  if(d$name == "asfr")
+  if(d$name %in% c("asfr", "easfr"))
     ch <- age1[5:11]
   if(d$name %in% c("prop", "mys"))
     ch <- age1[-(1:4)]
@@ -38,6 +38,8 @@ edu_choice0 <- function(d){
   ch <- edu1
   if(d$edu == 0)
     ch <- edu1[1]
+  if(d$name %in% c("prop","bprop"))
+    ch <- edu1[-1]
   if(d$name %in% c("ggapedu15", "ggapedu25"))
     ch <- edu1[-(1:2)]
   if(d$name %in% c("etfr"))

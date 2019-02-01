@@ -18,7 +18,8 @@ map_geo<-reactive({
   return(geo)
 })
 
-#input=NULL;input$map_year=2015; input$map_ind=ind4[[1]][3]; input$map_proj="mercator";input$map_area="Latin America and the Caribbean"; input$map_sn=1; input$map_age="";input$map_sex=1;input$map_edu=""
+#input=NULL;input$map_year=2015; input$map_ind=ind4[[4]][3]; input$map_proj="mercator";input$map_area="Latin America and the Caribbean"; input$map_sn=1; input$map_age="";input$map_sex=1;
+#input$map_edu=0; input$map_age = 5; input$map_sex=2;
 map_build <- reactive({
   validate( 
     need(input$map_ind != "", "Please select Indicator"), 
@@ -63,17 +64,12 @@ map_build <- reactive({
         filter(dim == "country") %>%
         select(name, ggarea, isono)
       
-      df2 <- df1 %>% 
-        gather(key = isono, value = x, -(1:4), convert = TRUE) %>%
-        # fill in missing rows for masters etc pre 2015
-        # complete(year, ageno, sexno, eduno, isono) %>%
+      df2 <- df2 %>% 
+        # gather(key = isono, value = x, -(1:4), convert = TRUE) %>%
         filter(year == input$map_year,
                ageno == input$map_age,
                sexno == input$map_sex,
                eduno == input$map_edu) %>%
-               # ageno == if(nchar(input$map_age)==0) 0 else input$map_age,
-               # sexno == if(nchar(input$map_sex)==0) 0 else input$map_sex,
-               # eduno == if(nchar(input$map_edu)==0) 0 else input$map_edu) %>%
         full_join(d2a, by="isono") %>%
         # replace_na(list(x = 0)) %>%
         rename(!!cn := x)

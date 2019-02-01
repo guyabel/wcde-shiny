@@ -55,6 +55,28 @@ observe({
   updateSelectizeInput(session, inputId = "map_edu", choices = map_edu_choice())
 })
 
+
+
+map_area_choice <- reactive({
+  validate(
+    need(input$map_edu, "", ""),
+    need(input$map_ind, "", "")
+  )
+  ch <- geo2
+  e <- ind %>%
+    filter(fullname %in% input$map_ind) %>%
+    pull(edu)
+  if(e == 1)
+    if(input$map_edu %in% edu1[8:10])
+      ch <- geo4
+  return(ch)
+})
+
+observe({
+  updateSelectizeInput(session, inputId = "map_area", choices = map_area_choice())
+})
+
+
 # output$map_sn0 <- renderUI({
 #   scenario.s<-sn1[1]
 #   scenario.c<-sn1
@@ -104,24 +126,14 @@ observe({
 output$map_year0 <- renderUI({
   validate(
     need(input$map_ind, " ", "")
-    # need(input$map_edu, " ", "")
   )
-  
   year.min<-2015
   year.l<-"Time"
-  
   if(ind %>% filter(fullname %in% input$map_ind) %>% .[["past"]]==1){
     year.min<-1950
   }
-  # if(input$map_edu > 7){
-  #   year.min<-2015
-  # }
   if(ind %>% filter(fullname %in% input$map_ind) %>% .[["period"]]==1){
     year.l<- "Beginning of 5-Year Period"
   }
-  # if(ind %>% filter(fullname %in% input$map_ind) %>% .[["name"]]=="epop" & 
-  #    input$map_edu %in% 8:10){
-  #   year.min<-2015
-  # }
   sliderInput("map_year", year.l, min = year.min, max = 2100, value = c(2015), step= 5, sep="", ticks= FALSE, width="100%")
 })

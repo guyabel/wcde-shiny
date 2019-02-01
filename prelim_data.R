@@ -52,7 +52,7 @@ d1_edu <- dimen %>%
 #   write_csv(x = d2, paste0("C:\\Users\\gabel\\Dropbox\\wcde2\\ToGuy V1\\df",sn,"epop.csv"))
 # }
   
-#sn=1; i = 1
+#sn=1; i = 23
 for(sn in 1:5){
   for(i in 1:length(ind$name)){
     fn <- paste0("ToGuy V5/df",sn,ind$name[i],".csv")

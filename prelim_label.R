@@ -94,6 +94,8 @@ geo3 <- c(list("World","Continent"),nn3)
 names(geo3)[2]<-geo3[2]
 geo3[[2]]<-an1[-1]
 
+geo4 <- c(an1, rn1)[str_detect(c(an1, rn1), "Europe")]
+
 
 
 ##
@@ -295,7 +297,6 @@ rm(i)
 
 save.image(file="./label.RData")
 
-save(ind0, file="./ind0.RData")
 
 ##
 ## check pdf names

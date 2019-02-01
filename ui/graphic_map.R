@@ -6,7 +6,7 @@ tagList(
     ),
     column(
       width = 3, 
-      selectizeInput(inputId = "map_area", label = "Area", choices = geo2, width = "100%")
+      selectizeInput(inputId = "map_area", label = "Area", choices = NULL, width = "100%")
     ),
     column(
       width = 3, 

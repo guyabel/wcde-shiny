@@ -74,7 +74,7 @@ df_build <- reactive({
   
   withProgress(message = 'Creating Data', detail = 'May take a few seconds...', value = 0, {
     for(i in input$scenario){
-      #input<-NULL; input$age=0;  input$sex=2;  input$year=0;  input$year=2020; input$data_ind=ind2[[3]][4]; input$scenario=c(sn1[1],sn1[2]); input$isono=TRUE; i=2
+      #input<-NULL; input$age=0;  input$sex=2;  input$year=0;  input$year=2020; input$data_ind=ind2[[2]][3]; input$scenario=c(sn1[1],sn1[2]); input$isono=TRUE; i=2
       # input$reg <- c("Oceania", "Asia")
       df2 <- NULL
       
