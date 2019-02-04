@@ -115,8 +115,8 @@ yn2<-as.list(yn1)[-length(yn1)]
 names(yn2)<-paste0(yn1[-length(yn1)],"-",substr(yn1[-length(yn1)]+5,3,4))
 
 yn3<-seq(1950, 2100,5)
-yn4<-as.list(yn3)[-length(yn1)]
-names(yn4)<-paste0(yn3[-length(yn1)],"-",substr(yn3[-length(yn1)]+5,3,4))
+yn4<-as.list(yn3)[-length(yn3)]
+names(yn4)<-paste0(yn3[-length(yn3)],"-",substr(yn3[-length(yn3)]+5,3,4))
 
 
 age1 <- dimen %>%

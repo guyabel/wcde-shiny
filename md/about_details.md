@@ -74,7 +74,7 @@ Researchers who participated in the development of the projections:
 <td>Sergei Scherbov<sup> a</sup></td>
 </tr>
 <tr>
-<td>Alain Bélanger<sup> a, b</sup></td>
+<td>Alain B??langer<sup> a, b</sup></td>
 <td>Henri Leridon</td>
 <td>Bruno Schoumaker</td>
 </tr>
@@ -96,76 +96,77 @@ Researchers who participated in the development of the projections:
 <tr>
 <td>William P. Butz</td>
 <td>Guillaume Marois<sup> a, b</sup></td>
-<td>Nikolaos Stilianakis<sup> b</sup></td>
+<td>Markus Speringer</td>
 </tr>
 <tr>
 <td>Graziella Caselli</td>
 <td>Douglas Massey</td>
-<td>Marcin Stonawski<sup> a, b</sup></td>
+<td>Nikolaos Stilianakis<sup> b</sup></td>
 </tr>
 <tr>
 <td>John Casterline</td>
 <td>Bruno Masquelier</td>
-<td>Erich Striessnig<sup> a</sup></td>
+<td>Marcin Stonawski<sup> a, b</sup></td>
 </tr>
 <tr>
 <td>Teresa Castro-Martin</td>
 <td>John F. May</td>
-<td>Christian Wegner-Siegmundt<sup> a</sup></td>
+<td>Erich Striessnig<sup> a</sup></td>
 </tr>
 <tr>
 <td>Minja Kim Choe</td>
 <td>Blessing Mberu</td>
-<td>Maria Rita Testa<sup> a</sup></td>
+<td>Christian Wegner-Siegmundt<sup> a</sup></td>
 </tr>
 <tr>
 <td>Alessandra Conte<sup> b</sup></td>
-<td>France Meslé</td>
-<td>Olivier Thévenon</td>
+<td>France Mesl??</td>
+<td>Maria Rita Testa<sup> a</sup></td>
 </tr>
 <tr>
 <td>Sven Drefahl</td>
 <td>Melinda Mills</td>
-<td>Edward Jow-Ching Tu</td>
+<td>Olivier Th??venon</td>
 </tr>
 <tr>
 <td>Rachel E. Durham</td>
 <td>S. Philip Morgan</td>
-<td>Laura Wong</td>
+<td>Edward Jow-Ching Tu</td>
 </tr>
 <tr>
 <td>Jakob Eder</td>
 <td>Elsie Pamuk</td>
-<td>Marcus Wurzer</td>
+<td>Laura Wong</td>
 </tr>
 <tr>
 <td>Regina Fuchs </td>
-<td>Michaela Potančoková<sup> a, b</sup></td>
-<td>Brenda Yepez-Martinez</td>
+<td>Michaela Potan??okov??<sup> a, b</sup></td>
+<td>Marcus Wurzer</td>
 </tr>
 <tr>
 <td>Tomas Frejka</td>
 <td>Claudia Reiter<sup> a</sup></td>
-<td>Dilek Yildiz<sup> a</sup></td>
+<td>Brenda Yepez-Martinez</td>
 </tr>
 <tr>
 <td>Alessandra Garbero</td>
 <td>Ronald R. Rindfuss</td>
-<td>Sam Hyun Yoo</td>
+<td>Dilek Yildiz<sup> a</sup></td>
 </tr>
 <tr>
 <td>Michel Garenne</td>
 <td>Fernando Riosmena</td>
-<td>Kryštof Zeman<sup> a</sup></td>
+<td>Sam Hyun Yoo</td>
 </tr>
 <tr>
 <td>Anne Goujon<sup> a</sup></td>
 <td>Louis Rosero-Bixby</td>
-<td>Zhongwei Zhao</td>
+<td>Kry??tof Zeman<sup> a</sup></td>
 </tr>
 <tr>
 <td>Erofili Grapsa<sup> b</sup></td>
 <td>Arodys Robles</td>
+<td>Zhongwei Zhao</td>
 </tr>
 <tr>
 <td colspan="3"><sup>a</sup> Wittgenstein Centre for Demography and Global Human Capital</td>
@@ -186,7 +187,7 @@ Web interface built using:
 
 Additional R packages used for data manipulations and visualisation:
 
-* <a href="http://cran.r-project.org/web/packages/dplyr" target="_blank">dplyr</a>: Wickham, H., Francois, R., Henry, L. and Müller K. (2018). dplyr: A Grammar of Data Manipulation. R package version 0.7.6.
+* <a href="http://cran.r-project.org/web/packages/dplyr" target="_blank">dplyr</a>: Wickham, H., Francois, R., Henry, L. and M??ller K. (2018). dplyr: A Grammar of Data Manipulation. R package version 0.7.6.
 * <a href="http://cran.r-project.org/web/packages/googleVis" target="_blank">googleVis</a>: Gesmann, M., & de Castillo, D. (2011). Using the Google visualisation API with R. *The R Journal*, 3(2), 40-44.
 * <a href="http://cran.r-project.org/web/packages/magrittr" target="_blank">magrittr</a>: Bache, S.M. & Wickham, H. (2015). magrittr: A Forward-Pipe Operator for R. R package version 1.5
 * <a href="http://cran.r-project.org/web/packages/markdown" target="_blank">markdown</a>: Allaire, J.J., Horner, J., Marti, V. & Porte, N. (2015). markdown: Markdown rendering for R. R package version 0.7.4

@@ -26,7 +26,7 @@ tagList(
         width = 3, 
         selectizeInput(
           inputId = "pyr_sn2", label = "Scenario", 
-          choices = sn1, selected = sn1[1], width = "100%"
+          choices = sn1, selected = sn1[2], width = "100%"
         )
       )
     )

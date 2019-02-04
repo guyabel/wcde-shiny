@@ -22,13 +22,13 @@ map_geo<-reactive({
 #input$map_edu=0; input$map_age = 5; input$map_sex=2;
 map_build <- reactive({
   validate( 
-    need(input$map_ind != "", "Please select Indicator"), 
-    need(input$map_area != "", "Please select Area"), 
-    need(input$map_sn != "", "Please select Scenario"),
-    need(input$map_age != "", "Please select Age"),
-    need(input$map_sex != "", "Please select Sex"),
-    need(input$map_edu != "", "Please select Education"),
-    need(input$map_year != "", "Please select Years")
+    need(input$map_ind != "", ""), 
+    need(input$map_area != "", "Push Generate Map button once you have your desired data selections"), 
+    need(input$map_sn != "", ""),
+    need(input$map_age != "", ""),
+    need(input$map_sex != "", ""),
+    need(input$map_edu != "", ""),
+    need(input$map_year != "", "")
   )
   df1<-NULL;df2<-NULL; gg<-NULL
   withProgress(message = 'Loading Map', value = 0, {
@@ -64,8 +64,8 @@ map_build <- reactive({
         filter(dim == "country") %>%
         select(name, ggarea, isono)
       
-      df2 <- df2 %>% 
-        # gather(key = isono, value = x, -(1:4), convert = TRUE) %>%
+      df2 <- df1 %>% 
+        gather(key = isono, value = x, -(1:4), convert = TRUE) %>%
         filter(year == input$map_year,
                ageno == input$map_age,
                sexno == input$map_sex,
@@ -96,7 +96,14 @@ map_build <- reactive({
 })   
 
 output$map <- renderGvis({
-  map_build()
+  # validate( 
+  #   need(input$map_go != "", "Push Generate Map button once you have your desired data selections")
+  # )
+  m <- NULL
+  input$map_go
+  # Use isolate() to avoid dependency on input$obs
+  m <- isolate(map_build())
+  m
 })
 
 output$map1_dl <- downloadHandler(
