@@ -23,14 +23,14 @@ map_geo<-reactive({
 map_build <- reactive({
   validate( 
     need(input$map_ind != "", ""), 
-    need(input$map_area != "", "Push Generate Map button once you have your desired data selections"), 
+    need(input$map_area != "", ""), 
     need(input$map_sn != "", ""),
     need(input$map_age != "", ""),
     need(input$map_sex != "", ""),
     need(input$map_edu != "", ""),
-    need(input$map_year != "", "")
+    need(input$map_year != "", "Push Generate Map button once you have your desired data selections")
   )
-  df1<-NULL;df2<-NULL; gg<-NULL
+  df1 <- df2 <- gg<-NULL
   withProgress(message = 'Loading Map', value = 0, {
     if(length(input$map_sn)>0){
       cn <- ind %>% 

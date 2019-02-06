@@ -13,7 +13,6 @@ shinyUI(
         column(width = 7, includeMarkdown("md/intro_data.md")),
         column(width = 5, includeHTML("md/intro_logo.html"))
       ),
-      # br(),
       tabsetPanel(
         type = "tabs",
         tabPanel("Selection", source("ui/data_select.R", local=TRUE)$value),
@@ -43,13 +42,13 @@ shinyUI(
           source("ui/graphic_sac.R", local=TRUE)$value
         ),
         tabPanel(
-          title = "Map", 
-          br(), 
+          title = "Map",
+          br(),
           source("ui/graphic_map.R", local=TRUE)$value
         ),
         tabPanel(
-          title = "Profile", 
-          br(), 
+          title = "Profile",
+          br(),
           source("ui/graphic_profile.R", local=TRUE)$value
         )
         # tabPanel("Output", verbatimTextOutput("temp"))
@@ -65,17 +64,17 @@ shinyUI(
       # br(),
       tabsetPanel(
         type = "tabs",
-        tabPanel("Details", includeMarkdown("md/about_details.md")),
+    #     tabPanel("Details", includeMarkdown("md/about_details.md")),
         tabPanel(
-          title = "FAQ", 
+          title = "FAQ",
           br(),
-          h4("General:"), 
+          h4("General:"),
           dataTableOutput("about_faq2"),
-          h4("Data and Graphic Explorer:"), 
+          h4("Data and Graphic Explorer:"),
           dataTableOutput("about_faq1")
         ),
         tabPanel(
-          title = "Scenario Defintions", 
+          title = "Scenario Defintions",
           dataTableOutput("about_scenario"),
           includeMarkdown("md/about_scenario.md")
         ),
@@ -84,13 +83,13 @@ shinyUI(
           dataTableOutput("about_edu"),
           includeMarkdown("md/about_edu.md")
         )
-        #tabPanel("Output", verbatimTextOutput("temp"))
+        # tabPanel("Output", verbatimTextOutput("temp"))
       )
     ),
     includeCSS("style.css"),
     tags$head(includeScript("google-analytics.js")),
     tags$script(includeHTML("sm-share.html")),
-    tags$head(#tags$script(includeScript("C:/Users/gabel/Documents/shiny/wic2/nav.js"))
+    tags$head(
       tags$script(
         "Shiny.addCustomMessageHandler('updateSelections',
         function(data) {

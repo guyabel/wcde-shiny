@@ -56,25 +56,25 @@ observe({
 })
 
 
-
-map_area_choice <- reactive({
-  validate(
-    need(input$map_edu, "", ""),
-    need(input$map_ind, "", "")
-  )
-  ch <- geo2
-  e <- ind %>%
-    filter(fullname %in% input$map_ind) %>%
-    pull(edu)
-  if(e == 1)
-    if(input$map_edu %in% edu1[8:10])
-      ch <- geo4
-  return(ch)
-})
-
-observe({
-  updateSelectizeInput(session, inputId = "map_area", choices = map_area_choice())
-})
+# 
+# map_area_choice <- reactive({
+#   validate(
+#     need(input$map_edu, "", ""),
+#     need(input$map_ind, "", "")
+#   )
+#   ch <- geo2
+#   e <- ind %>%
+#     filter(fullname %in% input$map_ind) %>%
+#     pull(edu)
+#   if(e == 1)
+#     if(input$map_edu %in% edu1[8:10])
+#       ch <- geo4
+#   return(ch)
+# })
+# 
+# observe({
+#   updateSelectizeInput(session, inputId = "map_area", choices = map_area_choice())
+# })
 
 
 # output$map_sn0 <- renderUI({

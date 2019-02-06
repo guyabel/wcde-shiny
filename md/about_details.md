@@ -74,7 +74,7 @@ Researchers who participated in the development of the projections:
 <td>Sergei Scherbov<sup> a</sup></td>
 </tr>
 <tr>
-<td>Alain B??langer<sup> a, b</sup></td>
+<td>Alain B?langer<sup> a, b</sup></td>
 <td>Henri Leridon</td>
 <td>Bruno Schoumaker</td>
 </tr>
@@ -120,13 +120,13 @@ Researchers who participated in the development of the projections:
 </tr>
 <tr>
 <td>Alessandra Conte<sup> b</sup></td>
-<td>France Mesl??</td>
+<td>France Mesl?</td>
 <td>Maria Rita Testa<sup> a</sup></td>
 </tr>
 <tr>
 <td>Sven Drefahl</td>
 <td>Melinda Mills</td>
-<td>Olivier Th??venon</td>
+<td>Olivier Th?venon</td>
 </tr>
 <tr>
 <td>Rachel E. Durham</td>
@@ -140,7 +140,7 @@ Researchers who participated in the development of the projections:
 </tr>
 <tr>
 <td>Regina Fuchs </td>
-<td>Michaela Potan??okov??<sup> a, b</sup></td>
+<td>Michaela Potancokov?<sup> a, b</sup></td>
 <td>Marcus Wurzer</td>
 </tr>
 <tr>
@@ -161,7 +161,7 @@ Researchers who participated in the development of the projections:
 <tr>
 <td>Anne Goujon<sup> a</sup></td>
 <td>Louis Rosero-Bixby</td>
-<td>Kry??tof Zeman<sup> a</sup></td>
+<td>Krystof Zeman<sup> a</sup></td>
 </tr>
 <tr>
 <td>Erofili Grapsa<sup> b</sup></td>
@@ -193,7 +193,4 @@ Additional R packages used for data manipulations and visualisation:
 * <a href="http://cran.r-project.org/web/packages/markdown" target="_blank">markdown</a>: Allaire, J.J., Horner, J., Marti, V. & Porte, N. (2015). markdown: Markdown rendering for R. R package version 0.7.4
 * <a href="http://cran.r-project.org/web/packages/tidyr" target="_blank">tidyr</a>: Wickham, H. & Henry, L. (2018). tidyr: Easily Tidy Data with 'spread()' and 'gather()' Functions. R package version 0.8.1.
 * <a href="http://cran.r-project.org/web/packages/saves" target="_blank">saves</a>: Dar&oacute;czi, G. (2013). saves: Fast load variables. R package version 0.5
-
-Converting HTML plots to PDF and PNG:
-
-* <a href="http://wkhtmltopdf.org"  target="_blank">http://wkhtmltopdf.org</a>
+* <a href="http://cran.r-project.org/web/packages/webshot" target="_blank">webshot</a>: Chang, W. (2017). webshot: Take Screenshots of Web Pages. R package version 0.5

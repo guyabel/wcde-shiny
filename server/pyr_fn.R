@@ -71,7 +71,7 @@ leg_gvis <- function(edu = input$pyr_edu, dl = FALSE){
     )
     g2 <- gvisBarChart(
       data = leg, 
-      xvar = "Total", yvar = names(leg)[8:10], 
+      xvar = "Total", yvar = names(leg)[7:10], 
       options = list(
         colors = iiasa8b,
         height = 30, width = 900, 
