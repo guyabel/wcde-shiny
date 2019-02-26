@@ -28,7 +28,10 @@ shinyUI(
       id='graphic_tabs',
       fluidRow(
         column(width = 6, includeMarkdown("md/intro_graphic.md")),
-        column(width = 6, includeHTML("md/intro_logo.html"))
+        # column(width = 6, includeHTML("md/intro_logo.html"))
+        column(width = 3, includeHTML("md/intro_logo1.html")),
+        column(width = 3, includeHTML("md/intro_logo2.html"))
+        
       ),
       # br(),
       tabsetPanel(
@@ -61,7 +64,9 @@ shinyUI(
       id='about_tabs',
       fluidRow(
         column(width = 6, includeMarkdown("md/intro_about.md")),
-        column(width = 6, includeHTML("md/intro_logo.html"))
+        # column(width = 6, includeHTML("md/intro_logo.html"))
+        column(width = 3, includeHTML("md/intro_logo1.html")),
+        column(width = 3, includeHTML("md/intro_logo2.html"))
       ),
       # br(),
       tabsetPanel(
