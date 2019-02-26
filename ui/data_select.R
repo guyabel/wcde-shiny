@@ -67,7 +67,7 @@ tagList(
       ),
       selectizeInput(
         inputId = 'year', label = 'Year', width = "100%", multiple = TRUE,
-        choices = yn1, selected = 1
+        choices = yn1, selected = yn1[1]
       ),
       checkboxInput(
         inputId = 'allyear', label = 'Include all times',

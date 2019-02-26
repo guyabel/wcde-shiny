@@ -4,14 +4,16 @@ load("label.RData")
 shinyUI(
   navbarPage(
     title=" ", #footer=source("intro_foot.R", local=TRUE)$value, 
-    windowTitle="Wittgenstein Centre Data Explorer", collapsible=TRUE, fluid=FALSE,
+    windowTitle="Wittgenstein Centre Human Capital Data Explorer", collapsible=TRUE, fluid=FALSE,
     id='page',
     tabPanel(
       title = "Data Explorer",
       id='data_tabs',
       fluidRow(
-        column(width = 7, includeMarkdown("md/intro_data.md")),
-        column(width = 5, includeHTML("md/intro_logo.html"))
+        column(width = 6, includeMarkdown("md/intro_data.md")),
+        # column(width = 6, includeHTML("md/intro_logo.html"))
+        column(width = 3, includeHTML("md/intro_logo1.html")),
+        column(width = 3, includeHTML("md/intro_logo2.html"))
       ),
       tabsetPanel(
         type = "tabs",
@@ -25,8 +27,8 @@ shinyUI(
       title = "Graphic Explorer",
       id='graphic_tabs',
       fluidRow(
-        column(width = 7, includeMarkdown("md/intro_graphic.md")),
-        column(width = 5, includeHTML("md/intro_logo.html"))
+        column(width = 6, includeMarkdown("md/intro_graphic.md")),
+        column(width = 6, includeHTML("md/intro_logo.html"))
       ),
       # br(),
       tabsetPanel(
@@ -58,8 +60,8 @@ shinyUI(
       title = "About",
       id='about_tabs',
       fluidRow(
-        column(width = 7, includeMarkdown("md/intro_about.md")),
-        column(width = 5, includeHTML("md/intro_logo.html"))
+        column(width = 6, includeMarkdown("md/intro_about.md")),
+        column(width = 6, includeHTML("md/intro_logo.html"))
       ),
       # br(),
       tabsetPanel(

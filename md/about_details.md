@@ -4,7 +4,7 @@ This website presents a set of different scenarios of future population and huma
 
 The present version (2.0) benefitted from the partnership with the Joint Research Centre in the Centre of Expertise on Population and Migration <a href="http://www.iiasa.ac.at/web/home/research/researchPrograms/WorldPopulation/Research/Centre_of_Expertise_on_Population_and_Migration.html">(CEPAM)</a>. On top of the assumptions about future trends in fertility, mortality, and education, the projections study the effect of several migration assumptions applied to the context of the set of Shared Socioeconomic Pathways (SSP) scenarios related to the Intergovernmental Panel on Climate Change <a href="http://www.ipcc.ch/" target="_blank">(IPCC)</a>.
 
-The new version also includes the reconstruction of population by levels of educational attainment from 1950 to 2015 for 185 countries. More information in <a href="https://www.oeaw.ac.at/fileadmin/subsites/Institute/VID/PDF/Publications/Working_Papers/WP2019_02.pdf">Speringer et al. 2019</a>.
+The new version also includes the reconstruction of population by levels of educational attainment from 1950 to 2015 for 185 countries. More information in <a href="https://www.oeaw.ac.at/fileadmin/subsites/Institute/VID/IMG/Publications/Working_Papers/WP2019_02.pdf">Speringer et al. 2019</a>.
 
 ### Citation
 The suggested citation for data and plots from this website is:
@@ -74,7 +74,7 @@ Researchers who participated in the development of the projections:
 <td>Sergei Scherbov<sup> a</sup></td>
 </tr>
 <tr>
-<td>Alain B?langer<sup> a, b</sup></td>
+<td>Alain B&eacute;langer<sup> a, b</sup></td>
 <td>Henri Leridon</td>
 <td>Bruno Schoumaker</td>
 </tr>
@@ -120,13 +120,13 @@ Researchers who participated in the development of the projections:
 </tr>
 <tr>
 <td>Alessandra Conte<sup> b</sup></td>
-<td>France Mesl?</td>
+<td>France Mesl&eacute;</td>
 <td>Maria Rita Testa<sup> a</sup></td>
 </tr>
 <tr>
 <td>Sven Drefahl</td>
 <td>Melinda Mills</td>
-<td>Olivier Th?venon</td>
+<td>Olivier Th&eacute;venon</td>
 </tr>
 <tr>
 <td>Rachel E. Durham</td>
@@ -140,7 +140,7 @@ Researchers who participated in the development of the projections:
 </tr>
 <tr>
 <td>Regina Fuchs </td>
-<td>Michaela Potancokov?<sup> a, b</sup></td>
+<td>Michaela Potan&ccaron;okov&aacute;<sup> a, b</sup></td>
 <td>Marcus Wurzer</td>
 </tr>
 <tr>
@@ -161,7 +161,7 @@ Researchers who participated in the development of the projections:
 <tr>
 <td>Anne Goujon<sup> a</sup></td>
 <td>Louis Rosero-Bixby</td>
-<td>Krystof Zeman<sup> a</sup></td>
+<td>Kry&scaron;tof Zeman<sup> a</sup></td>
 </tr>
 <tr>
 <td>Erofili Grapsa<sup> b</sup></td>
@@ -187,7 +187,7 @@ Web interface built using:
 
 Additional R packages used for data manipulations and visualisation:
 
-* <a href="http://cran.r-project.org/web/packages/dplyr" target="_blank">dplyr</a>: Wickham, H., Francois, R., Henry, L. and M??ller K. (2018). dplyr: A Grammar of Data Manipulation. R package version 0.7.6.
+* <a href="http://cran.r-project.org/web/packages/dplyr" target="_blank">dplyr</a>: Wickham, H., Francois, R., Henry, L. and M&uuml;ller K. (2018). dplyr: A Grammar of Data Manipulation. R package version 0.7.6.
 * <a href="http://cran.r-project.org/web/packages/googleVis" target="_blank">googleVis</a>: Gesmann, M., & de Castillo, D. (2011). Using the Google visualisation API with R. *The R Journal*, 3(2), 40-44.
 * <a href="http://cran.r-project.org/web/packages/magrittr" target="_blank">magrittr</a>: Bache, S.M. & Wickham, H. (2015). magrittr: A Forward-Pipe Operator for R. R package version 1.5
 * <a href="http://cran.r-project.org/web/packages/markdown" target="_blank">markdown</a>: Allaire, J.J., Horner, J., Marti, V. & Porte, N. (2015). markdown: Markdown rendering for R. R package version 0.7.4
