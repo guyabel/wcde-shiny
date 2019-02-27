@@ -9,7 +9,7 @@ The new version also includes the reconstruction of population by levels of educ
 ### Citation
 The suggested citation for data and plots from this website is:
 
-Wittgenstein Centre for Demography and Global Human Capital, (2018). *Wittgenstein Centre Data Explorer Version 2.0.* Available at: <a href="http://www.wittgensteincentre.org/dataexplorer">http://www.wittgensteincentre.org/dataexplorer</a>
+Wittgenstein Centre for Demography and Global Human Capital, (2018). *Wittgenstein Centre Data Explorer Version 2.0 (Beta).* Available at: <a href="http://www.wittgensteincentre.org/dataexplorer">http://www.wittgensteincentre.org/dataexplorer</a>
 
 ### Credits
 Data Explorer Team at the Wittgenstein Centre for Demography and Global Human Capital:
