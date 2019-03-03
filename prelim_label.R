@@ -11,7 +11,7 @@ library(magrittr)
 dir_delete("./meta")
 dir_copy(path = "C:\\Users\\Guy\\Dropbox\\wcde2\\meta-to-wcde", 
          new_path = "./meta")
-dir_delete("./md")
+# dir_delete("./md")
 dir_copy(path = "C:\\Users\\Guy\\Dropbox\\wcde2\\md-to-wcde", 
          new_path = "./md")
 # file.copy(from = "C:/Users/gabel/Dropbox/wicdata/about_details.md", to = "C:/Users/gabel/Documents/shiny/wcde/about_details.md", overwrite = TRUE)
