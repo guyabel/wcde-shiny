@@ -47,7 +47,7 @@ pyr_fill1 <- reactive({
   f <- pyr_fill(year = input$pyr_year1, edu = input$pyr_edu, geo = input$pyr_geo1)
   return(f)
 })
- 
+
 pyr_fill2 <- reactive({
   validate(
     need(input$pyr_year2 != "", " "),
@@ -57,7 +57,7 @@ pyr_fill2 <- reactive({
   f <- pyr_fill(year = input$pyr_year2, edu = input$pyr_edu, geo = input$pyr_geo2)
   return(f)
 })
- 
+
 output$pyr_warn1 <- renderUI({
   f <- pyr_fill1()
   w <- pyr_warn(f = f, year = input$pyr_year1)
@@ -175,31 +175,31 @@ output$pyr1_dl <- downloadHandler(
       dl = TRUE
     )
     
-    #generate head.html
-    dl_head(year = input$pyr_year1, scenario = input$pyr_sn1, geo = input$pyr_geo1, type = "pyr")
-    #generate gg.html
-    gg$html$caption <- includeHTML("head.html")
-    print(gg, file = "gg.html")
-
-    webshot(
-      url = "gg.html", 
-      file = paste0("./output.", input$pyr_dl), 
-      delay = 2,
-      zoom = ifelse(input$pyr_dl == ".pdf", 0.5, 1)
-    )
+    tdir = tempdir()
+    dir.create(tdir, showWarnings = FALSE)
+    temp_gg <- tempfile(pattern = "wcde_v2_", tmpdir = tdir, fileext = ".html")
+    temp_img <- tempfile(pattern = "wcde_v2_", tmpdir = tdir, 
+                        fileext = paste0(".", input$pyr_dl))
     
-    file.copy(paste0("output.", input$pyr_dl), file)
-    file.remove("gg.html")
-    file.remove("head.html")
-    file.remove(paste0("output.", input$pyr_dl))
+    # generate gg.html
+    gg$html$caption <- dl_head(year = input$pyr_year1, scenario = input$pyr_sn1, geo = input$pyr_geo1,
+                               type = "pyr")
+    print(gg, file = temp_gg)
+    
+    webshot(
+      url = temp_gg, 
+      file = temp_img, 
+      delay = 2
+    )
+    file.copy(temp_img, file)
+    file.remove(temp_gg)
+    file.remove(temp_img)
   }
 )
 
 
-
 output$pyr2_dl <- downloadHandler(
   filename = function() {
-    # paste0("wic_pyr.", if(input$pyr_dl=="pdf") 'pdf' else 'png')
     paste0("pyr_",
            tolower(input$pyr_geo2), "_", input$pyr_year2, "_s", input$pyr_sn2, "_e", input$pyr_edu, ".",
            if(input$pyr_dl=="pdf") 'pdf' else 'png')
@@ -218,22 +218,25 @@ output$pyr2_dl <- downloadHandler(
       dl = TRUE
     )
     
-    #generate head.html
-    dl_head(year = input$pyr_year2, scenario = input$pyr_sn2, geo = input$pyr_geo2, type = "pyr")
-    #generate gg.html
-    gg$html$caption <- includeHTML("head.html")
-    print(gg, file = "gg.html")
+    tdir = tempdir()
+    dir.create(tdir, showWarnings = FALSE)
+    temp_gg <- tempfile(pattern = "wcde_v2_", tmpdir = tdir, fileext = ".html")
+    temp_img <- tempfile(pattern = "wcde_v2_", tmpdir = tdir, 
+                         fileext = paste0(".", input$pyr_dl))
+    
+    # generate gg.html
+    gg$html$caption <- dl_head(year = input$pyr_year2, scenario = input$pyr_sn2, geo = input$pyr_geo2,
+                               type = "pyr")
+    print(gg, file = temp_gg)
     
     webshot(
-      url = "gg.html", 
-      file = paste0("./output.", input$pyr_dl), 
-      delay = 2,
-      zoom = ifelse(input$pyr_dl == ".pdf", 0.5, 1)
+      url = temp_gg, 
+      file = temp_img, 
+      delay = 2
     )
-    
-    file.copy(paste0("output.", input$pyr_dl), file)
-    file.remove("gg.html")
-    file.remove("head.html")
-    file.remove(paste0("output.", input$pyr_dl))
+    file.copy(temp_img, file)
+    file.remove(temp_gg)
+    file.remove(temp_img)
   }
 )
+

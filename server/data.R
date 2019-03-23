@@ -192,9 +192,8 @@ output$data_dl <- downloadHandler(
   }
 )
 
-
 output$data_dl0 <- downloadHandler(
-  filename = function() { "wicdf.csv" },
+  filename = function() { "wcde_data.csv" },
   content = function(filename) {
     sn0 <- dimen %>% 
       filter(dim=="scenario") %>% 

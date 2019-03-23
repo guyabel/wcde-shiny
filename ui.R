@@ -10,10 +10,8 @@ shinyUI(
       title = "Data Explorer",
       id='data_tabs',
       fluidRow(
-        column(width = 6, includeMarkdown("md/intro_data.md")),
-        # column(width = 6, includeHTML("md/intro_logo.html"))
-        column(width = 3, includeHTML("md/intro_logo1.html")),
-        column(width = 3, includeHTML("md/intro_logo2.html"))
+        column(width = 8, includeMarkdown("md/intro_data.md")),
+        column(width = 4, includeHTML("md/intro_logo.html"))
       ),
       tabsetPanel(
         type = "tabs",
@@ -27,13 +25,9 @@ shinyUI(
       title = "Graphic Explorer",
       id='graphic_tabs',
       fluidRow(
-        column(width = 6, includeMarkdown("md/intro_graphic.md")),
-        # column(width = 6, includeHTML("md/intro_logo.html"))
-        column(width = 3, includeHTML("md/intro_logo1.html")),
-        column(width = 3, includeHTML("md/intro_logo2.html"))
-        
+        column(width = 8, includeMarkdown("md/intro_graphic.md")),
+        column(width = 4, includeHTML("md/intro_logo.html"))
       ),
-      # br(),
       tabsetPanel(
         type = "tabs",
         tabPanel(
@@ -63,10 +57,8 @@ shinyUI(
       title = "About",
       id='about_tabs',
       fluidRow(
-        column(width = 6, includeMarkdown("md/intro_about.md")),
-        # column(width = 6, includeHTML("md/intro_logo.html"))
-        column(width = 3, includeHTML("md/intro_logo1.html")),
-        column(width = 3, includeHTML("md/intro_logo2.html"))
+        column(width = 8, includeMarkdown("md/intro_about.md")),
+        column(width = 4, includeHTML("md/intro_logo.html"))
       ),
       # br(),
       tabsetPanel(
@@ -93,6 +85,16 @@ shinyUI(
         # tabPanel("Output", verbatimTextOutput("temp"))
       )
     ),
+    hr(),
+    fluidRow(
+      column(width = 6, offset = 6, includeMarkdown("md/bottom_blurb.md"))
+    ),
+    fluidRow(
+      column(width = 2, offset = 6, includeHTML("md/bottom_logo1.html")),
+      column(width = 2, includeHTML("md/bottom_logo2.html")),
+      column(width = 2, includeHTML("md/bottom_logo3.html"))
+    ),
+    br(),
     includeCSS("style.css"),
     tags$head(includeScript("google-analytics.js")),
     tags$script(includeHTML("sm-share.html")),

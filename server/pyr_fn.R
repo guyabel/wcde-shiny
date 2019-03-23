@@ -90,50 +90,47 @@ dl_head <- function(year = input$pyr_year1, scenario = input$pyr_sn1,
                     geo = input$pyr_geo1, type = "pyr", 
                     ind = NULL, age = NULL, sex = NULL, edu = NULL){
   w <- NULL
-  if(type != "map"){
-    w <- pyr_warn(f = f, year = year)
-  }
+  # if(type != "map"){
+  #   w <- pyr_warn(f = f, year = year)
+  # }
   sn <- dimen %>%
     filter(dim=="scenario", code==scenario) %>%
     pull(name)
   
   # head file
-  fh <- file("head.html", "w")
-  cat(pdfinfo, file = fh)
+  w <- paste(w, "<br>\n", pdfinfo) 
   if(type == "pyr")
-    cat(paste0("Population Pyramid  (in millions)","<br>\n"), file = fh)
+    w <- paste(w, "Population Pyramid  (in millions)","<br>\n")
   if(type == "sac")
-    cat(paste0("Population (in millions)","<br>\n"), file = fh)
-  cat(paste0(geo, "<br>\n"), file = fh)
-  cat(paste0(year, "<br>"), file = fh)
-  cat(paste0(sn, "<br>\n<br>\n"), file = fh)
+    w <- paste(w, "Population(in millions)","<br>\n")
+  w <- paste(w, geo, year, sn, sep = "<br>\n")
   
+
   if(type == "map"){
-    cat(paste0(ind,  "<br>\n"), file = fh)
+    cat(paste0(ind,  "<br>\n"), file = head_file)
     if(age != 0){
       a <- dimen %>% 
         filter(dim =="age", 
                code== age) %>% 
         pull(name)
-      cat(paste0("Age: ", a, "<br>\n"), file = fh)
+      w <- paste(w, "Age: ", a, "<br>\n")
     }
     if(sex != 0){
       s <- dimen %>% 
         filter(dim =="sex", 
                code== sex) %>% 
         pull(name)
-      cat(paste0("Sex: ", s, "<br>\n"), file = fh)
+      w <- paste(w, "Sex: ", s, "<br>\n")
     }
     if(edu != 0){
       e <- dimen %>% 
         filter(dim =="edu", 
                code== edu) %>% 
         pull(name)
-      cat(paste0("Education: ", e, "<br>\n"), file = fh)
+      w <- paste(w, "Education: ", e, "<br>\n")
     }
   }
-  cat(w, file = fh)
-  close(fh)
+  return(w)
 }
 
 
@@ -272,14 +269,16 @@ pyr_fill <- function(year = input$pyr_year1, edu = input$pyr_edu, geo = input$py
 
 pyr_warn <- function(f = NULL, year = input$pyr_year1){
   w <- ""
-  if(f == TRUE)
-    w0 <- "You have selected eight categories for the educational background. These data are only available from 2015 onwards for selected countries. Please consult the FAQ in the About page for more information."
-  # if(f == TRUE & year < 2015)
-  #   w0 <- "You have selected eight categories for the educational background. These data are only available from 2015 onwards for selected countries. Please consult the FAQ in the About page for more information."
-  # if(f == TRUE & year >= 2015)
-  #   w0 <- "You have selected eight categories for the educational background. These data are only available from 2015 onwards for selected countries. Please consult the FAQ in the About page for more information."
-  if(f == TRUE)
-    w <- paste0("<FONT COLOR='gray'>", w0, "<br><br>")
+  if(!is.null(f)){
+    if(f == TRUE)
+      w0 <- "You have selected eight categories for the educational background. These data are only available from 2015 onwards for selected countries. Please consult the FAQ in the About page for more information."
+    # if(f == TRUE & year < 2015)
+    #   w0 <- "You have selected eight categories for the educational background. These data are only available from 2015 onwards for selected countries. Please consult the FAQ in the About page for more information."
+    # if(f == TRUE & year >= 2015)
+    #   w0 <- "You have selected eight categories for the educational background. These data are only available from 2015 onwards for selected countries. Please consult the FAQ in the About page for more information."
+    if(f == TRUE)
+      w <- paste0("<FONT COLOR='gray'>", w0, "<br><br>")
+  }
   return(w)
 }
 

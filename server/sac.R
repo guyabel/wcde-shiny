@@ -147,7 +147,6 @@ output$sac_leg <- renderGvis({
 
 output$sac1_dl <- downloadHandler(
   filename = function() {
-    # paste0("wic_sac.", if(input$sac_dl=="pdf") 'pdf' else 'png')
     paste0("pop_",
            tolower(input$sac_geo1), "_", input$sac_year1, "_s", input$sac_sn1, "_e", input$sac_edu, ".",
            if(input$sac_dl=="pdf") 'pdf' else 'png')
@@ -162,23 +161,23 @@ output$sac1_dl <- downloadHandler(
       prop = input$sac_prop
     )
     
-    #generate head.html
-    dl_head(year = input$sac_year1, scenario = input$sac_sn1, geo = input$sac_geo1, type = "sac")
-    #generate gg.html
-    gg$html$caption <- includeHTML("head.html")
-    print(gg, file = "gg.html")
+    tdir = tempdir()
+    dir.create(tdir, showWarnings = FALSE)
+    temp_gg <- tempfile(pattern = "wcde_v2_", tmpdir = tdir, fileext = ".html")
+    temp_img <- tempfile(pattern = "wcde_v2_", tmpdir = tdir, 
+                         fileext = paste0(".", input$pyr_dl))
+    
+    gg$html$caption <- dl_head(year = input$sac_year1, scenario = input$sac_sn1, geo = input$sac_geo1, type = "sac")
+    print(gg, file = temp_gg)
     
     webshot(
-      url = "gg.html", 
-      file = paste0("./output.", input$sac_dl), 
-      delay = 2,
-      zoom = ifelse(input$sac_dl == ".pdf", 0.5, 1)
+      url = temp_gg, 
+      file = temp_img, 
+      delay = 2
     )
-    
-    file.copy(paste0("output.", input$sac_dl), file)
-    file.remove("gg.html")
-    file.remove("head.html")
-    file.remove(paste0("output.", input$sac_dl))
+    file.copy(temp_img, file)
+    file.remove(temp_gg)
+    file.remove(temp_img)
   }
 )
 
@@ -200,22 +199,22 @@ output$sac2_dl <- downloadHandler(
       legend = TRUE, dl = TRUE
     )
 
-    #generate head.html
-    dl_head(year = input$sac_year2, scenario = input$sac_sn2, geo = input$sac_geo2, type = "sac")
-    #generate gg.html
-    gg$html$caption <- includeHTML("head.html")
-    print(gg, file = "gg.html")
+    tdir = tempdir()
+    dir.create(tdir, showWarnings = FALSE)
+    temp_gg <- tempfile(pattern = "wcde_v2_", tmpdir = tdir, fileext = ".html")
+    temp_img <- tempfile(pattern = "wcde_v2_", tmpdir = tdir, 
+                         fileext = paste0(".", input$pyr_dl))
+    
+    gg$html$caption <- dl_head(year = input$sac_year2, scenario = input$sac_sn2, geo = input$sac_geo2, type = "sac")
+    print(gg, file = temp_gg)
     
     webshot(
-      url = "gg.html", 
-      file = paste0("./output.", input$sac_dl), 
-      delay = 2,
-      zoom = ifelse(input$sac_dl == ".pdf", 0.5, 1)
+      url = temp_gg, 
+      file = temp_img, 
+      delay = 2
     )
-    
-    file.copy(paste0("output.", input$sac_dl), file)
-    file.remove("gg.html")
-    file.remove("head.html")
-    file.remove(paste0("output.", input$sac_dl))
+    file.copy(temp_img, file)
+    file.remove(temp_gg)
+    file.remove(temp_img)
   }
 )

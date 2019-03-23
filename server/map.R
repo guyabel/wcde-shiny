@@ -113,25 +113,25 @@ output$map1_dl <- downloadHandler(
   content = function(file) {
     gg <- map_build()
     
-    #generate head.html
-    dl_head(year = input$map_year, scenario = input$map_sn, geo = input$map_area, 
-            type = "map", 
-            ind = input$map_ind, age = input$map_age, 
-            sex = input$map_sex, edu = input$map_edu)
-    #generate gg.html
-    gg$html$caption <- includeHTML("head.html")
-    print(gg, file = "gg.html")
+    tdir = tempdir()
+    dir.create(tdir, showWarnings = FALSE)
+    temp_gg <- tempfile(pattern = "wcde_v2_", tmpdir = tdir, fileext = ".html")
+    temp_img <- tempfile(pattern = "wcde_v2_", tmpdir = tdir, 
+                         fileext = paste0(".", input$pyr_dl))
+    
+    gg$html$caption <-  dl_head(year = input$map_year, scenario = input$map_sn, 
+                                geo = input$map_area, type = "map", 
+                                ind = input$map_ind, age = input$map_age, 
+                                sex = input$map_sex, edu = input$map_edu)
+    print(gg, file = temp_gg)
     
     webshot(
-      url = "gg.html", 
-      file = paste0("./output.", input$map_dl), 
-      delay = 5,
-      zoom = ifelse(input$map_dl == ".pdf", 0.5, 1)
+      url = temp_gg, 
+      file = temp_img, 
+      delay = 2
     )
-    
-    file.copy(paste0("output.", input$map_dl), file)
-    file.remove("gg.html")
-    file.remove("head.html")
-    file.remove(paste0("output.", input$map_dl))
+    file.copy(temp_img, file)
+    file.remove(temp_gg)
+    file.remove(temp_img)
   }
 )
