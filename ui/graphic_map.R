@@ -56,7 +56,7 @@ tagList(
         column(6,
           h4("Download Options:"),
           fluidRow(
-            column(6, selectizeInput("map_dl", "File Type", width="100%",  choices = list("PDF"="pdf","PNG"="png")), htmlOutput("map_dlwarn") ),
+            column(6, selectizeInput("map_dl", "File Type", width="100%",  choices = list("PNG"="png")), htmlOutput("map_dlwarn") ),
             column(4, downloadButton('map1_dl', 'Map'))
           )
         )

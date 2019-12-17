@@ -99,15 +99,19 @@ dl_head <- function(year = input$pyr_year1, scenario = input$pyr_sn1,
   
   # head file
   w <- paste(w, "<br>\n", pdfinfo) 
-  if(type == "pyr")
+  if(type == "pyr"){
     w <- paste(w, "Population Pyramid  (in millions)","<br>\n")
-  if(type == "sac")
+    w <- paste(w, geo, year, sn, sep = "<br>\n")
+  }
+  if(type == "sac"){
     w <- paste(w, "Population(in millions)","<br>\n")
-  w <- paste(w, geo, year, sn, sep = "<br>\n")
-  
-
+    w <- paste(w, geo, sn, sep = "<br>\n")
+  }
+    
   if(type == "map"){
-    cat(paste0(ind,  "<br>\n"), file = head_file)
+    # cat(paste0(ind,  "<br>\n"), file = head_file)
+    w <- paste(w, geo, year, sn, sep = "<br>\n")
+    w <- paste(w,"<br>\n")
     if(age != 0){
       a <- dimen %>% 
         filter(dim =="age", 
@@ -130,6 +134,8 @@ dl_head <- function(year = input$pyr_year1, scenario = input$pyr_sn1,
       w <- paste(w, "Education: ", e, "<br>\n")
     }
   }
+  w <- paste(w, "<br>\n")
+  w <- paste(w, "<br>\n")
   return(w)
 }
 

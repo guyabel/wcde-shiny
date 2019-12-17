@@ -153,19 +153,22 @@ output$sac1_dl <- downloadHandler(
   },
   content = function(file) {
     f <- sac_fill1()
+    m <- sac_max1()
     gg <- sac_gvis(
       d_sac =  sac_d1(),
-      pcol = ifelse(test = f, yes = "['darkgrey']", no = get(paste0("iiasa",input$sac_edu))),
+      pcol = ifelse(test = f, yes = "['darkgrey']", 
+                    no = get(paste0("iiasa",input$sac_edu))),
       no_edu = f,
       pmax = m,
-      prop = input$sac_prop
+      prop = input$sac_prop,
+      dl = TRUE
     )
     
     tdir = tempdir()
     dir.create(tdir, showWarnings = FALSE)
     temp_gg <- tempfile(pattern = "wcde_v2_", tmpdir = tdir, fileext = ".html")
     temp_img <- tempfile(pattern = "wcde_v2_", tmpdir = tdir, 
-                         fileext = paste0(".", input$pyr_dl))
+                         fileext = paste0(".", input$sac_dl))
     
     gg$html$caption <- dl_head(year = input$sac_year1, scenario = input$sac_sn1, geo = input$sac_geo1, type = "sac")
     print(gg, file = temp_gg)
@@ -185,25 +188,28 @@ output$sac2_dl <- downloadHandler(
   filename = function() {
     # paste0("wic_sac.", if(input$sac_dl=="pdf") 'pdf' else 'png')
     paste0("pop_",
-           tolower(input$sac_geo2), "_", input$sac_year2, "_s", input$sac_sn2, "_e", input$sac_edu, ".",
+           tolower(input$sac_geo2), "_", input$sac_year2, "_s", 
+           input$sac_sn2, "_e", input$sac_edu, ".",
            if(input$sac_dl=="pdf") 'pdf' else 'png')
   },
   content = function(file) {
     f <- sac_fill2()
+    m <- sac_max2()
     gg <- sac_gvis(
       d_sac =  sac_d2(),
-      pcol = ifelse(test = f, yes = "['darkgrey']", no = get(paste0("iiasa",input$sac_edu))),
+      pcol = ifelse(test = f, yes = "['darkgrey']", 
+                    no = get(paste0("iiasa",input$sac_edu))),
       no_edu = f,
       pmax = m,
-      prop = input$sac_prop, 
-      legend = TRUE, dl = TRUE
+      prop = input$sac_prop,
+      dl = TRUE
     )
 
     tdir = tempdir()
     dir.create(tdir, showWarnings = FALSE)
     temp_gg <- tempfile(pattern = "wcde_v2_", tmpdir = tdir, fileext = ".html")
     temp_img <- tempfile(pattern = "wcde_v2_", tmpdir = tdir, 
-                         fileext = paste0(".", input$pyr_dl))
+                         fileext = paste0(".", input$sac_dl))
     
     gg$html$caption <- dl_head(year = input$sac_year2, scenario = input$sac_sn2, geo = input$sac_geo2, type = "sac")
     print(gg, file = temp_gg)
