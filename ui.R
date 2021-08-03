@@ -90,7 +90,10 @@ shinyUI(
     #  column(width = 6, offset = 6, includeMarkdown("md/bottom_blurb.md"))
     #),
     fluidRow(
-      column(width = 2, offset = 6, includeHTML("md/bottom_logo1.html")),
+      column(width = 6, includeHTML("md/r_blurb.html")),
+      column(width = 2, 
+             # offset = 6, 
+             includeHTML("md/bottom_logo1.html")),
       column(width = 2, includeHTML("md/bottom_logo2.html")),
       column(width = 2, includeHTML("md/bottom_logo3.html"))
     ),

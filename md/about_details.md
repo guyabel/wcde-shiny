@@ -7,11 +7,18 @@ The present version (2.0) benefitted from the partnership with the Joint Researc
 The new version also includes the reconstruction of population by levels of educational attainment from 1950 to 2015 for 185 countries. More information in <a href="https://www.oeaw.ac.at/fileadmin/subsites/Institute/VID/IMG/Publications/Working_Papers/WP2019_02.pdf">Speringer et al. 2019</a>.
 
 ### Citation
+
 The suggested citation for data and plots from this website is:
 
 Wittgenstein Centre for Demography and Global Human Capital, (2018). *Wittgenstein Centre Data Explorer Version 2.0 (Beta).* Available at: <a href="http://www.wittgensteincentre.org/dataexplorer">http://www.wittgensteincentre.org/dataexplorer</a>
 
+
+### R package
+
+You may download data directly into <a href="https://cran.r-project.org/" target="_blank" rel="noopener"><i class="fab fa-r-project"></i></a> using the *wcde* package. See the package <a href="https://guyabel.github.io/wcde/" target="_blank" rel="noopener">website</a> for further details.
+
 ### Credits
+
 Data Explorer Team at the Wittgenstein Centre for Demography and Global Human Capital:
 
 Concept and Coordination:
