@@ -1,7 +1,7 @@
 fluidRow(
   column(
     width = 3, 
-    Created by resaerchers based at:
+    By:
   ),
   # column(
   #   width = 3, 

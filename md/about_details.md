@@ -33,6 +33,9 @@ Web Interface:
 
 * <a href="http://www.iiasa.ac.at/staff/staff.php?type=auto&visibility=visible&search=true&login=abel"  target="_blank">Guy J. Abel</a>
 
+* <a href="http://www.wittgensteincentre.org/en/staff/member/rengs.htm"  target="_blank">Bernhard Rengs</a>
+
+
 Researchers who participated in the development of the projections:
 
 <dl>
