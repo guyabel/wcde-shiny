@@ -2,7 +2,7 @@
 
 This website presents a set of different scenarios of future population and human capital trends in 201 countries of the world to 2100. The result of the population projections by levels of educational attainment were published in 2018 in <a href="https://ec.europa.eu/jrc/en/publication/demographic-and-human-capital-scenarios-21st-century-2018-assessment-201-countries">Lutz, Goujon, KC, Stonawski, and Stilianakis (Eds.) (2018)</a>. They provide an update of the projections (scope, coverage and quality) presented in <a href="https://global.oup.com/academic/product/world-population-and-human-capital-in-the-twenty-first-century-9780198703167?cc=at&lang=en&">Lutz, Butz and KC in 2014</a>, based on the work of a large team of researchers at the <a href="http://www.wittgensteincentre.org" target="_blank_">Wittgenstein Centre</a> for Demography and Global Human Capital and at other institutions.
 
-The present version (2.0) benefitted from the partnership with the Joint Research Centre in the Centre of Expertise on Population and Migration <a href="http://www.iiasa.ac.at/web/home/research/researchPrograms/WorldPopulation/Research/Centre_of_Expertise_on_Population_and_Migration.html">(CEPAM)</a>. On top of the assumptions about future trends in fertility, mortality, and education, the projections study the effect of several migration assumptions applied to the context of the set of Shared Socioeconomic Pathways (SSP) scenarios related to the Intergovernmental Panel on Climate Change <a href="http://www.ipcc.ch/" target="_blank">(IPCC)</a>.
+The present version (2.0) benefited from the partnership with the Joint Research Centre in the Centre of Expertise on Population and Migration <a href="http://www.iiasa.ac.at/web/home/research/researchPrograms/WorldPopulation/Research/Centre_of_Expertise_on_Population_and_Migration.html">(CEPAM)</a>. On top of the assumptions about future trends in fertility, mortality, and education, the projections study the effect of several migration assumptions applied to the context of the set of Shared Socioeconomic Pathways (SSP) scenarios related to the Intergovernmental Panel on Climate Change <a href="http://www.ipcc.ch/" target="_blank">(IPCC)</a>.
 
 The new version also includes the reconstruction of population by levels of educational attainment from 1950 to 2015 for 185 countries. More information in <a href="https://www.oeaw.ac.at/fileadmin/subsites/Institute/VID/IMG/Publications/Working_Papers/WP2019_02.pdf">Speringer et al. 2019</a>.
 
@@ -10,7 +10,7 @@ The new version also includes the reconstruction of population by levels of educ
 
 The suggested citation for data and plots from this website is:
 
-Wittgenstein Centre for Demography and Global Human Capital, (2018). *Wittgenstein Centre Data Explorer Version 2.0 (Beta).* Available at: <a href="http://www.wittgensteincentre.org/dataexplorer">http://www.wittgensteincentre.org/dataexplorer</a>
+Wittgenstein Centre for Demography and Global Human Capital, (2018). *Wittgenstein Centre Data Explorer Version 2.0.* Available at: <a href="http://www.wittgensteincentre.org/dataexplorer">http://www.wittgensteincentre.org/dataexplorer</a>
 
 
 ### R package
