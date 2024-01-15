@@ -1,10 +1,6 @@
----
----
----
-
 ### Overview
 
-This website presents the 2023 revision of the Wittgenstein Centre population projections (Version 3), following the initial projections (Version 1) in 2013 ([Lutz, Butz, and KC (Eds.) 2014](https://global.oup.com/academic/product/world-population-and-human-capital-in-the-twenty-first-century-9780198703167?cc=at&lang=en&)) and the 2018 update (Version 2) ([Lutz, Goujon, KC, Stonawski, and, Stilianakis (Eds.) 2018](https://op.europa.eu/en/publication-detail/-/publication/e1853ba8-4444-11e8-a9f4-01aa75ed71a1/language-en)). Further details on the updates and the revisions can be found in KC et al. (2024) and in other satellite papers focusing on the migration component ([Yildiz and Abel 2024](https://pure.iiasa.ac.at/id/eprint/19399/1/WP-24-001.pdf)), the mortality component (Moradhvaj and KC 2024 - forthcoming), and the fertility component (Adhikari et al. 2024 - forthcoming).
+This website presents the 2023 revision of the Wittgenstein Centre population projections (Version 3), following the initial projections (Version 1) in 2013 ([Lutz, Butz, and KC (Eds.) 2014)](https://global.oup.com/academic/product/world-population-and-human-capital-in-the-twenty-first-century-9780198703167?cc=at&lang=en&) and the 2018 update (Version 2) ([Lutz, Goujon, KC, Stonawski, and, Stilianakis (Eds.) 2018](https://op.europa.eu/en/publication-detail/-/publication/e1853ba8-4444-11e8-a9f4-01aa75ed71a1/language-en)). Further details on the updates and the revisions can be found in KC et al. (2024) and in other satellite papers focusing on the migration component ([Yildiz and Abel 2024] (https://pure.iiasa.ac.at/id/eprint/19399/1/WP-24-001.pdf)), the mortality component (Moradhvaj and KC 2024 - forthcoming), and the fertility component (Adhikari et al. 2024 - forthcoming).
 
 In 2021, [the Shared Socioeconomic Pathways (SSPs) scenario community](https://data.ece.iiasa.ac.at/ssp/) related to the Intergovernmental Panel on Climate Change requested an update of the human core of the SSPs, which is at the origin of this version. This updated version is based on 2020 as the reference year, with adjustments to certain short-term assumptions extending to 2030. However, most long-term assumptions have not been changed. Several changes were nevertheless implemented particularly in estimating and using country-specific education differentials in mortality and migration.
 
@@ -40,9 +36,10 @@ Web Interface:
 
 -   [Guy J. Abel](https://iiasa.ac.at/staff/guy-abel)
 
--   [Bernhard Rengs](https://www.wittgensteincentre.org/en/staff/member/rengs.htm)
+-   [Bernhard Rengs](https://www.oeaw.ac.at/vid/people/staff/bernhard-rengs)
 
 Researchers who participated in the development of the projections:
+
 
 <dl>
 <table border="0" width="100%" style="margin-left:25px">
@@ -69,7 +66,7 @@ Researchers who participated in the development of the projections:
 </tr>
 <tr>
 <td>Bilal F. Barakat</td>
-<td>Samir K.C.<sup> a</sup></td>
+<td>Samir KC <sup> a</sup></td>
 <td>Warren C. Sanderson<sup> a</sup></td>
 </tr>
 <tr>
@@ -175,7 +172,7 @@ Researchers who participated in the development of the projections:
 <tr>
 <td>Michel Garenne</td>
 <td>Fernando Riosmena</td>
-<td>Kry&scaron;tof Zeman<sup> a</sup></td>
+<td>Krystof Zeman<sup> a</sup></td>
 </tr>
 <tr>
 <td>Anne Goujon<sup> a</sup></td>
@@ -192,7 +189,6 @@ Researchers who participated in the development of the projections:
 </tbody>
 </table>
 </dl>
-
 
 Web interface built using:
 
