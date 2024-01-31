@@ -49,8 +49,8 @@ tagList(
                 choices = 
                   list(
                     "Four Categories" = 4,
-                    "Six Categories" = 6,
-                    "Eight Categories" = 8
+                    "Six Categories" = 6
+                    # "Eight Categories" = 8
                   )
               )
             ),

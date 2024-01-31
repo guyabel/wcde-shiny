@@ -307,9 +307,17 @@ pyr_data <- function(geo = input$pyr_geo1,
   #   pull(edu8) %>%
   #   sum()
   
-  df1 <- loads(file = paste0("df", sn, "/epop"), 
-               variables = v, ultra.fast = TRUE, to.data.frame=TRUE) %>%
-    tbl_df() %>%
+  df1 <- tibble(
+    v = v,
+    file = paste0("../wcde-data/wcde-v3-single/", sn, "/epop/", v, ".rds")
+  ) %>%
+    mutate(d = map(.x = file, .f = ~read_rds(.x))) %>%
+    select(-file) %>%
+    pivot_wider(names_from = v, values_from = d) %>%
+    unnest(col = names(.)) %>%
+  # df1 <- loads(file = paste0("df", sn, "/epop"), 
+  #              variables = v, ultra.fast = TRUE, to.data.frame=TRUE) %>%
+  #   as_tibble() %>%
     mutate_if(is.factor, as.character) %>%
     mutate(edu = fct_inorder(edu)) %>%
     gather(key = isono, value = pop, -(1:7)) %>% 

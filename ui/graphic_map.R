@@ -32,11 +32,11 @@ tagList(
       width = 3, 
       selectizeInput(inputId = "map_edu", label = "Education", choices = NULL, width="100%")
     ),
-    column(
-      width = 3, 
-      actionButton(inputId = "map_go", label = "Generate Map", width="100%", 
-                   style="color: white; background-color: rgba(44,146,208,1)")
-    )
+    # column(
+    #   width = 3, 
+    #   actionButton(inputId = "map_go", label = "Generate Map", width="100%", 
+    #                style="color: white; background-color: rgba(44,146,208,1)")
+    # )
   ),
   htmlOutput("map"),
   br(),

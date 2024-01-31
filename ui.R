@@ -44,11 +44,6 @@ shinyUI(
           title = "Map",
           br(),
           source("ui/graphic_map.R", local=TRUE)$value
-        ),
-        tabPanel(
-          title = "Profile",
-          br(),
-          source("ui/graphic_profile.R", local=TRUE)$value
         )
         # tabPanel("Output", verbatimTextOutput("temp"))
       )
@@ -57,8 +52,8 @@ shinyUI(
       title = "About",
       id='about_tabs',
       fluidRow(
-        column(width = 8, includeMarkdown("md/intro_about.md")),
-        column(width = 4, includeHTML("md/intro_logo.html"))
+        # column(width = 8, includeMarkdown("md/intro_about.md")),
+        column(width = 4, includeHTML("md/intro_logo.html"), offset = 8)
       ),
       # br(),
       tabsetPanel(
@@ -82,35 +77,31 @@ shinyUI(
           dataTableOutput("about_edu"),
           includeMarkdown("md/about_edu.md")
         )
-        # tabPanel("Output", verbatimTextOutput("temp"))
       )
     ),
-    hr(),
-   # fluidRow(
-    #  column(width = 6, offset = 6, includeMarkdown("md/bottom_blurb.md"))
-    #),
-    fluidRow(
-      column(width = 4, includeHTML("md/r_blurb.html")),
-      column(width = 2, includeHTML("md/bottom_logo_adri.html")),
-      column(width = 2, includeHTML("md/bottom_logo_iiasa.html")),
-      column(width = 2, includeHTML("md/bottom_logo_oeaw.html")),
-      column(width = 2, includeHTML("md/bottom_logo_uniwien.html"))
-    ),
-    br(),
-    includeCSS("style.css"),
-    tags$head(includeScript("google-analytics.js")),
-    tags$script(includeHTML("sm-share.html")),
-    tags$head(
-      tags$script(
-        "Shiny.addCustomMessageHandler('updateSelections',
+   tags$footer(
+     hr(),
+     fluidRow(
+       column(width = 4, includeHTML("md/r_blurb.html")),
+       column(width = 2, includeHTML("md/bottom_logo_adri.html")),
+       column(width = 2, includeHTML("md/bottom_logo_iiasa.html")),
+       column(width = 2, includeHTML("md/bottom_logo_oeaw.html")),
+       column(width = 2, includeHTML("md/bottom_logo_uniwien.html"))
+     ),
+     includeCSS("style.css"),
+     tags$head(includeScript("google-analytics.js")),
+     tags$script(includeHTML("sm-share.html")),
+     tags$head(
+       tags$script(
+         "Shiny.addCustomMessageHandler('updateSelections',
         function(data) {
         var nav_ref = '#page a:contains(\"' + data.nav + '\")';
         var tabpanel_id = data.nav == 'Alpha' ? '#data_tabs' : '#graphic_tabs';
         $(nav_ref).tab('show');
         })"
-      )
-    )
-    #tags$script(includeHTML("twitter-share.html"))
+       )
+     )
+   )
   )
 )
 

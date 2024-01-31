@@ -63,10 +63,19 @@ sac_data <- function(geo = input$sac_geo1,
     filter(name %in% geo) %>%
     pull(isono) %>%
     c(v, .)
+
   
-  df1 <- loads(file = paste0("df", sn, "/epop"), 
-               variables = v, ultra.fast = TRUE, to.data.frame=TRUE) %>%
-    tbl_df() %>%
+  df1 <- tibble(
+    v = v,
+    file = paste0("../wcde-data/wcde-v3-single/", sn, "/epop/", v, ".rds")
+  ) %>%
+    mutate(d = map(.x = file, .f = ~read_rds(.x))) %>%
+    select(-file) %>%
+    pivot_wider(names_from = v, values_from = d) %>%
+    unnest(col = names(.)) %>%  
+  # df1 <- loads(file = paste0("df", sn, "/epop"), 
+  #              variables = v, ultra.fast = TRUE, to.data.frame=TRUE) %>%
+  #   as_tibble() %>%
     filter(ageno==0, 
            sexno==0, 
            year %in% seq(from = year_range[1], to = year_range[2], by = 5)) %>%

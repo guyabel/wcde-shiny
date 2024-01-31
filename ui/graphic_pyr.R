@@ -36,7 +36,7 @@ tagList(
       width = 6, 
       sliderInput(
         inputId = "pyr_year1", label = "Year", 
-        min = 1950, max = 2100, value = 2015, step= 5, ticks= FALSE, 
+        min = 2020, max = 2100, value = 2020, step= 5, ticks= FALSE, 
         animate = animationOptions(interval = 2000),
         sep="", width = "100%"
       )
@@ -45,7 +45,7 @@ tagList(
       width = 6, 
       sliderInput(
         inputId = "pyr_year2", label = "Year", 
-        min = 1950, max = 2100, value = 2050, step= 5, ticks= FALSE, 
+        min = 2020, max = 2100, value = 2050, step= 5, ticks= FALSE, 
         animate = animationOptions(interval = 2000),
         sep="", width = "100%"
       )
@@ -80,8 +80,8 @@ tagList(
                 selected = 4,
                 choices = list(
                   "Four Categories" = 4, 
-                  "Six Categories" = 6,
-                  "Eight Categories" = 8 
+                  "Six Categories" = 6
+                  # "Eight Categories" = 8 
                 )
               )
             ),

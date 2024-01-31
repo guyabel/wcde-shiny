@@ -18,8 +18,9 @@ map_geo<-reactive({
   return(geo)
 })
 
-#input=NULL;input$map_year=2015; input$map_ind=ind4[[4]][3]; input$map_proj="mercator";input$map_area="Latin America and the Caribbean"; input$map_sn=1; input$map_age="";input$map_sex=1;
+#input=NULL;input$map_year=2020; input$map_ind=ind4[[4]][3]; input$map_proj="mercator";input$map_area="Latin America and the Caribbean"; input$map_sn=1; input$map_age="";input$map_sex=1;
 #input$map_edu=0; input$map_age = 5; input$map_sex=2;
+# input=NULL;input$map_year=2020; input$map_ind=ind4[[1]][1]; input$map_proj="mercator";input$map_area="World"; input$map_sn=2; input$map_age="0";input$map_sex="0"; input$map_edu=0;
 map_build <- reactive({
   validate( 
     need(input$map_ind != "", ""), 
@@ -38,27 +39,47 @@ map_build <- reactive({
         pull(cname)
       
       v <- c("year", "ageno", "sexno", "eduno")
+      
+      # availabe countries for given scenario and indicator
+      fn <- ind %>% 
+        filter(fullname == input$map_ind) %>%
+        pull(name)
+      
+      xx <- paste0("../wcde-data/wcde-v3-single/", input$map_sn, "/", fn, "/") %>%
+        dir(all.files = TRUE) %>%
+        str_remove(pattern = ".rds") %>%
+        str_subset(pattern = "[0-9]") %>%
+        as.numeric()
+        
       if(input$map_area != "World"){
         v <- geog %>%
-          filter(continent == input$map_area | region == input$map_area) %>%
-          pull(isono) %>%
-          c(v, .)
-      }
-      if(input$map_area == "World"){
-        v <- geog %>%
-          filter(dim == "country") %>%
+          filter(continent == input$map_area | region == input$map_area,
+                 isono %in% xx) %>%
           pull(isono) %>%
           c(v, .)
       }
       
-      fn <- ind %>% 
-        filter(fullname == input$map_ind) %>%
-        pull(name)
+      if(input$map_area == "World"){
+        v <- geog %>%
+          filter(dim == "country",
+                 isono %in% xx) %>%
+          pull(isono) %>%
+          c(v, .)
+      }
 
       incProgress(1/4)
-      df1 <- loads(file = paste0("df",input$map_sn, "/", fn, "/"), 
-                   variables = v, ultra.fast = TRUE, to.data.frame=TRUE) %>%
-        tbl_df()
+      
+      df1 <- tibble(
+        v = v,
+        file = paste0("../wcde-data/wcde-v3-single/", input$map_sn, "/", fn, "/", v, ".rds")
+      ) %>%
+        mutate(d = map(.x = file, .f = ~read_rds(.x))) %>%
+        select(-file) %>%
+        pivot_wider(names_from = v, values_from = d) %>%
+        unnest(col = names(.))
+      # df1 <- loads(file = paste0("df",input$map_sn, "/", fn, "/"), 
+      #              variables = v, ultra.fast = TRUE, to.data.frame=TRUE) %>%
+      #   as_tibble()
       incProgress(2/4)
       d2a <- geog %>% 
         filter(dim == "country") %>%
@@ -102,7 +123,8 @@ output$map <- renderGvis({
   m <- NULL
   input$map_go
   # Use isolate() to avoid dependency on input$obs
-  m <- isolate(map_build())
+  # m <- isolate(map_build())
+  m <- map_build()
   m
 })
 

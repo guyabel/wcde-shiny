@@ -127,7 +127,7 @@ output$map_year0 <- renderUI({
   validate(
     need(input$map_ind, " ", "")
   )
-  year.min<-2015
+  year.min<-2020
   year.l<-"Time"
   if(ind %>% filter(fullname %in% input$map_ind) %>% .[["past"]]==1){
     year.min<-1950
@@ -135,5 +135,5 @@ output$map_year0 <- renderUI({
   if(ind %>% filter(fullname %in% input$map_ind) %>% .[["period"]]==1){
     year.l<- "Beginning of 5-Year Period"
   }
-  sliderInput("map_year", year.l, min = year.min, max = 2100, value = c(2015), step= 5, sep="", ticks= FALSE, width="100%")
+  sliderInput("map_year", year.l, min = year.min, max = 2100, value = c(2020), step= 5, sep="", ticks= FALSE, width="100%")
 })

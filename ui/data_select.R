@@ -2,19 +2,26 @@
 
 tagList(
   br(),
-  fluidRow(class = "myRow1", 
+  fluidRow(
+    class = "myRow1",
     column(
-      width = 3, 
-      br(), 
-      h4("1. Indicators"), 
-      br(), 
+      width = 3,
+      br(),
+      h4("1. Indicators"),
+      br(),
       selectizeInput(
-        inputId = 'data_cat', label = 'Indicator Type', width = "100%",
-        choices = ind0, selected = ind0[[1]][1]
+        inputId = 'data_cat',
+        label = 'Indicator Type',
+        width = "100%",
+        choices = ind0,
+        selected = ind0[[1]][1]
       ),
       selectizeInput(
-        inputId = 'data_ind', label = 'Indicator', width = "100%",
-        choices = ind1, selected = ind1[[1]][1]
+        inputId = 'data_ind',
+        label = 'Indicator',
+        width = "100%",
+        choices = ind1,
+        selected = ind1[[1]][1]
       )
     ),
     column(
@@ -23,17 +30,24 @@ tagList(
       h4("2. Geography"),
       br(),
       selectizeInput(
-        inputId = 'nat', label = 'Country', width = "100%", multiple = TRUE,
-        choices = nn2, 
+        inputId = 'nat',
+        label = 'Country',
+        width = "100%",
+        multiple = TRUE,
+        choices = nn2,
         options = list(placeholder = 'Type or click for multiple choices')
       ),
       selectizeInput(
-        inputId = 'reg', label = 'Region', width = "100%", multiple = TRUE,
-        choices = geo2, 
+        inputId = 'reg',
+        label = 'Region',
+        width = "100%",
+        multiple = TRUE,
+        choices = geo2,
         options = list(placeholder = 'Type or click for multiple choices')
       ),
       checkboxInput(
-        inputId = 'allnat', label = 'Include countries of selected regions',
+        inputId = 'allnat',
+        label = 'Include countries of selected regions',
         value = FALSE
       )
     ),
@@ -43,16 +57,25 @@ tagList(
       h4("3. Breakdown"),
       br(),
       selectizeInput(
-        inputId = 'sex', label = 'Sex', width = "100%", multiple = TRUE,
-        choices = sex1, selected = 1
+        inputId = 'sex',
+        label = 'Sex',
+        width = "100%",
+        multiple = TRUE,
+        choices = sex1,
+        selected = 1
       ),
       selectizeInput(
-        inputId = 'age', label = 'Age', width = "100%", multiple = TRUE,
-        choices = age1, selected = 1,
+        inputId = 'age',
+        label = 'Age',
+        width = "100%",
+        multiple = TRUE,
+        choices = age1,
+        selected = 1,
         options = list(placeholder = 'Not available')
       ),
       checkboxInput(
-        inputId = 'allage', label = 'Include all age groups',
+        inputId = 'allage',
+        label = 'Include all age groups',
         value = FALSE
       )
     ),
@@ -62,31 +85,45 @@ tagList(
       h4("4. Time Horizon"),
       br(),
       selectizeInput(
-        inputId = 'scenario', label = 'Scenario', width = "100%", multiple = TRUE,
-        choices = sn1, selected = 1
+        inputId = 'scenario',
+        label = 'Scenario',
+        width = "100%",
+        multiple = TRUE,
+        choices = sn1,
+        selected = 1
       ),
       selectizeInput(
-        inputId = 'year', label = 'Year', width = "100%", multiple = TRUE,
-        choices = yn1, selected = yn1[1]
+        inputId = 'year',
+        label = 'Year',
+        width = "100%",
+        multiple = TRUE,
+        choices = yn1,
+        selected = yn1[1]
       ),
       checkboxInput(
-        inputId = 'allyear', label = 'Include all times',
+        inputId = 'allyear',
+        label = 'Include all times',
         value = FALSE
       ),
       br(),
-      HTML("<div id='linkToData'><button type='button' class='btn btn-block btn-default'>View Data <span class='glyphicon glyphicon-new-window'></span></button></div>"),
+      HTML(
+        "<div id='linkToData'><button type='button' class='btn btn-block btn-default'>View Data <span class='glyphicon glyphicon-new-window'></span></button></div>"
+      ),
       br(),
       downloadButton('data_dl0', 'Download'),
       br(),
       br()
     )
   ),
-  tags$script("$('#linkToData').click(function() {
+  tags$script(
+    "$('#linkToData').click(function() {
             tabs = $('.tabbable .nav.nav-tabs li a');
             $(tabs[1]).click();
-            })"),
-  tags$style(type='text/css', "#data_dl0 { width:100%}"),
-  tags$style(".myRow1{background: rgba(212,228,239,1); 
+            })"
+  ),
+  tags$style(type = 'text/css', "#data_dl0 { width:100%}"),
+  tags$style(
+    ".myRow1{background: rgba(212,228,239,1);
                background: -moz-linear-gradient(left, rgba(212,228,239,1) 0%, rgba(44,146,208,1) 100%);
                background: -webkit-gradient(left top, right top, color-stop(0%, rgba(212,228,239,1)), color-stop(100%, rgba(44,146,208,1)));
                background: -webkit-linear-gradient(left, rgba(212,228,239,1) 0%, rgba(44,146,208,1) 100%);
@@ -97,7 +134,7 @@ tagList(
                border-radius: 10px 10px 10px 10px;
                -moz-border-radius: 10px 10px 10px 10px;
                -webkit-border-radius: 10px 10px 10px 10px;}"
-             ),
+  ),
   br(),
   br()
 )
