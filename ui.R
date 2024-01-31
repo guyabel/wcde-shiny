@@ -88,9 +88,9 @@ shinyUI(
        column(width = 2, includeHTML("md/bottom_logo_oeaw.html")),
        column(width = 2, includeHTML("md/bottom_logo_uniwien.html"))
      ),
-     includeCSS("style.css"),
-     tags$head(includeScript("google-analytics.js")),
-     tags$script(includeHTML("sm-share.html")),
+     includeCSS("www/style.css"),
+     tags$head(includeScript("www/google-analytics.js")),
+     tags$script(includeHTML("www/sm-share.html")),
      tags$head(
        tags$script(
          "Shiny.addCustomMessageHandler('updateSelections',
