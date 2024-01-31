@@ -349,8 +349,6 @@ faq <- read_excel("./meta/faq.xlsx")
 ##
 ##saving
 ##
-rm(i)
-
 save.image(file = "./label.RData")
 
 
