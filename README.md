@@ -8,7 +8,7 @@ Data formatting and upload based in the separate repo: <https://github.com/guyab
 
 `www` folder contains images used on site and additional files.
 
-`server` folder contains all the R code that is dependent (reactive) on the user inputs including
+`server` folder contains all the R code that is dependent (reactive) on the user inputs, referred to in `server.R`, including
 
 -   `[foo].R`: returns plots or data frames in a given tab.
 
@@ -20,7 +20,7 @@ Data formatting and upload based in the separate repo: <https://github.com/guyab
 
 -   lists of indicator names, country names, age groups, etc., etc., used in the drop-down fields
 
-    In addition to data frames from the meta folder:
+In addition to data frames from the meta folder:
 
 -   `ind`: details on which indicators are available by which dimension.
 
@@ -34,7 +34,7 @@ Data formatting and upload based in the separate repo: <https://github.com/guyab
 
 The objects in `label.RData` are loaded at the top of the `ui.R` script.
 
-The `ui.R` script refers to a number of files to control the layout including:
+The `ui.R` script refers to a number of files in the `ui` folder to control the layout including:
 
 -   `[foo].md` files are markdown text generally located at the top of the page above the tabs.
 
