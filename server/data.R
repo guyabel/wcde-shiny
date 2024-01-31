@@ -34,7 +34,7 @@ output$tit_scen <- renderText({
   ))
   tt <- dimen %>%
     filter(dim == "scenario") %>%
-    filter(code == input$scenario) %>%
+    filter(wcde_code == input$scenario) %>%
     pull(name)
   if (length(input$scenario) > 1)
     tt <- "Multiple Scenarios Selected"
@@ -49,7 +49,7 @@ output$def_scen <- renderUI({
   ))
   tt <- dimen %>%
     filter(dim == "scenario") %>%
-    filter(code == input$scenario) %>%
+    filter(wcde_code == input$scenario) %>%
     pull(details)
   if (length(input$scenario) > 1)
     tt <- "See About tab for full scenario details."
@@ -127,7 +127,7 @@ df_build <- reactive({
                      c(v, .)
                    
                    sn <- dimen %>%
-                     filter(dim == "scenario", code == i) %>%
+                     filter(dim == "scenario", wcde_code == i) %>%
                      pull(sname)
                    
 
@@ -227,7 +227,7 @@ output$data_dl <- downloadHandler(
   },
   content = function(filename) {
     sn0 <-
-      dimen %>% filter(dim == "scenario") %>% filter(code == input$scenario) %>% .[["name"]]
+      dimen %>% filter(dim == "scenario") %>% filter(wcde_code == input$scenario) %>% .[["name"]]
     d2 <- ind %>%
       filter(fullname == input$data_ind) %>%
       select(fullname, definition) %>%
@@ -261,7 +261,7 @@ output$data_dl0 <- downloadHandler(
   content = function(filename) {
     sn0 <- dimen %>%
       filter(dim == "scenario") %>%
-      filter(code == input$scenario) %>%
+      filter(wcde_code == input$scenario) %>%
       .[["name"]]
     d2 <- ind %>%
       filter(fullname == input$data_ind) %>%

@@ -117,15 +117,6 @@ dimen <- read_excel("./meta/dimension.xlsx")
 
 sn1 <- dimen %>%
   filter(dim == "scenario") %>%
-  mutate(wcde_code = case_when(
-    sname == "SSP1" ~ 1,
-    sname == "SSP2" ~ 2,
-    sname == "SSP3" ~ 3,
-    sname == "SSP4" ~ 4,
-    sname == "SSP5" ~ 5,
-    sname == "SSP2ZM" ~ 22,
-    sname == "SSP2DM" ~ 23,
-  )) %>%
   arrange(wcde_code) %>%
   arrange(wcde_code != 2) %>%
   mutate(name = fct_inorder(name)) %>%
