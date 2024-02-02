@@ -166,8 +166,8 @@ output$sac1_dl <- downloadHandler(
     
     tdir = tempdir()
     dir.create(tdir, showWarnings = FALSE)
-    temp_gg <- tempfile(pattern = "wcde_v2_", tmpdir = tdir, fileext = ".html")
-    temp_img <- tempfile(pattern = "wcde_v2_", tmpdir = tdir, 
+    temp_gg <- tempfile(pattern = "wcde_v3_", tmpdir = tdir, fileext = ".html")
+    temp_img <- tempfile(pattern = "wcde_v3_", tmpdir = tdir, 
                          fileext = paste0(".", input$sac_dl))
     
     gg$html$caption <- dl_head(year = input$sac_year1, scenario = input$sac_sn1, geo = input$sac_geo1, type = "sac")
@@ -207,8 +207,8 @@ output$sac2_dl <- downloadHandler(
 
     tdir = tempdir()
     dir.create(tdir, showWarnings = FALSE)
-    temp_gg <- tempfile(pattern = "wcde_v2_", tmpdir = tdir, fileext = ".html")
-    temp_img <- tempfile(pattern = "wcde_v2_", tmpdir = tdir, 
+    temp_gg <- tempfile(pattern = "wcde_v3_", tmpdir = tdir, fileext = ".html")
+    temp_img <- tempfile(pattern = "wcde_v3_", tmpdir = tdir, 
                          fileext = paste0(".", input$sac_dl))
     
     gg$html$caption <- dl_head(year = input$sac_year2, scenario = input$sac_sn2, geo = input$sac_geo2, type = "sac")

@@ -94,7 +94,7 @@ dl_head <- function(year = input$pyr_year1, scenario = input$pyr_sn1,
   #   w <- pyr_warn(f = f, year = year)
   # }
   sn <- dimen %>%
-    filter(dim=="scenario", code==scenario) %>%
+    filter(dim=="scenario", wcde_code==scenario) %>%
     pull(name)
   
   # head file
@@ -309,7 +309,7 @@ pyr_data <- function(geo = input$pyr_geo1,
   
   df1 <- tibble(
     v = v,
-    file = paste0("../wcde-data/wcde-v3-single/", sn, "/epop/", v, ".rds")
+    file = paste0("../wcde-data/wcde-v30-single/", sn, "/epop/", v, ".rds")
   ) %>%
     mutate(d = map(.x = file, .f = ~read_rds(.x))) %>%
     select(-file) %>%

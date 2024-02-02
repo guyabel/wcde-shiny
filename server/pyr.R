@@ -177,8 +177,8 @@ output$pyr1_dl <- downloadHandler(
     
     tdir = tempdir()
     dir.create(tdir, showWarnings = FALSE)
-    temp_gg <- tempfile(pattern = "wcde_v2_", tmpdir = tdir, fileext = ".html")
-    temp_img <- tempfile(pattern = "wcde_v2_", tmpdir = tdir, 
+    temp_gg <- tempfile(pattern = "wcde_v3_", tmpdir = tdir, fileext = ".html")
+    temp_img <- tempfile(pattern = "wcde_v3_", tmpdir = tdir, 
                         fileext = paste0(".", input$pyr_dl))
     
     # generate gg.html
@@ -220,8 +220,8 @@ output$pyr2_dl <- downloadHandler(
     
     tdir = tempdir()
     dir.create(tdir, showWarnings = FALSE)
-    temp_gg <- tempfile(pattern = "wcde_v2_", tmpdir = tdir, fileext = ".html")
-    temp_img <- tempfile(pattern = "wcde_v2_", tmpdir = tdir, 
+    temp_gg <- tempfile(pattern = "wcde_v3_", tmpdir = tdir, fileext = ".html")
+    temp_img <- tempfile(pattern = "wcde_v3_", tmpdir = tdir, 
                          fileext = paste0(".", input$pyr_dl))
     
     # generate gg.html

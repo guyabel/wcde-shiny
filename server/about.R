@@ -17,6 +17,7 @@ output$about_faq2 <- renderDataTable({
 output$about_scenario <- renderDataTable({
   dimen %>% 
     filter(dim == "scenario") %>% 
+    arrange(wcde_code) %>%
     select(name,details) %>% 
     rename(Scenario = name,
            Definition = details)

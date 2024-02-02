@@ -1,4 +1,3 @@
-# setwd("E:/VID/project/wcde/")
 rm(list = ls())
 library(tidyverse)
 library(readxl)
