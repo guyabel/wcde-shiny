@@ -70,6 +70,8 @@ shinyUI(
         tabPanel(
           title = "Scenario Defintions",
           dataTableOutput("about_scenario"),
+          h4("Summary Component Table:"),
+          includeHTML("md/scenario_table0.html"),
           includeMarkdown("md/about_scenario.md")
         ),
         tabPanel(

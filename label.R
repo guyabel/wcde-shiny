@@ -14,7 +14,9 @@ dir_copy(path = "C:\\Users\\Guy\\Dropbox\\WCDE for Guy/meta/",
 dir_delete("./md")
 dir_copy(path = "C:\\Users\\Guy\\Dropbox\\WCDE for Guy/md/",
          new_path = "./md")
-
+# dir_ls(path = "md/") %>%
+#   as_tibble()
+  
 ##
 ##Indicators
 ##
@@ -215,11 +217,14 @@ bage1 <- dimen %>%
 ##
 ##assumptions
 ##
-assump <- read_excel("./meta/assumption.xlsx")
+# assump <- read_excel("./meta/assumption.xlsx")
+assump <- read_csv("./meta/assumption.csv")
 #assump$country<-NULL
 # assump<-assump %>% left_join(geog %>% select(name,isono))
 # assump<-assump %>% rename(country=name)
 head(assump)
+
+
 
 ##
 ##info

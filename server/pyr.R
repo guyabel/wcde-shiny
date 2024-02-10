@@ -4,7 +4,7 @@
 # setwd("E:/VID/project/wcde")
 # load("label.RData")
 # source("server/pyr_fn.R")
-# input<-NULL; input$pyr_sn1<-2; input$pyr_geo1="France"; input$pyr_year1=2020; input$pyr_sn2<-2; input$pyr_geo2="Germany"; input$pyr_edu=6; input$pyr_dl="png"; input$pyr_prop = FALSE
+# input<-NULL; input$pyr_sn1<-2; input$pyr_geo1="World"; input$pyr_year1=2020; input$pyr_sn2<-2; input$pyr_geo2="Germany"; input$pyr_edu=6; input$pyr_dl="png"; input$pyr_prop = FALSE
 
 pyr_max1 <- reactive({
   m <- NULL
@@ -177,8 +177,8 @@ output$pyr1_dl <- downloadHandler(
     
     tdir = tempdir()
     dir.create(tdir, showWarnings = FALSE)
-    temp_gg <- tempfile(pattern = "wcde_v3_", tmpdir = tdir, fileext = ".html")
-    temp_img <- tempfile(pattern = "wcde_v3_", tmpdir = tdir, 
+    temp_gg <- tempfile(pattern = "wcde_v2_", tmpdir = tdir, fileext = ".html")
+    temp_img <- tempfile(pattern = "wcde_v2_", tmpdir = tdir, 
                         fileext = paste0(".", input$pyr_dl))
     
     # generate gg.html

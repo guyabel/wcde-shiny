@@ -309,7 +309,7 @@ pyr_data <- function(geo = input$pyr_geo1,
   
   df1 <- tibble(
     v = v,
-    file = paste0("../wcde-data/wcde-v30-single/", sn, "/epop/", v, ".rds")
+    file = paste0("../wcde-data/wcde-v3-single/", sn, "/epop/", v, ".rds")
   ) %>%
     mutate(d = map(.x = file, .f = ~read_rds(.x))) %>%
     select(-file) %>%
@@ -348,23 +348,24 @@ pyr_data <- function(geo = input$pyr_geo1,
       ungroup() %>%
       mutate(eduno = ifelse(edu == "Total", 0, 1))
   }
-  if(edu == "8"){
-    df2 <- df1 %>%
-      filter(eduno != 7) %>%
-      left_join(edu10, by = "eduno") %>%
-      mutate(edu = fct_inorder(edu_name)) %>%
-      select(-edu_name) %>%
-      drop_na() %>%
-      group_by(scenario, year, ageno, age, sex, sexno, edu) %>%
-      summarise(pop=sum(pop)) %>%
-      ungroup() %>%
-      # all education splits to zero if less than 2015
-      mutate(pop = ifelse(year < 2015 & edu != "Total", 0, pop)) %>%
-      # fill in missing rows for masters etc pre 2015
-      complete(scenario, year, age, sex, edu, fill = list(pop = 0)) %>%
-      fill(ageno, sexno) %>%
-      mutate(eduno = ifelse(edu == "Total", 0, 1))
-  }
+  # if(edu == "8"){
+  #   df2 <- df1 %>%
+  #     wcde::edu_group_sum(n = 8)
+  #     filter(eduno != 7) %>%
+  #     left_join(edu10, by = "eduno") %>%
+  #     mutate(edu = fct_inorder(edu_name)) %>%
+  #     select(-edu_name) %>%
+  #     drop_na() %>%
+  #     group_by(scenario, year, ageno, age, sex, sexno, edu) %>%
+  #     summarise(pop=sum(pop)) %>%
+  #     ungroup() %>%
+  #     # all education splits to zero if less than 2015
+  #     mutate(pop = ifelse(year < 2020 & edu != "Total", 0, pop)) %>%
+  #     # fill in missing rows for masters etc pre 2015
+  #     complete(scenario, year, age, sex, edu, fill = list(pop = 0)) %>%
+  #     fill(ageno, sexno) %>%
+  #     mutate(eduno = ifelse(edu == "Total", 0, 1))
+  # }
   return(df2)
 }
 # leg_data(df2)
