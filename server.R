@@ -1,7 +1,5 @@
-library(reshape2)
 library(tidyverse)
 library(magrittr)
-library(saves)
 library(shiny)
 library(googleVis)
 library(webshot)

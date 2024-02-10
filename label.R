@@ -219,6 +219,14 @@ bage1 <- dimen %>%
 ##
 # assump <- read_excel("./meta/assumption.xlsx")
 assump <- read_csv("./meta/assumption.csv")
+assump <- assump %>%
+  mutate(sno = case_when(
+    str_detect(scenario, "SSP1") ~ 1,
+    str_detect(scenario, "SSP2") ~ 2,
+    str_detect(scenario, "SSP3") ~ 3,
+    str_detect(scenario, "SSP4") ~ 4,
+    str_detect(scenario, "SSP5") ~ 5
+  ))
 #assump$country<-NULL
 # assump<-assump %>% left_join(geog %>% select(name,isono))
 # assump<-assump %>% rename(country=name)
