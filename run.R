@@ -1,5 +1,5 @@
 library(shiny)
-runApp(launch.browser = TRUE)
+shiny::runApp(launch.browser = TRUE)
 
 
 # library(profvis)

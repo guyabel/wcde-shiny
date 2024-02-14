@@ -106,7 +106,7 @@ df_build <- reactive({
                value = 0,
                {
                  for (i in input$scenario) {
-                   #input<-NULL; input$age=0;  input$sex=2;  input$year=0;  input$year=2020; input$data_ind=ind2[[2]][3]; input$scenario=c(sn1[1],sn1[2]); input$isono=TRUE; i=2
+                   #input<-NULL; input$age=0;  input$sex=2;  input$year=0;  input$year=2020; input$data_ind=ind2[[3]][1]; input$scenario=c(sn1[1],sn1[2]); input$isono=TRUE; i=2
                    # input$reg <- c("Oceania", "Asia")
                    d2 <- NULL
                    
@@ -236,13 +236,13 @@ output$data_dl <- downloadHandler(
     colnames(d2) <- ""
     
     warn <- NULL
-    if (length(allarea()) > 0) {
-      if (sum(geog %>% filter(name %in% allarea()) %>% .[["is171"]], na.rm = TRUE) >
-          0) {
-        warn <-
-          "Note: Your selection includes at least one country with limited base year data on educational attainment. Please consult the FAQ for more information"
-      }
-    }
+    # if (length(allarea()) > 0) {
+    #   if (sum(geog %>% filter(name %in% allarea()) %>% .[["is171"]], na.rm = TRUE) >
+    #       0) {
+    #     warn <-
+    #       "Note: Your selection includes at least one country with limited base year data on educational attainment. Please consult the FAQ for more information"
+    #   }
+    # }
     csvinfo0 <-
       paste0(substring(csvinfo, 1, nchar(csvinfo) - 1), warn, "\n")
     

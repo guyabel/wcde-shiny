@@ -8,12 +8,12 @@ library(magrittr)
 ##copy about
 ##
 
-dir_delete("./meta")
-dir_copy(path = "C:\\Users\\Guy\\Dropbox\\WCDE for Guy/meta/",
-         new_path = "./meta")
-dir_delete("./md")
-dir_copy(path = "C:\\Users\\Guy\\Dropbox\\WCDE for Guy/md/",
-         new_path = "./md")
+# dir_delete("./meta")
+# dir_copy(path = "C:\\Users\\Guy\\Dropbox\\WCDE for Guy/meta/",
+#          new_path = "./meta")
+# dir_delete("./md")
+# dir_copy(path = "C:\\Users\\Guy\\Dropbox\\WCDE for Guy/md/",
+#          new_path = "./md")
 # dir_ls(path = "md/") %>%
 #   as_tibble()
   

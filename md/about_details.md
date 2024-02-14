@@ -1,16 +1,16 @@
 ### Overview
 
-This website presents the 2023 revision of the Wittgenstein Centre population projections (Version 3), following the initial projections (Version 1) in 2013 ([Lutz, Butz, and KC (Eds.) 2014)](https://global.oup.com/academic/product/world-population-and-human-capital-in-the-twenty-first-century-9780198703167?cc=at&lang=en&) and the 2018 update (Version 2) ([Lutz, Goujon, KC, Stonawski, and, Stilianakis (Eds.) 2018](https://op.europa.eu/en/publication-detail/-/publication/e1853ba8-4444-11e8-a9f4-01aa75ed71a1/language-en)). Further details on the updates and the revisions can be found in [KC et al. (2024)](https://pure.iiasa.ac.at/1948) and in other satellite papers focusing on the migration component ([Yildiz and Abel 2024](https://pure.iiasa.ac.at/id/eprint/19399/1/WP-24-001.pdf)), the mortality component (Dhakad and KC 2024 - forthcoming), and the fertility component (Adhikari et al. 2024 - forthcoming).
+This website presents the 2023 revision of the Wittgenstein Centre population projections (Version 3), following the initial projections ([Version 1](https://dataexplorer.wittgensteincentre.org/wcde-v1/)) in 2013 ([Lutz, Butz, and KC (Eds.) 2014)](https://global.oup.com/academic/product/world-population-and-human-capital-in-the-twenty-first-century-9780198703167?cc=at&lang=en&) and the 2018 update ([Version 2](https://dataexplorer.wittgensteincentre.org/wcde-v2/)) ([Lutz, Goujon, KC, Stonawski, and, Stilianakis (Eds.) 2018](https://op.europa.eu/en/publication-detail/-/publication/e1853ba8-4444-11e8-a9f4-01aa75ed71a1/language-en)). Further details on the updates and the revisions can be found in [K.C. et al. (2024)](https://pure.iiasa.ac.at/19487) and in other satellite papers focusing on the migration component ([Yildiz and Abel 2024](https://pure.iiasa.ac.at/id/eprint/19399/1/WP-24-001.pdf)), the mortality component (Dhakad and KC 2024 - forthcoming), and the fertility component (Adhikari et al. 2024 - forthcoming).
 
 In 2021, [the Shared Socioeconomic Pathways (SSPs) scenario community](https://data.ece.iiasa.ac.at/ssp/) related to the Intergovernmental Panel on Climate Change requested an update of the human core of the SSPs, which is at the origin of this version. This updated version is based on 2020 as the reference year, with adjustments to certain short-term assumptions extending to 2030. However, most long-term assumptions have not been changed. Several changes were nevertheless implemented particularly in estimating and using country-specific education differentials in mortality and migration.
 
-This new version includes population projections by levels of educational attainment from 2020 to 2100 for 200 countries according to five scenarios (SSP1-5). The reconstruction will become available in the course of 2024.
+This new version includes population projections by levels of educational attainment from 2020 to 2100 for 200 countries according to seven scenarios (SSP1-5, SSP2-Zero Migration and SSP2-Double Migration). The reconstruction will become available in the course of 2024.
 
 ### Citation
 
 The suggested citation for data and plots from this website is:
 
-Wittgenstein Centre for Demography and Global Human Capital, (2023). *Wittgenstein Centre Data Explorer Version 3.0. (Beta)* Available at: <http://www.wittgensteincentre.org/dataexplorer>
+K.C., S., Dhakad, M., Potancokova, M., Adhikari, S., Yildiz, D., Mamolo, M., Sobotka, T., Zeman, K., Abel, G., Lutz, W., and Goujon, A. (2024). Updating the Shared Socioeconomic Pathways (SSPs) Global Population and Human Capital Projections. IIASA Working Paper. Laxenburg, Austria: WP-24-003. https://pure.iiasa.ac.at/19487. Available at: <http://www.wittgensteincentre.org/dataexplorer>.
 
 ### R package
 

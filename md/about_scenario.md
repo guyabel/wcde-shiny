@@ -15,7 +15,7 @@
 
 For further details see:
 
-* K.C., S., Dhakad, M., Potancokova, M., Adhikari, S., Yildiz, D., Mamolo, M., Sobotka, T., Zeman, K., Abel, G., Lutz, W., and Goujon, A. (2024). Updating the Shared Socioeconomic Pathways (SSPs) Global Population and Human Capital Projections. IIASA Working Paper. Laxenburg, Austria: WP-24-003. https://pure.iiasa.ac.at/19487   
+* K.C., S., Dhakad, M., Potancokova, M., Adhikari, S., Yildiz, D., Mamolo, M., Sobotka, T., Zeman, K., Abel, G., Lutz, W., and Goujon, A. (2024). Updating the Shared Socioeconomic Pathways (SSPs) Global Population and Human Capital Projections. IIASA Working Paper. Laxenburg, Austria: WP-24-003. https://pure.iiasa.ac.at/19487. Available at: <http://www.wittgensteincentre.org/dataexplorer>. 
 
 * O'Neill, B.C., Kriegler, E., Ebi, K.L., Kemp-Benedict, E., Riahi, K. (2014). <a href="https://www.sciencedirect.com/science/article/pii/S0959378015000060" target="_blank">The roads ahead: Narratives for shared socioeconomic pathways describing world futures in the 21st century.</a> *Global Environmental Change*.
 
