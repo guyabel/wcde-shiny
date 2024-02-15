@@ -2,6 +2,8 @@ library(tidyverse)
 library(magrittr)
 library(shiny)
 library(googleVis)
+# for webshot to work on iiasa server
+Sys.setenv(OPENSSL_CONF="/dev/null")
 library(webshot)
 
 load("label.RData")
