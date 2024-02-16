@@ -3,15 +3,16 @@ load("label.RData")
 
 shinyUI(
   navbarPage(
-    title=" ", #footer=source("intro_foot.R", local=TRUE)$value, 
-    windowTitle="Wittgenstein Centre Human Capital Data Explorer", collapsible=TRUE, fluid=FALSE,
-    id='page',
+    windowTitle = "Wittgenstein Centre Human Capital Data Explorer", 
+    title = " ",  
+    id = 'page', 
+    collapsible = TRUE,
+    fluid = FALSE,
     tabPanel(
       title = "Data Explorer",
-      id='data_tabs',
       fluidRow(
         column(width = 8, includeMarkdown("md/intro_data.md")),
-        column(width = 4, includeHTML("md/intro_logo.html"))
+        column(width = 4, includeHTML("www/intro_logo.html"))
       ),
       tabsetPanel(
         type = "tabs",
@@ -23,10 +24,9 @@ shinyUI(
     ),
     tabPanel(
       title = "Graphic Explorer",
-      id='graphic_tabs',
       fluidRow(
         column(width = 8, includeMarkdown("md/intro_graphic.md")),
-        column(width = 4, includeHTML("md/intro_logo.html"))
+        column(width = 4, includeHTML("www/intro_logo.html"))
       ),
       tabsetPanel(
         type = "tabs",
@@ -50,10 +50,9 @@ shinyUI(
     ),
     tabPanel(
       title = "About",
-      id='about_tabs',
       fluidRow(
-        # column(width = 8, includeMarkdown("md/intro_about.md")),
-        column(width = 4, includeHTML("md/intro_logo.html"), offset = 8)
+        column(width = 8, includeMarkdown("md/intro_about.md")),
+        column(width = 4, includeHTML("www/intro_logo.html"))
       ),
       # br(),
       tabsetPanel(
@@ -68,10 +67,12 @@ shinyUI(
           dataTableOutput("about_faq1")
         ),
         tabPanel(
+          h4("Description:"),
           title = "Scenario Defintions",
           dataTableOutput("about_scenario"),
           h4("Summary Component Table:"),
-          includeHTML("md/scenario_table0.html"),
+          includeHTML("md/scenario_table.html"),
+          h4("Further Details:"),
           includeMarkdown("md/about_scenario.md")
         ),
         tabPanel(
@@ -79,31 +80,28 @@ shinyUI(
           dataTableOutput("about_edu"),
           includeMarkdown("md/about_edu.md")
         )
-      )
+      ),
     ),
-   tags$footer(
-     hr(),
-     fluidRow(
-       column(width = 4, includeHTML("md/r_blurb.html")),
-       column(width = 2, includeHTML("md/bottom_logo_adri.html")),
-       column(width = 2, includeHTML("md/bottom_logo_iiasa.html")),
-       column(width = 2, includeHTML("md/bottom_logo_oeaw.html")),
-       column(width = 2, includeHTML("md/bottom_logo_uniwien.html"))
-     ),
-     includeCSS("www/style.css"),
-     tags$head(includeScript("www/google-analytics.js")),
-     tags$script(includeHTML("www/sm-share.html")),
-     tags$head(
-       tags$script(
-         "Shiny.addCustomMessageHandler('updateSelections',
-        function(data) {
-        var nav_ref = '#page a:contains(\"' + data.nav + '\")';
-        var tabpanel_id = data.nav == 'Alpha' ? '#data_tabs' : '#graphic_tabs';
-        $(nav_ref).tab('show');
-        })"
-       )
-     )
-   )
+    footer = 
+      tagList(
+        fluidRow(
+          hr(),
+          column(width = 4, includeHTML("www/r_blurb.html")),
+          column(width = 2, includeHTML("www/bottom_logo_adri.html")),
+          column(width = 2, includeHTML("www/bottom_logo_iiasa.html")),
+          column(width = 2, includeHTML("www/bottom_logo_oeaw.html")),
+          column(width = 2, includeHTML("www/bottom_logo_uniwien.html"))
+        ),
+        includeCSS("www/style.css"),
+        tags$script(
+          "Shiny.addCustomMessageHandler('updateSelections',
+         function(data) {
+         var nav_ref = '#page a:contains(\"' + data.nav + '\")';
+         var tabpanel_id = data.nav == 'Alpha' ? '#data_tabs' : '#graphic_tabs';
+         $(nav_ref).tab('show');
+         })"),
+        tags$script(includeHTML("www/sm-share.html"))
+      ),
+    header = includeScript("www/google-analytics.js")
   )
 )
-

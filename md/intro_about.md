@@ -1,2 +1,3 @@
-This section will not have intro
-===============
+Wittgenstein Centre <br/> Human Capital Data and Graphic Explorer
+========================================================
+

@@ -28,7 +28,7 @@ sex_choice0 <- function(d){
     ch <- sex1[1]
   if(d$name %in% c("assr","eassr",  "e0", "ryl15", "pryl15")) #"prop", "bprop",
     ch <- sex1[-1]
-  if(d$name %in% c("tfr", "etfr", "asfr", "macb", "easfr"))
+  if(d$name %in% c("tfr", "etfr", "asfr", "macb", "easfr", "emacb"))
     ch <- sex1[-c(1:2)]
   return(ch)
 }
@@ -40,10 +40,19 @@ edu_choice0 <- function(d){
     ch <- edu1[1]
   if(d$name %in% c("prop","bprop"))
     ch <- edu1[-1]
-  if(d$name %in% c("ggapedu15", "ggapedu25"))
+  if(d$name %in% c("ggapedu15", "ggapedu25", "netedu", 
+                   "easfr", "emacb", "eassr", "etfr", "emacb"))
     ch <- edu1[-(1:2)]
-  if(d$name %in% c("etfr"))
-    ch <- edu1[-2]
+  # if(d$name %in% c("etfr"))
+  #   ch <- edu1[-2]
   return(ch)
 }
 
+sex_choice1 <- function(d){
+  ch <- sex1
+  if(d$name %in% c("tfr", "etfr", "asfr", "macb", "easfr"))
+    ch <- sex1[-c(1:2)]
+  if(d$name %in% c("assr","eassr",  "e0", "ryl15", "pryl15"))
+    ch <- sex1[1]
+  return(ch)
+}

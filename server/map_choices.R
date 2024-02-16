@@ -21,7 +21,7 @@ map_sex_choice <- reactive({
   )
   ch <- ind %>%
     filter(fullname %in% input$map_ind) %>%
-    sex_choice0()
+    sex_choice1()
   return(ch)
 })
 
@@ -46,8 +46,6 @@ map_edu_choice <- reactive({
   ch <- ind %>%
     filter(fullname %in% input$map_ind) %>%
     edu_choice0()
-  if(input$map_year < 2015 & length(ch)>8)
-    ch <- ch[!ch %in% 8:10]
   return(ch)
 })
 

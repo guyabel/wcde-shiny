@@ -1,7 +1,9 @@
-library(tidyverse)
+library(tidyverse, quietly = TRUE)
+options(dplyr.summarise.inform = FALSE)
+
 library(magrittr)
 library(shiny)
-library(googleVis)
+library(googleVis, quietly = TRUE)
 # for webshot to work on iiasa server
 Sys.setenv(OPENSSL_CONF="/dev/null")
 library(webshot)
@@ -15,5 +17,4 @@ shinyServer(function(input, output, session) {
     source(file.path("server", file), local = TRUE)
   }
 })
-
 
