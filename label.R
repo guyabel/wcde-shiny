@@ -92,7 +92,10 @@ geo1[[3]] <- rn1
 geo2 <- list("World", "Continent", "Region")
 names(geo2) <- geo2
 geo2[[2]] <- an1[-1]
-geo2[[3]] <- rn1
+geo2[[3]] <- geog %>%
+  filter(dim == "region",
+         !is.na(ggarea)) %>%
+  pull(name)
 
 geo3 <- geo1
 geo3[[3]] <- NULL
