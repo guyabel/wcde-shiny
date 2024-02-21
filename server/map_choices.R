@@ -2,11 +2,12 @@ map_age_choice <- reactive({
   validate(
     need(input$map_ind, " ", "")
   )
-  # input$map_ind = ind$fullname[6]
-  ch <- ind %>%
-    filter(fullname %in% input$map_ind) %>%
-    age_choice0()
-  # ch <- ifelse(length(ch)==1, NULL, ch)
+  ch <- dim_avail %>%
+    filter(fullname %in% input$map_ind,
+           dim == "age") %>%
+    select(label, code) %>%
+    deframe() %>%
+    as.list()
   return(ch)
 })
 
@@ -19,33 +20,37 @@ map_sex_choice <- reactive({
   validate(
     need(input$map_ind, " ", "")
   )
-  ch <- ind %>%
-    filter(fullname %in% input$map_ind) %>%
-    sex_choice1()
+  ch <- dim_avail %>%
+    filter(fullname %in% input$map_ind,
+           dim == "sex") %>%
+    select(label, code) %>%
+    deframe() %>%
+    as.list()
   return(ch)
 })
 
-map_sex_select <- reactive({
-  s <- map_sex_choice()
-  if(length(s) == 3)
-    s <- s[1]
-  return(s)
-})
+# map_sex_select <- reactive({
+#   s <- map_sex_choice()
+#   if(length(s) > 1)
+#     s <- s[1]
+#   return(s)
+# })
 
 observe({
-  updateSelectizeInput(session, inputId = "map_sex", 
-                       choices = map_sex_choice(), selected = map_sex_select())
+  updateSelectizeInput(session, inputId = "map_sex", choices = map_sex_choice())
 })
 
 
 map_edu_choice <- reactive({
   validate(
     need(input$map_ind, " ", ""),
-    need(input$map_year, " ", "")
   )
-  ch <- ind %>%
-    filter(fullname %in% input$map_ind) %>%
-    edu_choice0()
+  ch <- dim_avail %>%
+    filter(fullname %in% input$map_ind,
+           dim == "edu") %>%
+    select(label, code) %>%
+    deframe() %>%
+    as.list()
   return(ch)
 })
 

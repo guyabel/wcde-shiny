@@ -63,7 +63,7 @@ reg_choice <- reactive({
   ind_name <- ind %>%
     filter(fullname %in% input$data_ind) %>%
     pull(name)
-  if(ind_name == "net")
+  if(ind_name %in% c("net", "netedu"))
     ch <- NULL
   return(ch)
 })
@@ -77,13 +77,26 @@ observe({
 ## sex
 ##
 
+# sex_choice <- reactive({
+#   validate(
+#     need(input$data_ind, label = "indicator")
+#   )
+#   ch <- ind %>%
+#     filter(fullname %in% input$data_ind) %>%
+#     sex_choice0()
+#   return(ch)
+# })
+
 sex_choice <- reactive({
   validate(
-    need(input$data_ind, label = "indicator")
+    need(input$data_ind, " ", "")
   )
-  ch <- ind %>%
-    filter(fullname %in% input$data_ind) %>%
-    sex_choice0()
+  ch <- dim_avail %>%
+    filter(fullname %in% input$data_ind,
+           dim == "sex") %>%
+    select(label, code) %>%
+    deframe() %>%
+    as.list()
   return(ch)
 })
 
@@ -117,16 +130,32 @@ observe({
 ## age
 ##
 
+# age_choice <- reactive({
+#   validate(
+#     need(input$data_ind, label = "indicator")
+#   )
+#   # input$data_ind = ind$fullname[2]
+#   ch <- ind %>%
+#     filter(fullname %in% input$data_ind) %>%
+#     age_choice0()
+#   return(ch)
+# })
+
 age_choice <- reactive({
   validate(
     need(input$data_ind, label = "indicator")
   )
-  # input$data_ind = ind$fullname[2]
-  ch <- ind %>%
-    filter(fullname %in% input$data_ind) %>%
-    age_choice0()
+  ch <- dim_avail %>%
+    filter(fullname %in% input$data_ind,
+           dim == "age") %>%
+    select(label, code) %>%
+    deframe() %>%
+    as.list()
+  
+  # ch <- ifelse(length(ch)==1, NULL, ch)
   return(ch)
 })
+
 
 age_select <- reactive({
   s <- age_choice()[1]

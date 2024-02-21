@@ -40,7 +40,10 @@ ind2 <- ind %>%
   distinct(fullname, type2) %>%
   mutate(type2 = fct_inorder(type2)) %$%
   split(fullname, type2)
+ind2[[2]] <- ind2[[2]][c(1:3,6,4:5,7)]
+ind2[[4]] <- ind2[[4]][c(1,4,2:3)]
 ind2$Migration <- c(ind2$Migration, " ")
+
 
 ind3 <- ind %>%
   filter(type == "si") %>%
@@ -48,7 +51,17 @@ ind3 <- ind %>%
   mutate(type2 = fct_inorder(type2)) %$%
   split(fullname, type2)
 
+
 ind4 <- c(ind1, ind2, ind3)
+
+# limits for labels
+dim_avail <- read_csv("../wcde-data/data/dim.csv") %>%
+  filter(v == "wcde-v3") %>%
+  filter(!is.na(label)) %>%
+  distinct(i, dim, label, code) %>%
+  arrange(i, dim, code) %>%
+  left_join(ind[,1:2], by = c("i" = "name"))
+
 
 ##
 ##geography
