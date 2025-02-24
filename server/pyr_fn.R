@@ -150,7 +150,7 @@ pyr_gvis <- function(d_pyr,
                      prop = FALSE, 
                      edu = 6, 
                      ...){
-  #d_pyr<-d1;pyr_year=2015; pyr_col=iiasa4; w=400;pmax=NULL; h=550; prop=FALSE; no_edu=FALSE
+  #d_pyr<-df2;pyr_year=2020; pyr_col=iiasa8; w=400;pmax=NULL; h=550; prop=FALSE; no_edu=FALSE
   m_pyr <- d_pyr %>% 
     filter(year == pyr_year, 
            sexno == 1, 
@@ -277,7 +277,7 @@ pyr_warn <- function(f = NULL, year = input$pyr_year1){
   w <- ""
   if(!is.null(f)){
     if(f == TRUE)
-      w0 <- "You have selected eight categories for the educational background. These data are only available from 2015 onwards for selected countries. Please consult the FAQ in the About page for more information."
+      w0 <- "You have selected eight categories for the educational breakdown. These data are only available from 2020 onwards for selected countries. Please consult the FAQ in the About page for more information."
     # if(f == TRUE & year < 2015)
     #   w0 <- "You have selected eight categories for the educational background. These data are only available from 2015 onwards for selected countries. Please consult the FAQ in the About page for more information."
     # if(f == TRUE & year >= 2015)
@@ -288,6 +288,7 @@ pyr_warn <- function(f = NULL, year = input$pyr_year1){
   return(w)
 }
 
+# input <- NULL
 # input$pyr_geo1 = 250; input$pyr_sn1 = 2; input$pyr_edu = 8
 # geo = input$pyr_geo1; sn = input$pyr_sn1; edu = input$pyr_edu
 pyr_data <- function(geo = input$pyr_geo1, 
@@ -309,7 +310,7 @@ pyr_data <- function(geo = input$pyr_geo1,
   
   df1 <- tibble(
     v = v,
-    file = paste0("../wcde-data/wcde-v3-single/", sn, "/epop/", v, ".rds")
+    file = paste0("../wcde-data/wcde-v31-single/", sn, "/epop/", v, ".rds")
   ) %>%
     mutate(d = map(.x = file, .f = ~read_rds(.x))) %>%
     select(-file) %>%
@@ -348,24 +349,24 @@ pyr_data <- function(geo = input$pyr_geo1,
       ungroup() %>%
       mutate(eduno = ifelse(edu == "Total", 0, 1))
   }
-  # if(edu == "8"){
-  #   df2 <- df1 %>%
-  #     wcde::edu_group_sum(n = 8)
-  #     filter(eduno != 7) %>%
-  #     left_join(edu10, by = "eduno") %>%
-  #     mutate(edu = fct_inorder(edu_name)) %>%
-  #     select(-edu_name) %>%
-  #     drop_na() %>%
-  #     group_by(scenario, year, ageno, age, sex, sexno, edu) %>%
-  #     summarise(pop=sum(pop)) %>%
-  #     ungroup() %>%
-  #     # all education splits to zero if less than 2015
-  #     mutate(pop = ifelse(year < 2020 & edu != "Total", 0, pop)) %>%
-  #     # fill in missing rows for masters etc pre 2015
-  #     complete(scenario, year, age, sex, edu, fill = list(pop = 0)) %>%
-  #     fill(ageno, sexno) %>%
-  #     mutate(eduno = ifelse(edu == "Total", 0, 1))
-  # }
+  if(edu == "8"){
+    df2 <- df1 %>%
+      # wcde::edu_group_sum(n = 8)
+      filter(eduno != 7) %>%
+      left_join(edu10, by = "eduno") %>%
+      mutate(edu = fct_inorder(edu_name)) %>%
+      select(-edu_name) %>%
+      drop_na() %>%
+      group_by(scenario, year, ageno, age, sex, sexno, edu) %>%
+      summarise(pop=sum(pop)) %>%
+      ungroup() %>%
+      # all education splits to zero if less than 2015
+      mutate(pop = ifelse(year < 2020 & edu != "Total", 0, pop)) %>%
+      # fill in missing rows for masters etc pre 2015
+      complete(scenario, year, age, sex, edu, fill = list(pop = 0)) %>%
+      fill(ageno, sexno) %>%
+      mutate(eduno = ifelse(edu == "Total", 0, 1))
+  }
   return(df2)
 }
 # leg_data(df2)

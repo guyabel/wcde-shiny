@@ -106,8 +106,9 @@ df_build <- reactive({
                value = 0,
                {
                  for (i in input$scenario) {
+                   # input<-NULL; input$age=0;  input$sex=0;  input$year=2020; input$data_ind=ind1[[1]][1]; input$scenario=sn1[1]; input$isono=TRUE; i=2
                    #input<-NULL; input$age=0;  input$sex=2;  input$year=0;  input$year=2020; input$data_ind=ind2[[3]][1]; input$scenario=c(sn1[1],sn1[2]); input$isono=TRUE; i=2
-                   # input$reg <- c("Oceania", "Asia")
+                   # input$reg <- c("World")
                    d2 <- NULL
                    
                    # columns of data to load
@@ -123,17 +124,18 @@ df_build <- reactive({
                    v <- geog %>%
                      filter(name %in% allarea()) %>%
                      # filter(name %in% c("France", "Asia")) %>%
+                     # filter(name %in% n) %>%
                      pull(isono) %>%
                      c(v, .)
                    
                    sn <- dimen %>%
                      filter(dim == "scenario", wcde_code == i) %>%
                      pull(sname)
-                   
+                   # print(v)
 
                    d2 <- tibble(
                      v = v,
-                     file = paste0("../wcde-data/wcde-v3-single/", i, "/", d1$name, "/", v, ".rds")
+                     file = paste0("../wcde-data/wcde-v31-single/", i, "/", d1$name, "/", v, ".rds")
                    ) %>%
                      mutate(d = map(.x = file, .f = ~read_rds(.x))) %>%
                      select(-file) %>%

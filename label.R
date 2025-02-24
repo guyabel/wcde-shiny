@@ -56,7 +56,7 @@ ind4 <- c(ind1, ind2, ind3)
 
 # limits for labels
 dim_avail <- read_csv("../wcde-data/data/dim.csv") %>%
-  filter(v == "wcde-v3") %>%
+  filter(v == "wcde-v31") %>%
   filter(!is.na(label)) %>%
   distinct(i, dim, label, code) %>%
   arrange(i, dim, code) %>%
@@ -187,6 +187,7 @@ edu4 <- c(edu1[1], edu4)
 edu4 <- edu4 %>%
   map_df( ~ data_frame(eduno = .x), .id = "edu_name")
 
+edu6 <- 
 edu6 <- edu1[c(1:7) + 1]
 edu6[[7]] <- 7:10
 edu6 <- c(edu1[1], edu6)
@@ -194,10 +195,17 @@ edu6 <- c(edu1[1], edu6)
 edu6 <- edu6 %>%
   map_df( ~ data_frame(eduno = .x), .id = "edu_name")
 
-edu10 <- edu1 %>%
-  map_df( ~ data_frame(eduno = .x), .id = "edu_name")
-# mutate(eduno = ifelse(edu_name == "Post Secondary", NA, eduno))
+# edu10 <- edu1 %>%
+#   map_df( ~ data_frame(eduno = .x), .id = "edu_name") %>%
+#   mutate(eduno = ifelse(edu_name == "Post Secondary", NA, eduno))
 
+edu10 <- wcde::wic_col8 %>%
+  names() %>%
+  as_tibble() %>%
+  rename(edu_name = 1) %>%
+  mutate(eduno = 1:9, 
+         eduno = ifelse(eduno >= 7, eduno + 1, eduno)) %>%
+  bind_rows(data_frame(edu_name = "Total", eduno = 0), .)
 
 age2 <- list(
   "Five Year Age Groups" = dimen %>%
