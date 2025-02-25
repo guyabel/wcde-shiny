@@ -216,10 +216,10 @@ output$df <- renderDataTable({
   paging = TRUE,
   aoColumnDefs = list(list(
     sClass = "alignRight", aTargets = list(-1)
-  )),
-  drawCallback = I(
-    "function( settings ) {document.getElementById('df').style.width = '800px';}"
-  )
+  ))
+  # drawCallback = I(
+  #   "function( settings ) {document.getElementById('df').style.width = '800px';}"
+  # )
 ))
 
 
