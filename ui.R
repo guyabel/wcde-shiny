@@ -62,14 +62,14 @@ shinyUI(
           title = "FAQ",
           br(),
           h4("General:"),
-          DTOutput("about_faq2"),
+          DT::DTOutput("about_faq2"),
           h4("Data and Graphic Explorer:"),
-          DTOutput("about_faq1")
+          DT::DTOutput("about_faq1")
         ),
         tabPanel(
           h4("Description:"),
           title = "Scenario Defintions",
-          DTOutput("about_scenario"),
+          DT::DTOutput("about_scenario"),
           h4("Summary Component Table:"),
           includeHTML("md/scenario_table.html"),
           h4("Further Details:"),
@@ -77,7 +77,7 @@ shinyUI(
         ),
         tabPanel(
           title = "Education Definitions",
-          DTOutput("about_edu"),
+          DT::DTOutput("about_edu"),
           includeMarkdown("md/about_edu.md")
         )
       ),

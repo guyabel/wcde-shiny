@@ -52,7 +52,7 @@ output$ass_sn0 <- renderUI({
 
 #input<-NULL; input$ass_nat<-"France"; input$ass_sn<-sn1[1:2]
   
-output$data_ass <- renderDT({
+output$data_ass <- DT::renderDT({
   assump %>% 
     filter(country %in% input$ass_nat, 
            sno %in% input$ass_sn) %>% 

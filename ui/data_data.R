@@ -1,5 +1,5 @@
 tagList(
-  column(9, br(), DTOutput("df")),
+  column(9, br(), DT::DTOutput("df")),
   column(
     3,
     br(),
