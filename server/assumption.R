@@ -52,7 +52,7 @@ output$ass_sn0 <- renderUI({
 
 #input<-NULL; input$ass_nat<-"France"; input$ass_sn<-sn1[1:2]
   
-output$data_ass <- renderDataTable({
+output$data_ass <- renderDT({
   assump %>% 
     filter(country %in% input$ass_nat, 
            sno %in% input$ass_sn) %>% 
@@ -63,6 +63,7 @@ output$data_ass <- renderDataTable({
            Fertility = fertility,
            Migration = migration,
            Education = education)
-},  options = list(searching = FALSE, paging = FALSE, 
-                   drawCallback = I("function( settings ) {document.getElementById('df').style.width = '800px';}")))
+},  options = list(searching = FALSE, paging = FALSE 
+                   # drawCallback = I("function( settings ) {document.getElementById('df').style.width = '800px';}")
+                   ))
 

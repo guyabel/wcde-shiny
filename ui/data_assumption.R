@@ -19,7 +19,7 @@ tagList(
          checkboxInput('ass_prevnat', 'Use countries in Selection tab', TRUE), 
          br()
   ),
-  column(9, br(), dataTableOutput("data_ass"))
+  column(9, br(), DTOutput("data_ass"))
 )
   
   

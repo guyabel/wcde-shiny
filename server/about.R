@@ -1,4 +1,4 @@
-output$about_faq1 <- renderDataTable({
+output$about_faq1 <- renderDT({
   faq %>% 
     filter(category != "general") %>% 
     select(-category) %>% 
@@ -6,7 +6,7 @@ output$about_faq1 <- renderDataTable({
            Answer = answer)
 }, escape = FALSE, options = list(searching = FALSE,paging = FALSE,info=FALSE))
 
-output$about_faq2 <- renderDataTable({
+output$about_faq2 <- renderDT({
   faq %>% 
     filter(category == "general") %>% 
     select(-category) %>% 
@@ -14,7 +14,7 @@ output$about_faq2 <- renderDataTable({
            Answer = answer)
 }, escape = FALSE, options = list(searching = FALSE,paging = FALSE,info=FALSE))
 
-output$about_scenario <- renderDataTable({
+output$about_scenario <- renderDT({
   dimen %>% 
     filter(dim == "scenario") %>% 
     arrange(wcde_code) %>%
@@ -23,7 +23,7 @@ output$about_scenario <- renderDataTable({
            Definition = details)
 }, escape = FALSE, options = list(searching = FALSE,paging = FALSE,info=FALSE))
 
-output$about_edu <- renderDataTable({
+output$about_edu <- renderDT({
   dimen %>% 
     filter(dim=="edu") %>% 
     select(name, details) %>% 

@@ -209,7 +209,7 @@ df_build <- reactive({
   return(d3)
 })
 
-output$df <- renderDataTable({
+output$df <- renderDT({
   df_build()
 },  options = list(
   searching = TRUE,
