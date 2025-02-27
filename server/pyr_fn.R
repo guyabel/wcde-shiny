@@ -150,7 +150,7 @@ pyr_gvis <- function(d_pyr,
                      prop = FALSE, 
                      edu = 6, 
                      ...){
-  #d_pyr<-df2;pyr_year=2020; pyr_col=iiasa8; w=400;pmax=NULL; h=550; prop=FALSE; no_edu=FALSE
+  #d_pyr<-d2;pyr_year=2020; pyr_col=iiasa8; w=400;pmax=NULL; h=550; prop=FALSE; no_edu=FALSE
   m_pyr <- d_pyr %>% 
     filter(year == pyr_year, 
            sexno == 1, 
@@ -289,7 +289,7 @@ pyr_warn <- function(f = NULL, year = input$pyr_year1){
 }
 
 # input <- NULL
-# input$pyr_geo1 = 250; input$pyr_sn1 = 2; input$pyr_edu = 8
+# input$pyr_geo1 = "Austria"; input$pyr_sn1 = 2; input$pyr_edu = 8
 # geo = input$pyr_geo1; sn = input$pyr_sn1; edu = input$pyr_edu
 pyr_data <- function(geo = input$pyr_geo1, 
                      sn = input$pyr_sn1,
@@ -308,7 +308,7 @@ pyr_data <- function(geo = input$pyr_geo1,
   #   pull(edu8) %>%
   #   sum()
   
-  df1 <- tibble(
+  d1 <- tibble(
     v = v,
     file = paste0("../wcde-data/wcde-v31-single/", sn, "/epop/", v, ".rds")
   ) %>%
@@ -316,17 +316,14 @@ pyr_data <- function(geo = input$pyr_geo1,
     select(-file) %>%
     pivot_wider(names_from = v, values_from = d) %>%
     unnest(col = names(.)) %>%
-  # df1 <- loads(file = paste0("df", sn, "/epop"), 
-  #              variables = v, ultra.fast = TRUE, to.data.frame=TRUE) %>%
-  #   as_tibble() %>%
     mutate_if(is.factor, as.character) %>%
     mutate(edu = fct_inorder(edu)) %>%
     gather(key = isono, value = pop, -(1:7)) %>% 
     mutate(pop = pop/1e3) %>%
     mutate(scenario = sn) 
-  # df1 %>% filter(year == 2015, sexno != 0, ageno == 14, sexno == 1)
+  # d1 %>% filter(year == 2015, sexno != 0, ageno == 14, sexno == 1)
   if(edu == "4"){
-    df2 <- df1 %>%
+    d2 <- d1 %>%
       filter(!eduno %in% 8:10) %>%
       left_join(edu4, by = "eduno") %>%
       mutate(edu = fct_inorder(edu_name)) %>%
@@ -338,7 +335,7 @@ pyr_data <- function(geo = input$pyr_geo1,
       mutate(eduno = ifelse(edu == "Total", 0, 1))
   }
   if(edu == "6"){
-    df2 <- df1 %>%
+    d2 <- d1 %>%
       filter(!eduno %in% 8:10) %>%
       left_join(edu6, by = "eduno") %>%
       mutate(edu = fct_inorder(edu_name)) %>%
@@ -350,7 +347,7 @@ pyr_data <- function(geo = input$pyr_geo1,
       mutate(eduno = ifelse(edu == "Total", 0, 1))
   }
   if(edu == "8"){
-    df2 <- df1 %>%
+    d2 <- d1 %>%
       # wcde::edu_group_sum(n = 8)
       filter(eduno != 7) %>%
       left_join(edu10, by = "eduno") %>%
@@ -367,9 +364,9 @@ pyr_data <- function(geo = input$pyr_geo1,
       fill(ageno, sexno) %>%
       mutate(eduno = ifelse(edu == "Total", 0, 1))
   }
-  return(df2)
+  return(d2)
 }
-# leg_data(df2)
+# leg_data(d2)
 # 
 leg_data <- function(d){
   d %>%
