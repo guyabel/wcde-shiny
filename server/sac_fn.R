@@ -67,7 +67,7 @@ sac_data <- function(geo = input$sac_geo1,
   
   df1 <- tibble(
     v = v,
-    file = paste0("../wcde-data/wcde-v31-single/", sn, "/epop/", v, ".rds")
+    file = paste0("../wcde-data/wcde-v3-single/", sn, "/epop/", v, ".rds")
   ) %>%
     mutate(d = map(.x = file, .f = ~read_rds(.x))) %>%
     select(-file) %>%

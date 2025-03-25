@@ -45,7 +45,7 @@ map_build <- reactive({
         filter(fullname == input$map_ind) %>%
         pull(name)
       
-      xx <- paste0("../wcde-data/wcde-v31-single/", input$map_sn, "/", fn, "/") %>%
+      xx <- paste0("../wcde-data/wcde-v3-single/", input$map_sn, "/", fn, "/") %>%
         dir(all.files = TRUE) %>%
         str_remove(pattern = ".rds") %>%
         str_subset(pattern = "[0-9]") %>%
@@ -71,7 +71,7 @@ map_build <- reactive({
       
       df1 <- tibble(
         v = v,
-        file = paste0("../wcde-data/wcde-v31-single/", input$map_sn, "/", fn, "/", v, ".rds")
+        file = paste0("../wcde-data/wcde-v3-single/", input$map_sn, "/", fn, "/", v, ".rds")
       ) %>%
         mutate(d = map(.x = file, .f = ~read_rds(.x))) %>%
         select(-file) %>%

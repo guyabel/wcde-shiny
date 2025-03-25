@@ -56,7 +56,7 @@ ind4 <- c(ind1, ind2, ind3)
 
 # limits for labels
 dim_avail <- read_csv("../wcde-data/data/dim.csv") %>%
-  filter(v == "wcde-v31") %>%
+  filter(v == "wcde-v3") %>%
   filter(!is.na(label)) %>%
   distinct(i, dim, label, code) %>%
   arrange(i, dim, code) %>%

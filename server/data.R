@@ -135,7 +135,7 @@ df_build <- reactive({
 
                    d2 <- tibble(
                      v = v,
-                     file = paste0("../wcde-data/wcde-v31-single/", i, "/", d1$name, "/", v, ".rds")
+                     file = paste0("../wcde-data/wcde-v3-single/", i, "/", d1$name, "/", v, ".rds")
                    ) %>%
                      mutate(d = map(.x = file, .f = ~read_rds(.x))) %>%
                      select(-file) %>%
