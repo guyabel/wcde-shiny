@@ -86,11 +86,28 @@ shinyUI(
       tagList(
         fluidRow(
           hr(),
-          column(width = 4, includeHTML("www/r_blurb.html")),
+          column(width = 2, includeHTML("www/r_blurb.html")),
           column(width = 2, includeHTML("www/bottom_logo_adri.html")),
           column(width = 2, includeHTML("www/bottom_logo_iiasa.html")),
           column(width = 2, includeHTML("www/bottom_logo_oeaw.html")),
+          column(width = 2, includeHTML("www/bottom_logo_vid.html")),
           column(width = 2, includeHTML("www/bottom_logo_uniwien.html"))
+          # column(width = 10,
+          #        # splitLayout(
+          #        #   includeHTML("www/bottom_logo_adri.html"),
+          #        #   includeHTML("www/bottom_logo_iiasa.html"),
+          #        #   includeHTML("www/bottom_logo_oeaw.html"),
+          #        #   includeHTML("www/bottom_logo_uniwien.html"),
+          #        #   includeHTML("www/bottom_logo_vid.html"),
+          #        #   cellWidths = "20%"
+          #        # )
+          #        column(width = 2),
+          #        column(width = 2, includeHTML("www/bottom_logo_adri.html")),
+          #        column(width = 2, includeHTML("www/bottom_logo_iiasa.html")),
+          #        column(width = 2, includeHTML("www/bottom_logo_oeaw.html")),
+          #        column(width = 2, includeHTML("www/bottom_logo_uniwien.html")),
+          #        column(width = 2, includeHTML("www/bottom_logo_vid.html"))
+          #        ),
         ),
         includeCSS("www/style.css"),
         tags$script(
