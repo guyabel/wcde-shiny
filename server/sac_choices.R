@@ -7,7 +7,7 @@ output$sac_year10 <- renderUI({
     year_min <- 2020
   }
   sliderInput(inputId = "sac_year1", label = "Year", 
-              min = 2020, max = 2100, value = c(year_min,2100), step= 5, 
+              min = 1950, max = 2100, value = c(year_min,2100), step= 5, 
               ticks= FALSE, sep="", width="100%")
 })
 
@@ -20,6 +20,6 @@ output$sac_year20 <- renderUI({
     year_min <- 2020
   }
   sliderInput(inputId = "sac_year2", label = "Year", 
-              min = 2020, max = 2100, value = c(year_min,2100), step= 5, 
+              min = 1950, max = 2100, value = c(year_min,2100), step= 5, 
               ticks= FALSE, sep="", width="100%")
 })

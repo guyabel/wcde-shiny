@@ -278,10 +278,10 @@ pyr_warn <- function(f = NULL, year = input$pyr_year1){
   if(!is.null(f)){
     if(f == TRUE)
       w0 <- "You have selected eight categories for the educational breakdown. These data are only available from 2020 onwards for selected countries. Please consult the FAQ in the About page for more information."
-    # if(f == TRUE & year < 2015)
-    #   w0 <- "You have selected eight categories for the educational background. These data are only available from 2015 onwards for selected countries. Please consult the FAQ in the About page for more information."
-    # if(f == TRUE & year >= 2015)
-    #   w0 <- "You have selected eight categories for the educational background. These data are only available from 2015 onwards for selected countries. Please consult the FAQ in the About page for more information."
+    if(f == TRUE & year < 2020)
+      w0 <- "Past data are only available for selected countries. Please consult the FAQ in the About page for more information."
+    # if(f == TRUE & year >= 2020)
+    #   w0 <- "Past data are only available selected countries. Please consult the FAQ in the About page for more information."
     if(f == TRUE)
       w <- paste0("<FONT COLOR='gray'>", w0, "<br><br>")
   }
@@ -310,7 +310,7 @@ pyr_data <- function(geo = input$pyr_geo1,
   
   d1 <- tibble(
     v = v,
-    file = paste0("../wcde-data/wcde-v3-single/", sn, "/epop/", v, ".rds")
+    file = paste0("../wcde-data/wcde-v32-single/", sn, "/epop/", v, ".rds")
   ) %>%
     mutate(d = map(.x = file, .f = ~read_rds(.x))) %>%
     select(-file) %>%

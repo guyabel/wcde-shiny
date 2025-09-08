@@ -45,7 +45,7 @@ map_build <- reactive({
         filter(fullname == input$map_ind) %>%
         pull(name)
       
-      xx <- paste0("../wcde-data/wcde-v3-single/", input$map_sn, "/", fn, "/") %>%
+      xx <- paste0("../wcde-data/wcde-v32-single/", input$map_sn, "/", fn, "/") %>%
         dir(all.files = TRUE) %>%
         str_remove(pattern = ".rds") %>%
         str_subset(pattern = "[0-9]") %>%

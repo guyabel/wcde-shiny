@@ -78,6 +78,7 @@ shinyUI(
         tabPanel(
           title = "Education Definitions",
           DT::DTOutput("about_edu"),
+          h4("Further Details:"),
           includeMarkdown("md/about_edu.md")
         )
       ),
