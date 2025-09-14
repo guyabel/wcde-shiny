@@ -4,7 +4,14 @@ output$about_faq1 <- DT::renderDT({
     select(-category) %>% 
     rename(Question = question,
            Answer = answer)
-}, escape = FALSE, options = list(searching = FALSE,paging = FALSE,info=FALSE))
+}, escape = FALSE, rownames = FALSE,
+options = list(
+  searching = FALSE,
+  paging = FALSE,
+  info = FALSE,
+  autoWidth = TRUE))
+
+# options = list(searching = FALSE,paging = FALSE,info=FALSE))
 
 output$about_faq2 <- DT::renderDT({
   faq %>% 
@@ -12,7 +19,13 @@ output$about_faq2 <- DT::renderDT({
     select(-category) %>% 
     rename(Question = question, 
            Answer = answer)
-}, escape = FALSE, options = list(searching = FALSE,paging = FALSE,info=FALSE))
+}, escape = FALSE, rownames = FALSE, 
+options = list(
+  searching = FALSE,
+  paging = FALSE,
+  info = FALSE))
+
+# options = list(searching = FALSE,paging = FALSE,info=FALSE))
 
 output$about_scenario <- DT::renderDT({
   dimen %>% 
@@ -21,7 +34,7 @@ output$about_scenario <- DT::renderDT({
     select(name,details) %>% 
     rename(Scenario = name,
            Definition = details)
-}, escape = FALSE, options = list(searching = FALSE,paging = FALSE,info=FALSE))
+}, escape = FALSE,rownames = FALSE, options = list(searching = FALSE,paging = FALSE,info=FALSE))
 
 output$about_edu <- DT::renderDT({
   dimen %>% 
@@ -29,4 +42,4 @@ output$about_edu <- DT::renderDT({
     select(name, details) %>% 
     rename(Level = name, 
            Definition = details)
-}, escape = FALSE, options = list(searching = FALSE, paging = FALSE,info=FALSE))
+}, escape = FALSE,rownames = FALSE, options = list(searching = FALSE, paging = FALSE,info=FALSE))

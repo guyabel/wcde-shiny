@@ -236,9 +236,9 @@ year_choice <- reactive({
 year_select <- reactive({
   s <- year_choice()[1]
   if(year_past() == 1 & year_period() == 0)
-    s <- year_choice()[14]
+    s <- year_choice()[15]
   if(year_past() == 1 & year_period() == 1)
-    s <- year_choice()[13]
+    s <- year_choice()[14]
   if(input$allyear == 1)
     s <- year_choice()
   return(s)

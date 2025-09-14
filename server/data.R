@@ -211,7 +211,7 @@ df_build <- reactive({
 
 output$df <- DT::renderDT({
   df_build()
-},  options = list(
+},    rownames = FALSE, options = list(
   searching = TRUE,
   paging = TRUE,
   aoColumnDefs = list(list(

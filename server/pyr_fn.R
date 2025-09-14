@@ -261,7 +261,7 @@ pyr_gvis <- function(d_pyr,
 
 pyr_fill <- function(year = input$pyr_year1, edu = input$pyr_edu, geo = input$pyr_geo1){
   p <- FALSE
-  if(year < 2015 & edu == "8"){
+  if(year < 2020 & edu == "8"){
     p <- TRUE
   }
   g <- geog %>%

@@ -85,7 +85,7 @@ tagList(
                 )
               )
             ),
-            column(4, selectizeInput("pyr_x", "Horizontal Axis", width = "100%",
+            column(4, selectizeInput("pyr_x", "Horizontal Axis Scale", width = "100%",
                                      choices = list("Data Specific"="data","Entire Time Horizon"="allyear","Both Plots"="allarea"))),
             column(4, selectizeInput("pyr_prop", "Data", width = "100%",
                                      choices = list("Population"="FALSE","Percentage"="TRUE")))
