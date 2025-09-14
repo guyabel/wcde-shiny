@@ -310,7 +310,7 @@ pyr_data <- function(geo = input$pyr_geo1,
   
   d1 <- tibble(
     v = v,
-    file = paste0("../wcde-data/wcde-v32-single/", sn, "/epop/", v, ".rds")
+    file = paste0("../wcde-data/wcde-v3-single/", sn, "/epop/", v, ".rds")
   ) %>%
     mutate(d = map(.x = file, .f = ~read_rds(.x))) %>%
     select(-file) %>%
