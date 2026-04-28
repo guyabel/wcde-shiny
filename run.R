@@ -1,3 +1,5 @@
+# install.packages(c("googleVis", "webshot", "DT"))
+
 # library(shiny)
 shiny::runApp(launch.browser = TRUE)
 

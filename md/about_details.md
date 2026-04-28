@@ -1,6 +1,6 @@
 ### Overview
 
-This website presents the 2023 revision of the Wittgenstein Centre population projections (Version 3.2), following the initial projections ([Version 1](https://dataexplorer.wittgensteincentre.org/wcde-v1/)) in 2013 ([Lutz, Butz, and KC (Eds.) 2014)](https://global.oup.com/academic/product/world-population-and-human-capital-in-the-twenty-first-century-9780198703167?cc=at&lang=en&) and the 2018 update ([Version 2](https://dataexplorer.wittgensteincentre.org/wcde-v2/)) ([Lutz, Goujon, KC, Stonawski, and, Stilianakis (Eds.) 2018](https://op.europa.eu/en/publication-detail/-/publication/e1853ba8-4444-11e8-a9f4-01aa75ed71a1/language-en)). Further details on the updates and the revisions can be found in [K.C. et al. (2024)](https://pure.iiasa.ac.at/19487) and in other satellite papers focusing on the migration component ([Yildiz and Abel 2024](https://pure.iiasa.ac.at/id/eprint/19399/1/WP-24-001.pdf)), the mortality component [(Dhakad and KC 2024)](https://doi.org/10.1553/0x003f4a9d).
+This website presents the 2023 revision of the Wittgenstein Centre population projections (Version 3.3), following the initial projections ([Version 1](https://dataexplorer.wittgensteincentre.org/wcde-v1/)) in 2013 ([Lutz, Butz, and KC (Eds.) 2014)](https://global.oup.com/academic/product/world-population-and-human-capital-in-the-twenty-first-century-9780198703167?cc=at&lang=en&) and the 2018 update ([Version 2](https://dataexplorer.wittgensteincentre.org/wcde-v2/)) ([Lutz, Goujon, KC, Stonawski, and, Stilianakis (Eds.) 2018](https://op.europa.eu/en/publication-detail/-/publication/e1853ba8-4444-11e8-a9f4-01aa75ed71a1/language-en)). Further details on the updates and the revisions can be found in [K.C. et al. (2024)](https://pure.iiasa.ac.at/19487) and in other satellite papers focusing on the migration component ([Yildiz and Abel 2024](https://pure.iiasa.ac.at/id/eprint/19399/1/WP-24-001.pdf)), the mortality component [(Dhakad and KC 2024)](https://doi.org/10.1553/0x003f4a9d). Visit [here](https://iiasa.ac.at/models-tools-data/ssp-2023) for details.
 
 In 2021, [the Shared Socioeconomic Pathways (SSPs) scenario community](https://data.ece.iiasa.ac.at/ssp/) related to the Intergovernmental Panel on Climate Change requested an update of the human core of the SSPs, which is at the origin of this version. This updated version is based on 2020 as the reference year, with adjustments to certain short-term assumptions extending to 2030. However, most long-term assumptions have not been changed. Several changes were nevertheless implemented, particularly in estimating and using country-specific education differentials in mortality and migration.
 
@@ -12,11 +12,15 @@ The suggested citation for data and plots from this website is:
 
 K.C., S., Dhakad, M., Potancokova, M., Adhikari, S., Yildiz, D., Mamolo, M., Sobotka, T., Zeman, K., Abel, G., Lutz, W., and Goujon, A. (2024). Updating the Shared Socioeconomic Pathways (SSPs) Global Population and Human Capital Projections. IIASA Working Paper. Laxenburg, Austria: WP-24-003. <https://pure.iiasa.ac.at/19487>. Available at: <http://www.wittgensteincentre.org/dataexplorer>.
 
+### Zenodo Repository
+
+Find output files from the projection runs here (<https://zenodo.org/records/14718294>).
+
 ### R package
 
 You may download data directly into <a href="https://cran.r-project.org/" target="_blank" rel="noopener"><i class="fab fa-r-project"></i></a> using the *wcde* package. See the package <a href="https://guyabel.github.io/wcde/" target="_blank" rel="noopener">website</a> for further details.
 
-### Credits 
+### Credits
 
 Data Explorer Team at the Wittgenstein Centre for Demography and Global Human Capital:
 
@@ -42,56 +46,104 @@ Data Explorer Team at the Wittgenstein Centre for Demography and Global Human Ca
 
 Researchers who participated in the development of the projections:
 
+```{=html}
 <style>
 table {
     width: 100%;
   }
 td { width: 33%; }
 </style>
+```
+```{=html}
 <script>
 $(document).ready(function() {
   $('.footnotes').remove();
 });
 </script>
+```
+|                                           |                                                  |                                       |
+|-------------------------------------------|--------------------------------------------------|---------------------------------------|
+| M. Jalal Abbasi-Shavazi[^about_details-1] | Michel Guillot                                   | Arodys Robles                         |
+| Guy J. Abel[^about_details-2]             | Graeme Hugo                                      | Richard G. Rogers                     |
+| Saroja Adhikari                           | Gavin Jones                                      | Anna Rotkirch                         |
+| Alicia Adsera                             | Sandra Jurasszovich                              | Patrick Sabourin[^about_details-3]    |
+| Bilal F. Barakat                          | Samir K.C.[^about_details-4]                     | Nikola Sander                         |
+| Stuart Basten                             | James K.S.                                       | Warren C. Sanderson[^about_details-5] |
+| Ramon Bauer                               | Siew-Ean Khoo                                    | Zeba Sathar                           |
+| Jan Van Bavel                             | Henri Leridon                                    | Sergei Scherbov[^about_details-6]     |
+| Alain Bélanger[^about_details-7]          | Elke Loichinger                                  | Bruno Schoumaker                      |
+| Donatien Beguy                            | Marc Luy[^about_details-8]                       | David Shapiro                         |
+| Caroline Berghammer[^about_details-9]     | Wolfgang Lutz[^about_details-10]                 | Vegard Skirbekk                       |
+| Ayla Bonfiglio                            | Marija Mamolo[^about_details-11]                 | Tomas Sobotka[^about_details-12]      |
+| William P. Butz                           | Guillaume Marois[^about_details-13]              | Markus Speringer                      |
+| Graziella Caselli                         | Douglas Massey                                   | Nikolaos Stilianakis                  |
+| John Casterline                           | Bruno Masquelier                                 | Marcin Stonawski[^about_details-14]   |
+| Teresa Castro-Martin                      | John F. May                                      | Erich Striessnig[^about_details-15]   |
+| Minja Kim Choe                            | Blessing Mberu                                   | Christian Wegner-Siegmundt            |
+| Alessandra Conte                          | France Meslé                                     | Maria Rita Testa                      |
+| Moradhvaj Dhakad[^about_details-16]       | Melinda Mills                                    | Olivier Thévenon                      |
+| Sven Drefahl                              | S. Philip Morgan                                 | Edward Jow-Ching Tu                   |
+| Rachel E. Durham                          | Orlando Olaya Bucaro[^about_details-17]          | Laura Wong                            |
+| Jakob Eder                                | Elsie Pamuk                                      | Marcus Wurzer                         |
+| Regina Fuchs                              | Michaela Potančoková[^about_details-18]          | Brenda Yepez-Martinez                 |
+| Tomas Frejka                              | Wendy Vanesa Ramírez González[^about_details-19] | Dilek Yildiz[^about_details-20]       |
+| Alessandra Garbero                        | Claudia Reiter[^about_details-21]                | Sam Hyun Yoo                          |
+| Michel Garenne                            | Ronald R. Rindfuss                               | Cuiling Zhang                         |
+| Anne Goujon[^about_details-22]            | Fernando Riosmena                                | Kryštof Zeman[^about_details-23]      |
+| Erofili Grapsa                            | Louis Rosero-Bixby                               | Zhongwei Zhao                         |
+|                                           |                                                  |                                       |
 
-|                                 |                                   |                             |
-|----|----|----|
-| M. Jalal Abbasi-Shavazi[^1]     | Michel Guillot                    | Arodys Robles               |
-| Guy J. Abel[^1]                 | Graeme Hugo                       | Richard G. Rogers           |
-| Saroja Adhikari                 | Gavin Jones                       | Anna Rotkirch               |
-| Alicia Adsera                   | Sandra Jurasszovich               | Patrick Sabourin[^1]        |
-| Bilal F. Barakat                | Samir K.C.[^1]                    | Nikola Sander               |
-| Stuart Basten                   | James K.S.                        | Warren C. Sanderson[^1]     |
-| Ramon Bauer                     | Siew-Ean Khoo                     | Zeba Sathar                 |
-| Jan Van Bavel                   | Henri Leridon                     | Sergei Scherbov[^1]         |
-| Alain Bélanger[^1]              | Elke Loichinger                   | Bruno Schoumaker            |
-| Donatien Beguy                  | Marc Luy[^1]                      | David Shapiro               |
-| Caroline Berghammer[^1]         | Wolfgang Lutz[^1]                 | Vegard Skirbekk             |
-| Ayla Bonfiglio                  | Marija Mamolo[^1]                 | Tomas Sobotka[^1]           |
-| William P. Butz                 | Guillaume Marois[^1]              | Markus Speringer            |
-| Graziella Caselli               | Douglas Massey                    | Nikolaos Stilianakis        |
-| John Casterline                 | Bruno Masquelier                  | Marcin Stonawski[^1]        |
-| Teresa Castro-Martin            | John F. May                       | Erich Striessnig[^1]        |
-| Minja Kim Choe                  | Blessing Mberu                    | Christian Wegner-Siegmundt  |
-| Alessandra Conte                | France Meslé                      | Maria Rita Testa            |
-| Moradhvaj Dhakad[^1]            | Melinda Mills                     | Olivier Thévenon            |
-| Sven Drefahl                    | S. Philip Morgan                  | Edward Jow-Ching Tu         |
-| Rachel E. Durham                | Orlando Olaya Bucaro[^1]          | Laura Wong                  |
-| Jakob Eder                      | Elsie Pamuk                       | Marcus Wurzer               |
-| Regina Fuchs                    | Michaela Potančoková[^1]          | Brenda Yepez-Martinez       |
-| Tomas Frejka                    | Wendy Vanesa Ramírez González[^1] | Dilek Yildiz[^1]            |
-| Alessandra Garbero              | Claudia Reiter[^1]                | Sam Hyun Yoo                |
-| Michel Garenne                  | Ronald R. Rindfuss                | Cuiling Zhang               |
-| Anne Goujon[^1]                 | Fernando Riosmena                 | Kryštof Zeman[^1]           |
-| Erofili Grapsa                  | Louis Rosero-Bixby                | Zhongwei Zhao               |
-|                                 |                                   |                             |
+[^about_details-1]: Wittgenstein Centre for Demography and Global Human Capital
 
-<br>
-[^1]: Wittgenstein Centre for Demography and Global Human Capital
+[^about_details-2]: Wittgenstein Centre for Demography and Global Human Capital
 
-[^1]: Wittgenstein Centre for Demography and Global Human Capital
+[^about_details-3]: Wittgenstein Centre for Demography and Global Human Capital
 
-### Software 
+[^about_details-4]: Wittgenstein Centre for Demography and Global Human Capital
+
+[^about_details-5]: Wittgenstein Centre for Demography and Global Human Capital
+
+[^about_details-6]: Wittgenstein Centre for Demography and Global Human Capital
+
+[^about_details-7]: Wittgenstein Centre for Demography and Global Human Capital
+
+[^about_details-8]: Wittgenstein Centre for Demography and Global Human Capital
+
+[^about_details-9]: Wittgenstein Centre for Demography and Global Human Capital
+
+[^about_details-10]: Wittgenstein Centre for Demography and Global Human Capital
+
+[^about_details-11]: Wittgenstein Centre for Demography and Global Human Capital
+
+[^about_details-12]: Wittgenstein Centre for Demography and Global Human Capital
+
+[^about_details-13]: Wittgenstein Centre for Demography and Global Human Capital
+
+[^about_details-14]: Wittgenstein Centre for Demography and Global Human Capital
+
+[^about_details-15]: Wittgenstein Centre for Demography and Global Human Capital
+
+[^about_details-16]: Wittgenstein Centre for Demography and Global Human Capital
+
+[^about_details-17]: Wittgenstein Centre for Demography and Global Human Capital
+
+[^about_details-18]: Wittgenstein Centre for Demography and Global Human Capital
+
+[^about_details-19]: Wittgenstein Centre for Demography and Global Human Capital
+
+[^about_details-20]: Wittgenstein Centre for Demography and Global Human Capital
+
+[^about_details-21]: Wittgenstein Centre for Demography and Global Human Capital
+
+[^about_details-22]: Wittgenstein Centre for Demography and Global Human Capital
+
+[^about_details-23]: Wittgenstein Centre for Demography and Global Human Capital
+
+<br> [^about_details-24]: Wittgenstein Centre for Demography and Global Human Capital
+
+[^about_details-24]: Wittgenstein Centre for Demography and Global Human Capital
+
+### Software
 
 Web interface built using:
 
